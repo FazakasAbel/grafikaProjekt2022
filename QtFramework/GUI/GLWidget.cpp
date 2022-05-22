@@ -173,14 +173,13 @@ namespace cagd
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // stores/duplicates the original model view matrix
-                    glPushMatrix();
-                        glRotatef(_angle_x, 1.0, 0.0, 0.0);
-                        glRotatef(_angle_y, 0.0, 1.0, 0.0);
-                        glRotatef(_angle_z, 0.0, 0.0, 1.0);
-                        glTranslated(_trans_x, _trans_y, _trans_z);
-                        glScaled(_zoom, _zoom, _zoom);
-
-        //glPopMatrix();
+        glPushMatrix();
+            glRotatef(_angle_x, 1.0, 0.0, 0.0);
+            glRotatef(_angle_y, 0.0, 1.0, 0.0);
+            glRotatef(_angle_z, 0.0, 0.0, 1.0);
+            glTranslated(_trans_x, _trans_y, _trans_z);
+            glScaled(_zoom, _zoom, _zoom);
+        glPopMatrix();
     }
 
     //----------------------------------------------------------------------------
@@ -210,104 +209,9 @@ namespace cagd
     // implementation of the public slots
     //-----------------------------------
 
-    void GLWidget::animate(){
-        GLfloat *vertex = _mouse.MapVertexBuffer(GL_READ_WRITE);
-        GLfloat *normal = _mouse.MapNormalBuffer(GL_READ_ONLY);
-
-        _angle += DEG_TO_RADIAN;
-        if (_angle >= TWO_PI) _angle -= TWO_PI;
-
-        GLfloat scale = sin(_angle) / 3000.0;
-
-        for( GLuint i = 0; i < _mouse.VertexCount(); ++i){
-            for( GLuint coordinate = 0; coordinate < 3; ++coordinate, ++vertex, ++normal){
-                *vertex += scale * (*normal);
-            }
-        }
-
-        _mouse.UnmapVertexBuffer();
-        _mouse.UnmapNormalBuffer();
-
-        update();
-    }
-
     GLWidget::~GLWidget(){
-        switch(_mode){
-            case 0:
-                for(GLuint i = 0; i < _pcs.GetColumnCount(); ++i){
-                    delete _pcs[i];
-                }
-
-                for(GLuint i = 0; i < _image_of_pcs.GetColumnCount(); ++i){
-                    _image_of_pcs[i]->DeleteVertexBufferObjects();
-                    delete _image_of_pcs[i];
-                }
-
-            case 1:
-                    _mouse.DeleteVertexBufferObjects();
-                    delete _dl;
-                    _dl = nullptr;
-                    break;
-
-            case 2:
-                    for(GLuint i = 0; i < _models.GetColumnCount(); ++i){
-                        _models[i].DeleteVertexBufferObjects();
-                    }
-
-                    for(GLuint i = 0; i < _number_of_curves; ++i){
-                        delete _transformation[i];
-                        if(_curves[i]){
-                            _curves[i]->DeleteVertexBufferObjectsOfData();
-                            delete _curves[i];
-                        }
-                        if(_images_of_curves[i]){
-                            _images_of_curves[i]->DeleteVertexBufferObjects();
-                            delete _images_of_curves[i];
-                        }
-                    }
-
-                    delete _dl;
-                    _dl = nullptr;
-                    break;
-            case 3:
-
-                for(GLuint i = 0; i < _parametric_surface_count; ++i){
-                    if(_surfaces[i]){
-                        delete _surfaces[i];
-                    }
-
-                    if(_surface_images[i]){
-                        _surface_images[i]->DeleteVertexBufferObjects();
-                        delete _surface_images[i];
-                    }
-
-                    delete _dl;
-                    _dl = nullptr;
-                }
-
-                delete _surface_transformation;
-                _model.DeleteVertexBufferObjects();
-                break;
-
-            case 4:
-
-                delete _before_interpolation;
-                delete _after_interpolation;
-                delete _arc_image_before;
-                delete _arc_image_after;
-                delete _dl;
-                _dl = nullptr;
-                delete _u_curves;
-                delete _v_curves;
-                break;
-
-            case 5:
-                _model.DeleteVertexBufferObjects();
-                delete _dl;
-                for(GLuint i = 0; i < _shaders.GetColumnCount(); ++i){
-                    delete _shaders[i];
-                }
-        }
+        delete _dl;
+        _dl = nullptr;
     }
 
     void GLWidget::set_angle_x(int value)
