@@ -231,7 +231,6 @@ GenericCurve3* LinearCombination3::GenerateImage(GLuint max_order_of_derivatives
             delete result;
             return nullptr;
         }
-//        cout << d << endl;
 
         result->_derivative.SetColumn(i, d);
     }

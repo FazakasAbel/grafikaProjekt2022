@@ -13,8 +13,10 @@ protected:
 public:
 
     FirstOrderAlgebraicHyperbolicArc3(GLdouble alpha = 1);
+    FirstOrderAlgebraicHyperbolicArc3(const FirstOrderAlgebraicHyperbolicArc3& arc);
 
     GLboolean BlendingFunctionValues(GLdouble u, RowMatrix<GLdouble> &values) const;
+
     GLboolean CalculateDerivatives(
             GLuint max_order_of_derivatives, GLdouble u, Derivatives &d) const;
 

@@ -4,6 +4,11 @@
 FirstOrderAlgebraicHyperbolicArc3::FirstOrderAlgebraicHyperbolicArc3(GLdouble alpha) : LinearCombination3(0, alpha, 4, GL_STATIC_DRAW)
 {
     _alpha = alpha;
+    SetDefinitionDomain(0, alpha);
+}
+
+FirstOrderAlgebraicHyperbolicArc3::FirstOrderAlgebraicHyperbolicArc3(const FirstOrderAlgebraicHyperbolicArc3& rhs) : LinearCombination3(rhs), _alpha(rhs._alpha)
+{
 }
 
 GLboolean FirstOrderAlgebraicHyperbolicArc3::BlendingFunctionValues(GLdouble u, RowMatrix<GLdouble> &values) const{

@@ -53,14 +53,6 @@ namespace cagd
         connect(_side_widget->first_der, SIGNAL(clicked(bool)), _gl_widget, SLOT(set_show_first_der(bool)));
         connect(_side_widget->second_der, SIGNAL(clicked(bool)), _gl_widget, SLOT(set_show_second_der(bool)));
 
-        connect(_side_widget->set_div_points, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_div_point_count(int)));
-
-        connect(_side_widget->curve_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_curve(int)));
-        connect(_side_widget->curve_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_cyclic_curve(int)));
-
-        connect(_side_widget->scale, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_scale(double)));
-
-        connect(_side_widget->point_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_point(int)));
         connect(_side_widget->x_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(update_selected_point_x(double)));
         connect(_side_widget->y_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(update_selected_point_y(double)));
         connect(_side_widget->z_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(update_selected_point_z(double)));
@@ -68,16 +60,6 @@ namespace cagd
         connect(_gl_widget, SIGNAL(set_x_signal(double)), _side_widget->x_selector, SLOT(setValue(double)));
         connect(_gl_widget, SIGNAL(set_y_signal(double)), _side_widget->y_selector, SLOT(setValue(double)));
         connect(_gl_widget, SIGNAL(set_z_signal(double)), _side_widget->z_selector, SLOT(setValue(double)));
-        connect(_gl_widget, SIGNAL(set_knot_point_ratio(double)), _side_widget->knot_point_mover, SLOT(setValue(double)));
-
-        connect(_side_widget->cyclicDrawCheck, SIGNAL(clicked(bool)), _gl_widget, SLOT(setCyclicDraw(bool)));
-
-        connect(_side_widget->knot_point_mover, SIGNAL(valueChanged(double)), _gl_widget, SLOT(move_knot_point(double)));
-
-        connect(_side_widget->knot_point_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_knot_point(int)));
-        connect(_side_widget->saveButton, SIGNAL(clicked()), _gl_widget, SLOT(saveCurves()));
-        connect(_side_widget->surface_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_surface(int)));
-        connect(_side_widget->textureCheck, SIGNAL(clicked(bool)), _gl_widget, SLOT(set_texture_draw(bool)));
 
         connect(_side_widget->shader_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_shader(int)));
 

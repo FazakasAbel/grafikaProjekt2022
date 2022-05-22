@@ -57,8 +57,8 @@ mac {
     # IMPORTANT: change the letters x, y, z in the next two lines
     # to the corresponding version numbers of the GLEW library
     # which was installed by using the command 'brew install glew'
-    INCLUDEPATH += "/usr/local/Cellar/glew/x.y.z/include/"
-    LIBS += -L"/usr/local/Cellar/glew/x.y.z/lib/" -lGLEW
+    INCLUDEPATH += "/opt/homebrew/Cellar/glew/2.2.0_1/include"
+    LIBS += -L"/opt/homebrew/Cellar/glew/2.2.0_1/lib" -lGLEW
 
     # the OpenGL library has to added as a framework
     LIBS += -framework OpenGL
@@ -75,6 +75,7 @@ HEADERS += \
     Core/Constants.h \
     Core/CyclicCurves3.h \
     Core/DCoordinates3.h \
+    Core/FOAHCompositeArc.h \
     Core/FirstOrderAlgebraic-HyperbolicArc3.h \
     Core/FirstOrderAlgebraic-HyperbolicPatch3.h \
     Core/GenericCurves3.h \
@@ -99,6 +100,7 @@ HEADERS += \
 SOURCES += \
     Core/BasicFunctions.cpp \
     Core/CyclicCurves3.cpp \
+    Core/FOAHCompositeArc.cpp \
     Core/FirstOrderAlgebraic-HyperbolicPatch3.cpp \
     Core/FirstOrderAlgebraicHyperbolicArc3.cpp \
     Core/GenericCurves3.cpp \

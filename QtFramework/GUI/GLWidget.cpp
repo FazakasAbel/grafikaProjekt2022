@@ -148,6 +148,9 @@ namespace cagd
                 _shaders[i]->Disable();
             }
 
+            _composite_arc = new FOAHCompositeArc(1, 5);
+            _composite_arc->InsertNewArc();
+
             glEnable(GL_POLYGON_SMOOTH);
             glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 
@@ -179,6 +182,11 @@ namespace cagd
             glRotatef(_angle_z, 0.0, 0.0, 1.0);
             glTranslated(_trans_x, _trans_y, _trans_z);
             glScaled(_zoom, _zoom, _zoom);
+
+            glDisable(GL_LIGHTING);
+            //_composite_arc->RenderAllArcs(0, GL_LINE_STRIP);
+            _composite_arc->RenderSelectedArc(0, 0, GL_LINE_STRIP);
+            glEnable(GL_LIGHTING);
         glPopMatrix();
     }
 
@@ -212,6 +220,8 @@ namespace cagd
     GLWidget::~GLWidget(){
         delete _dl;
         _dl = nullptr;
+        delete _composite_arc;
+        _composite_arc = nullptr;
     }
 
     void GLWidget::set_angle_x(int value)
@@ -290,31 +300,6 @@ namespace cagd
 
         update();
     }
-    void GLWidget::set_selected_cyclic_curve(int index){
-        if(index >= _number_of_curves || index < 0){
-            return;
-        }
-
-        _selected_cyclic_curve = index;
-
-        emit set_x_signal(_points[_selected_cyclic_curve][_selected_point][0]);
-        emit set_y_signal(_points[_selected_cyclic_curve][_selected_point][1]);
-        emit set_z_signal(_points[_selected_cyclic_curve][_selected_point][2]);
-    }
-
-    void GLWidget::set_selected_point(int index){
-      if(index >= 16 || index < 0){
-            return;
-        }
-
-        _selected_point = index;
-
-        int x = _selected_point / 4, y = _selected_point % 4;
-        emit set_x_signal(_surface_cpoints(x, y)[0]);
-        emit set_y_signal(_surface_cpoints(x, y)[1]);
-        emit set_z_signal(_surface_cpoints(x, y)[2]);
-
-    }
 
     void GLWidget::update_selected_point_x(double new_value){
         update_selected_surface_point_x(new_value);
@@ -329,27 +314,27 @@ namespace cagd
     }
 
     void GLWidget::update_selected_surface_point_x(double new_value){
-        int x = _selected_point / 4;
-        int y = _selected_point % 4;
+//        int x = _selected_point / 4;
+//        int y = _selected_point % 4;
 
-        _surface_cpoints(x, y)[0] = new_value;
-        update();
+//        _surface_cpoints(x, y)[0] = new_value;
+//        update();
     }
 
     void GLWidget::update_selected_surface_point_y(double new_value){
-        int x = _selected_point / 4;
-        int y = _selected_point % 4;
+//        int x = _selected_point / 4;
+//        int y = _selected_point % 4;
 
-        _surface_cpoints(x, y)[1] = new_value;
-        update();
+//        _surface_cpoints(x, y)[1] = new_value;
+//        update();
     }
 
     void GLWidget::update_selected_surface_point_z(double new_value){
-        int x = _selected_point / 4;
-        int y = _selected_point % 4;
+//        int x = _selected_point / 4;
+//        int y = _selected_point % 4;
 
-        _surface_cpoints(x, y)[2] = new_value;
-        update();
+//        _surface_cpoints(x, y)[2] = new_value;
+//        update();
     }
 
     void GLWidget::update_selected_curve_point_x(double new_value){

@@ -13,6 +13,7 @@
 #include "../Core/FirstOrderAlgebraic-HyperbolicPatch3.h"
 #include "../Core/FirstOrderAlgebraic-HyperbolicArc3.h"
 #include "../Core/ShaderPrograms.h"
+#include "../Core/FOAHCompositeArc.h"
 
 namespace cagd
 {
@@ -42,6 +43,9 @@ namespace cagd
         int                             _div_point_count = 200;
         GLenum                          _usage_flag;
         GLdouble                        _scale = 1;
+        FOAHCompositeArc*               _composite_arc;
+        FirstOrderAlgebraicHyperbolicArc3* arc;
+        GenericCurve3*                  image;
 
         DirectionalLight *_dl = nullptr;
 
@@ -86,20 +90,11 @@ namespace cagd
         void set_trans_z(double value);
 
         void set_show_second_der(bool value);
-        void set_show_first_der(bool value);
-
-        void set_div_point_count(int value);
-
-        void set_selected_curve(int value);
-
-        void set_scale(double);
-        void set_selected_point(int);
+        void set_show_first_der(bool value);       
 
         void update_selected_point_x(double);
         void update_selected_point_y(double);
         void update_selected_point_z(double);
-        void set_selected_surface(int);
-
         void set_selected_shader(int);
 
         void set_selected_r(double);
