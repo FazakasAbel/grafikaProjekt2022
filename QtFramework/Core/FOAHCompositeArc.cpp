@@ -203,6 +203,77 @@ GLboolean FOAHCompositeArc::ContinueExisitingArc(GLuint index, Direction directi
     return GL_TRUE;
 }
 
+GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1)
+{
+    // TODO: test
+    if (index_0 >= _attributes.size() || index_1 >= _attributes.size())
+    {
+        cout << "Arc index is invalid!" << endl;
+        return GL_FALSE;
+    }
+
+    ArcAttributes &attribute_0 = _attributes[index_0];
+    ArcAttributes &attribute_1 = _attributes[index_1];
+
+    if ((direction_0 == LEFT && attribute_0.previous) ||
+        (direction_0 == RIGHT && attribute_0.next) ||
+        (direction_1 == LEFT && attribute_1.previous) ||
+        (direction_1 == RIGHT && attribute_1.next))
+    {
+        cout << "Arc already has a neighbor in given direction!" << endl;
+        return GL_FALSE;
+    }
+
+    size_t arc_count = _attributes.size();
+    _attributes.resize(arc_count + 1);
+
+    _attributes[arc_count].arc = new FirstOrderAlgebraicHyperbolicArc3();
+    _attributes[arc_count].color = new Color4(0.5f, 0.0f, 0.9f);
+    _attributes[arc_count].previous = &attribute_0;
+    _attributes[arc_count].next = &attribute_1;
+
+    FirstOrderAlgebraicHyperbolicArc3 &joiningArc = *_attributes[arc_count].arc;
+
+    if (direction_0 == LEFT)
+    {
+        joiningArc[0] = (*attribute_0.arc)[0];
+        joiningArc[1] = 2 * joiningArc[0] - 2 * (*attribute_0.arc)[1];
+        attribute_0.previous = &_attributes[arc_count];
+    }
+    else if (direction_0 == RIGHT)
+    {
+        joiningArc[0] = (*attribute_0.arc)[3];
+        joiningArc[1] = 2 * joiningArc[0] - 2 * (*attribute_0.arc)[2];
+        attribute_0.next = &_attributes[arc_count];
+    }
+
+    if (direction_1 == LEFT)
+    {
+        joiningArc[3] = (*attribute_1.arc)[0];
+        joiningArc[2] = joiningArc[3] - 2 * (*attribute_1.arc)[1];
+        attribute_1.previous = &_attributes[arc_count];
+    }
+    else if (direction_1 == RIGHT)
+    {
+        joiningArc[3] = (*attribute_1.arc)[3];
+        joiningArc[2] = joiningArc[3] - 2 * (*attribute_1.arc)[2];
+        attribute_1.next = &_attributes[arc_count];
+    }
+
+    if (!joiningArc.UpdateVertexBufferObjectsOfData())
+        throw Exception("Could not update VBO of joining arc's data!");
+
+    _attributes[arc_count].image = joiningArc.GenerateImage(2, 200);
+    if (!_attributes[arc_count].image)
+        throw Exception("Could not generate image of joining arc!");
+
+    if (!_attributes[arc_count].image->UpdateVertexBufferObjects(1))
+        throw Exception("Could not update VBO of joing arc image!");
+
+
+    return GL_TRUE;
+}
+
 FOAHCompositeArc::~FOAHCompositeArc()
 {
     for(auto& arcAttr : _attributes){
