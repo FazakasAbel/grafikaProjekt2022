@@ -150,6 +150,8 @@ namespace cagd
 
             _composite_arc = new FOAHCompositeArc(1, 5);
             _composite_arc->InsertNewArc();
+            _composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::RIGHT);
+            _composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::LEFT);
 
             glEnable(GL_POLYGON_SMOOTH);
             glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
@@ -185,6 +187,9 @@ namespace cagd
 
             glDisable(GL_LIGHTING);
             _composite_arc->RenderAllArcs(0, GL_LINE_STRIP);
+            _composite_arc->RenderAllArcData(GL_LINE_STRIP);
+            glPointSize(10.0f);
+            _composite_arc->RenderAllArcData(GL_POINTS);
 //            _composite_arc->RenderSelectedArc(0, 0, GL_LINE_STRIP);
             glEnable(GL_LIGHTING);
         glPopMatrix();

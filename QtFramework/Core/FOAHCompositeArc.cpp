@@ -1,7 +1,9 @@
 #include "FOAHCompositeArc.h"
 #include "Core/Exceptions.h"
 #include <GL/glu.h>
+#include <iostream>
 
+using namespace std;
 using namespace cagd;
 
 FOAHCompositeArc::ArcAttributes::ArcAttributes() : arc(nullptr), image(nullptr), previous(nullptr), next(nullptr), color(nullptr)
@@ -142,6 +144,61 @@ GLboolean FOAHCompositeArc::RenderAllArcData(GLenum render_mode) const
         glColor3f(arcAttr.color->r(), arcAttr.color->g(), arcAttr.color->b());
         arcAttr.arc->RenderData(render_mode);
     }
+
+    return GL_TRUE;
+}
+
+GLboolean FOAHCompositeArc::ContinueExisitingArc(GLuint index, Direction direction)
+{
+    if (index >= _attributes.size())
+    {
+        cout << "Arc index invalid!" << endl;
+        return GL_FALSE;
+    }
+
+    ArcAttributes* attribute = &_attributes.at(index);
+    if ((direction == LEFT && attribute->previous) || (direction == RIGHT && attribute->next))
+    {
+        cout << "Neighbor already exists in given direction!";
+        return GL_FALSE;
+    }
+
+    size_t arc_count = _attributes.size();
+    _attributes.resize(arc_count + 1);
+    _attributes[arc_count].arc = new FirstOrderAlgebraicHyperbolicArc3();
+    _attributes[arc_count].color = new Color4(0.8f, 0.0f, 0.6f);
+
+    FirstOrderAlgebraicHyperbolicArc3 &newArc = *_attributes[arc_count].arc;
+    if (direction == LEFT)
+    {
+        newArc[3] = (*attribute->arc)[0];
+        newArc[2] = 2 * newArc[3] - (*attribute->arc)[1];
+        newArc[1] = 2 * newArc[2] - newArc[3];
+        newArc[0] = 2 * newArc[1] - newArc[2];
+
+        attribute->previous = &_attributes[arc_count];
+        _attributes[arc_count].next = attribute;
+    }
+    else if (direction == RIGHT)
+    {
+        newArc[0] = (*attribute->arc)[3];
+        newArc[1] = 2 * newArc[0] - (*attribute->arc)[2];
+        newArc[2] = 2 * newArc[1] - newArc[0];
+        newArc[3] = 2 * newArc[2] - newArc[1];
+
+        attribute->next = &_attributes[arc_count];
+        _attributes[arc_count].previous = attribute;
+    }
+
+    if (!newArc.UpdateVertexBufferObjectsOfData())
+        throw Exception("Could not update VBO of arc's data!");
+
+    _attributes[arc_count].image = newArc.GenerateImage(2, 200);
+    if (!_attributes[arc_count].image)
+        throw Exception("Could not generate image of arc!");
+
+    if(!_attributes[arc_count].image->UpdateVertexBufferObjects(1))
+        throw Exception("Could not update VBO of arc image!");
 
     return GL_TRUE;
 }
