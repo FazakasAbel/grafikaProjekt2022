@@ -105,12 +105,15 @@ GLboolean FOAHCompositeArc::InsertNewArc()
 
 GLboolean FOAHCompositeArc::RenderAllArcs(GLuint order, GLenum render_mode) const
 {
-    for(auto& arcAttr : _attributes){
-        if(arcAttr.image){
+    for(auto& arcAttr : _attributes)
+    {
+        if(arcAttr.image)
+        {
             glColor3f(arcAttr.color->r(), arcAttr.color->g(), arcAttr.color->b());
             arcAttr.image->RenderDerivatives(order, render_mode);
-            arcAttr.arc->RenderData(render_mode);
-        } else{
+        }
+        else
+        {
             return GL_FALSE;
         }
     }
@@ -127,6 +130,17 @@ GLboolean FOAHCompositeArc::RenderSelectedArc(GLuint index, GLuint order, GLenum
     }
     else{
         return GL_FALSE;
+    }
+
+    return GL_TRUE;
+}
+
+GLboolean FOAHCompositeArc::RenderAllArcData(GLenum render_mode) const
+{
+    for (auto& arcAttr : _attributes)
+    {
+        glColor3f(arcAttr.color->r(), arcAttr.color->g(), arcAttr.color->b());
+        arcAttr.arc->RenderData(render_mode);
     }
 
     return GL_TRUE;

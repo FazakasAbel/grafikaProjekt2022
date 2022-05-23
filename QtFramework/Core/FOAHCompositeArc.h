@@ -49,6 +49,7 @@ namespace cagd
 
         GLboolean RenderAllArcs(GLuint order, GLenum render_mode) const;
         GLboolean RenderSelectedArc(GLuint index, GLuint order, GLenum render_mode) const;
+        GLboolean RenderAllArcData(GLenum render_mode) const;
 
         // other setters and getters
         // ...
