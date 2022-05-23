@@ -125,10 +125,10 @@ GLboolean FOAHCompositeArc::RenderAllArcs(GLuint order, GLenum render_mode) cons
 
 GLboolean FOAHCompositeArc::RenderSelectedArc(GLuint index, GLuint order, GLenum render_mode) const
 {
-    if(_attributes.at(index).image){
-        glColor3f(_attributes.at(index).color->r(), _attributes.at(index).color->g(), _attributes.at(index).color->b());
-        _attributes.at(index).image->RenderDerivatives(order, render_mode);
-        _attributes.at(index).arc->RenderData(render_mode);
+    if(_attributes[index].image){
+        glColor3f(_attributes[index].color->r(), _attributes[index].color->g(), _attributes[index].color->b());
+        _attributes[index].image->RenderDerivatives(order, render_mode);
+        _attributes[index].arc->RenderData(render_mode);
     }
     else{
         return GL_FALSE;
@@ -156,10 +156,10 @@ GLboolean FOAHCompositeArc::ContinueExisitingArc(GLuint index, Direction directi
         return GL_FALSE;
     }
 
-    ArcAttributes* attribute = &_attributes.at(index);
+    ArcAttributes* attribute = &_attributes[index];
     if ((direction == LEFT && attribute->previous) || (direction == RIGHT && attribute->next))
     {
-        cout << "Neighbor already exists in given direction!";
+        cout << "Arc already has a neighbor in given direction!";
         return GL_FALSE;
     }
 
