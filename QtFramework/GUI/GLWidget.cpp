@@ -184,8 +184,8 @@ namespace cagd
             glScaled(_zoom, _zoom, _zoom);
 
             glDisable(GL_LIGHTING);
-            //_composite_arc->RenderAllArcs(0, GL_LINE_STRIP);
-            _composite_arc->RenderSelectedArc(0, 0, GL_LINE_STRIP);
+            _composite_arc->RenderAllArcs(0, GL_LINE_STRIP);
+//            _composite_arc->RenderSelectedArc(0, 0, GL_LINE_STRIP);
             glEnable(GL_LIGHTING);
         glPopMatrix();
     }

@@ -79,23 +79,26 @@ FOAHCompositeArc::FOAHCompositeArc(GLdouble alpha, GLuint minimal_arc_count_to_b
 GLboolean FOAHCompositeArc::InsertNewArc()
 {
     try{
-        ArcAttributes newArcAttr;
-        FirstOrderAlgebraicHyperbolicArc3* newArc = new FirstOrderAlgebraicHyperbolicArc3();
-        (*newArc)[0] = DCoordinate3(3, 0, 3);
-        (*newArc)[1] = DCoordinate3(1, 1, 2);
-        (*newArc)[2] = DCoordinate3(2, 2, 1);
-        (*newArc)[3] = DCoordinate3(0, 3, 0);
-        newArcAttr.arc = newArc;
-        newArcAttr.color = new Color4(0.5f, 0.0f, 0.0f);
-        newArcAttr.image = newArc->GenerateImage(2, 200, GL_STATIC_DRAW);
-        newArcAttr.image->UpdateVertexBufferObjects(1);
-        newArc->UpdateVertexBufferObjectsOfData(GL_STATIC_DRAW);
-        _attributes.push_back(newArcAttr);
+        size_t arc_count = _attributes.size();
+        _attributes.resize(arc_count + 1);
+        _attributes[arc_count].arc = new FirstOrderAlgebraicHyperbolicArc3();
+        _attributes[arc_count].color = new Color4(1.0f, 0.0f, 0.0f);
+
+        FirstOrderAlgebraicHyperbolicArc3 &newArc = *_attributes[arc_count].arc;
+        newArc[0] = DCoordinate3(3, 0, 0);
+        newArc[1] = DCoordinate3(1, 1, 0);
+        newArc[2] = DCoordinate3(2, 2, 0);
+        newArc[3] = DCoordinate3(3, 2, 0);
+        newArc.UpdateVertexBufferObjectsOfData();
+
+        _attributes[arc_count].image = newArc.GenerateImage(2, 200);
+        GenericCurve3 &image = *_attributes[arc_count].image;
+        image.UpdateVertexBufferObjects(1);
 
         return GL_TRUE;
     }
     catch(Exception e){
-        std::cout << "bajvan" << std::endl;
+        std::cout << "InsertNewArc error!" << std::endl;
         return GL_FALSE;
     }
 }
@@ -105,10 +108,9 @@ GLboolean FOAHCompositeArc::RenderAllArcs(GLuint order, GLenum render_mode) cons
     for(auto& arcAttr : _attributes){
         if(arcAttr.image){
             glColor3f(arcAttr.color->r(), arcAttr.color->g(), arcAttr.color->b());
-            arcAttr.arc->RenderData(render_mode);
             arcAttr.image->RenderDerivatives(order, render_mode);
-        }
-        else{
+            arcAttr.arc->RenderData(render_mode);
+        } else{
             return GL_FALSE;
         }
     }
@@ -120,8 +122,8 @@ GLboolean FOAHCompositeArc::RenderSelectedArc(GLuint index, GLuint order, GLenum
 {
     if(_attributes.at(index).image){
         glColor3f(_attributes.at(index).color->r(), _attributes.at(index).color->g(), _attributes.at(index).color->b());
-        _attributes.at(index).arc->RenderData(render_mode);
         _attributes.at(index).image->RenderDerivatives(order, render_mode);
+        _attributes.at(index).arc->RenderData(render_mode);
     }
     else{
         return GL_FALSE;
