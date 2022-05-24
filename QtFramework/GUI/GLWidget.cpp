@@ -73,6 +73,75 @@ namespace cagd
 
 
         // ...
+        _materials.ResizeColumns(7);
+        _materials[0] = MatFBBrass;
+        _materials[1] = MatFBEmerald;
+        _materials[2] = MatFBGold;
+        _materials[3] = MatFBPearl;
+        _materials[4] = MatFBRuby;
+        _materials[5] = MatFBSilver;
+        _materials[6] = MatFBTurquoise;
+
+
+        _text = new QOpenGLTexture(QImage("Textures/texture_11.jpg").mirrored());
+        _text->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _text->setMagnificationFilter(QOpenGLTexture::Linear);
+        _textures[0] = new QOpenGLTexture(QImage("Textures/texture_01.jpg").mirrored());
+        _textures[0]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[0]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[1] = new QOpenGLTexture(QImage("Textures/texture_02.jpg"));
+        _textures[1]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[1]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[2] = new QOpenGLTexture(QImage("Textures/texture_03.jpg"));
+        _textures[2]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[2]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[3] = new QOpenGLTexture(QImage("Textures/texture_04.jpg"));
+        _textures[3]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[3]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[4] = new QOpenGLTexture(QImage("Textures/texture_05.jpg"));
+        _textures[4]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[4]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[5] = new QOpenGLTexture(QImage("Textures/texture_06.jpg"));
+        _textures[5]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[5]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[6] = new QOpenGLTexture(QImage("Textures/texture_07.jpg"));
+        _textures[6]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[6]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[7] = new QOpenGLTexture(QImage("Textures/texture_08.jpg"));
+        _textures[7]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[7]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[8] = new QOpenGLTexture(QImage("Textures/texture_09.jpg"));
+        _textures[8]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[8]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[9] = new QOpenGLTexture(QImage("Textures/texture_10.jpg"));
+        _textures[9]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[9]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[10] = new QOpenGLTexture(QImage("Textures/texture_11.jpg"));
+        _textures[10]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[10]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[11] = new QOpenGLTexture(QImage("Textures/texture_12.jpg"));
+        _textures[11]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[11]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[12] = new QOpenGLTexture(QImage("Textures/texture_13.jpg"));
+        _textures[12]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[12]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+        _textures[13] = new QOpenGLTexture(QImage("Textures/texture_14.jpg"));
+        _textures[13]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+        _textures[13]->setMagnificationFilter(QOpenGLTexture::Linear);
+
         HCoordinate3 direction(0.0, 0.0, 1.0, 0.0);
         Color4       ambient(0.4, 0.4, 0.4, 1.0);
         Color4       diffuse(0.8, 0.8, 0.8, 1.0);
@@ -215,6 +284,33 @@ namespace cagd
             _composite_arc->RenderAllArcData(GL_POINTS);
 //            _composite_arc->RenderSelectedArc(0, 0, GL_LINE_STRIP);
             glEnable(GL_LIGHTING);
+            _dl->Enable();
+            if(_enable_shader) {
+                _shaders[_selected_shader]->Enable();
+            }
+            if(_enable_material) {
+                _materials[_selected_material].Apply();
+            }
+            if(_enable_texture) {
+                glEnable(GL_TEXTURE_2D);
+                glEnable(GL_LIGHT0);
+                glEnable(GL_NORMALIZE);
+                _textures[_selected_texture]->bind();
+                _text->bind();
+
+            }
+
+            //content
+
+
+            if(_enable_shader) {
+                _shaders[_selected_shader]->Disable();
+            }
+            if(_enable_texture) {
+                _textures[_selected_texture]->release();
+                glDisable(GL_TEXTURE_2D);
+                glDisable(GL_NORMALIZE);
+            }
         glPopMatrix();
     }
 
@@ -442,5 +538,34 @@ namespace cagd
         _shading = value;
         updateUniformVariables();
         update();
+    }
+
+    void GLWidget::set_shader_enable(bool value) {
+        if(_enable_shader!=value) {
+            _enable_shader = value;
+            update();
+        }
+    }
+
+    void GLWidget::set_material_index(int value) {
+        _selected_material = value;
+        update();
+    }
+    void GLWidget::set_material_enable(bool value) {
+        if(_enable_material!=value) {
+            _enable_material=value;
+            update();
+        }
+    }
+
+    void GLWidget::set_texture_index(int value) {
+        _selected_texture = value;
+        update();
+    }
+    void GLWidget::set_texture_enable(bool value) {
+        if(_enable_texture!=value) {
+            _enable_texture = value;
+            update();
+        }
     }
 }

@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\QtFramework -I. -I..\QtFramework\Dependencies\Include -IC:\Qt\6.2.3\msvc2019_64\include -IC:\Qt\6.2.3\msvc2019_64\include\QtOpenGLWidgets -IC:\Qt\6.2.3\msvc2019_64\include\QtWidgets -IC:\Qt\6.2.3\msvc2019_64\include\QtOpenGL -IC:\Qt\6.2.3\msvc2019_64\include\QtGui -IC:\Qt\6.2.3\msvc2019_64\include\QtCore -Idebug -I. -I/include -IC:\Qt\6.2.3\msvc2019_64\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /DEBUG /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = opengl32.lib glu32.lib /LIBPATH:"C:\Egyetem\IV. felev\grafika\grafikaProjekt\grafikaProjekt2022\QtFramework\Dependencies\Lib\GL\x64" "C:\Egyetem\IV. felev\grafika\grafikaProjekt\grafikaProjekt2022\QtFramework\Dependencies\Lib\GL\x64\glew32.lib" C:\Qt\6.2.3\msvc2019_64\lib\Qt6OpenGLWidgetsd.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6Widgetsd.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6OpenGLd.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6Guid.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6Cored.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6EntryPointd.lib shell32.lib  
+LIBS          = opengl32.lib glu32.lib /LIBPATH:"D:\egyetem\masodev\masodik felev\grafika\projekt\grafikaProjekt2022\QtFramework\Dependencies\Lib\GL\x64" "D:\egyetem\masodev\masodik felev\grafika\projekt\grafikaProjekt2022\QtFramework\Dependencies\Lib\GL\x64\glew32.lib" C:\Qt\6.2.3\msvc2019_64\lib\Qt6OpenGLWidgetsd.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6Widgetsd.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6OpenGLd.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6Guid.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6Cored.lib C:\Qt\6.2.3\msvc2019_64\lib\Qt6EntryPointd.lib shell32.lib  
 QMAKE         = C:\Qt\6.2.3\msvc2019_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -100,6 +100,7 @@ DIST          =  ..\QtFramework\Core\BasicFunctions.h \
 		..\QtFramework\Core\CyclicCurves3.h \
 		..\QtFramework\Core\DCoordinates3.h \
 		..\QtFramework\Core\FOAHCompositeArc.h \
+		..\QtFramework\Core\FOAHCompositePatch.h \
 		..\QtFramework\Core\FirstOrderAlgebraic-HyperbolicArc3.h \
 		..\QtFramework\Core\FirstOrderAlgebraic-HyperbolicPatch3.h \
 		..\QtFramework\Core\GenericCurves3.h \
@@ -305,7 +306,7 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) QtFramework.zip $(SOURCES) $(DIST) ..\QtFramework\QtFramework.pro C:\Qt\6.2.3\msvc2019_64\mkspecs\features\spec_pre.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\common\windows-desktop.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\common\windows-vulkan.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\common\msvc-desktop.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\qconfig.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_ext_freetype.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_ext_libpng.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_core.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_entrypoint_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_help.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsanimation.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsanimation_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labssettings.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labssettings_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_linguist.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_linguist_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_network.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlcore.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlcore_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmldom_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_tools_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qt_functions.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qt_config.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\win32-msvc\qmake.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\6.2.3\msvc2019_64\mkspecs\features\exclusive_builds.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\common\msvc-version.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\toolchain.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\default_pre.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\win32\default_pre.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\resolve_config.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\default_post.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\build_pass.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qml_debug.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\entrypoint.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\precompile_header.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\warn_on.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qt.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\resources_functions.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\resources.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\moc.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\win32\opengl.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\uic.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qmake_use.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\file_copies.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\win32\windows.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\testcase_targets.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\exceptions.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\yacc.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\lex.prf ..\QtFramework\QtFramework.pro C:\Qt\6.2.3\msvc2019_64\lib\Qt6OpenGLWidgetsd.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6Widgetsd.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6OpenGLd.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6Guid.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6Cored.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6EntryPointd.prl    C:\Qt\6.2.3\msvc2019_64\mkspecs\features\data\dummy.cpp ..\QtFramework\Core\BasicFunctions.h ..\QtFramework\Core\Colors4.h ..\QtFramework\Core\Constants.h ..\QtFramework\Core\CyclicCurves3.h ..\QtFramework\Core\DCoordinates3.h ..\QtFramework\Core\FOAHCompositeArc.h ..\QtFramework\Core\FirstOrderAlgebraic-HyperbolicArc3.h ..\QtFramework\Core\FirstOrderAlgebraic-HyperbolicPatch3.h ..\QtFramework\Core\GenericCurves3.h ..\QtFramework\Core\Lights.h ..\QtFramework\Core\LinearCombination3.h ..\QtFramework\Core\Materials.h ..\QtFramework\Core\Matrices.h ..\QtFramework\Core\RealSquareMatrices.h ..\QtFramework\Core\ShaderPrograms.h ..\QtFramework\Core\TCoordinates4.h ..\QtFramework\Core\TensorProductSurfaces3.h ..\QtFramework\Core\TriangularFaces.h ..\QtFramework\Core\TriangulatedMeshes3.h ..\QtFramework\GUI\GLWidget.h ..\QtFramework\GUI\MainWindow.h ..\QtFramework\GUI\SideWidget.h ..\QtFramework\Core\Exceptions.h ..\QtFramework\Parametric\ParametricCurves3.h ..\QtFramework\Parametric\ParametricSurfaces3.h ..\QtFramework\Test\TestFunctions.h  ..\QtFramework\Core\BasicFunctions.cpp ..\QtFramework\Core\CyclicCurves3.cpp ..\QtFramework\Core\FOAHCompositeArc.cpp ..\QtFramework\Core\FirstOrderAlgebraic-HyperbolicPatch3.cpp ..\QtFramework\Core\FirstOrderAlgebraicHyperbolicArc3.cpp ..\QtFramework\Core\GenericCurves3.cpp ..\QtFramework\Core\Lights.cpp ..\QtFramework\Core\LinearCombination3.cpp ..\QtFramework\Core\Materials.cpp ..\QtFramework\Core\RealSquareMatrices.cpp ..\QtFramework\Core\ShaderPrograms.cpp ..\QtFramework\Core\TensorProductSurfaces3.cpp ..\QtFramework\Core\TriangulatedMeshes3.cpp ..\QtFramework\Core\stringHelp.cpp ..\QtFramework\GUI\GLWidget.cpp ..\QtFramework\GUI\MainWindow.cpp ..\QtFramework\GUI\SideWidget.cpp ..\QtFramework\Parametric\ParametricCurves3.cpp ..\QtFramework\Parametric\ParametricSurfaces3.cpp ..\QtFramework\Test\TestFunctions.cpp ..\QtFramework\main.cpp ..\QtFramework\GUI\MainWindow.ui ..\QtFramework\GUI\SideWidget.ui    
+	$(ZIP) QtFramework.zip $(SOURCES) $(DIST) ..\QtFramework\QtFramework.pro C:\Qt\6.2.3\msvc2019_64\mkspecs\features\spec_pre.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\common\windows-desktop.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\win32\windows_vulkan_sdk.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\common\windows-vulkan.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\common\msvc-desktop.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\qconfig.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_ext_freetype.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_ext_libpng.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_core.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_core_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_dbus.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_designer.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_entrypoint_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_gui.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_help.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_help_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsanimation.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsanimation_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labssettings.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labssettings_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labssharedimage_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_linguist.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_linguist_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_network.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_network_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_opengl.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_openglwidgets_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qml.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlcore.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlcore_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmldom_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlmodels_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_qmlxmllistmodel_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quick.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickcontrolstestutilsprivate_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2quickimpl_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickdialogs2utils_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicklayouts_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickshapes_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quicktestutilsprivate_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_sql.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_svg.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_svgwidgets_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_testlib.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_tools_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_uitools.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_widgets.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_xml.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\modules\qt_lib_zlib_private.pri C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qt_functions.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qt_config.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\win32-msvc\qmake.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\6.2.3\msvc2019_64\mkspecs\features\exclusive_builds.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\common\msvc-version.conf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\toolchain.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\default_pre.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\win32\default_pre.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\resolve_config.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\exclusive_builds_post.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\default_post.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\build_pass.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qml_debug.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\entrypoint.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\precompile_header.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\warn_on.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qt.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\resources_functions.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\resources.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\moc.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\win32\opengl.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\uic.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\qmake_use.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\file_copies.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\win32\windows.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\testcase_targets.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\exceptions.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\yacc.prf C:\Qt\6.2.3\msvc2019_64\mkspecs\features\lex.prf ..\QtFramework\QtFramework.pro C:\Qt\6.2.3\msvc2019_64\lib\Qt6OpenGLWidgetsd.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6Widgetsd.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6OpenGLd.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6Guid.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6Cored.prl C:\Qt\6.2.3\msvc2019_64\lib\Qt6EntryPointd.prl    C:\Qt\6.2.3\msvc2019_64\mkspecs\features\data\dummy.cpp ..\QtFramework\Core\BasicFunctions.h ..\QtFramework\Core\Colors4.h ..\QtFramework\Core\Constants.h ..\QtFramework\Core\CyclicCurves3.h ..\QtFramework\Core\DCoordinates3.h ..\QtFramework\Core\FOAHCompositeArc.h ..\QtFramework\Core\FOAHCompositePatch.h ..\QtFramework\Core\FirstOrderAlgebraic-HyperbolicArc3.h ..\QtFramework\Core\FirstOrderAlgebraic-HyperbolicPatch3.h ..\QtFramework\Core\GenericCurves3.h ..\QtFramework\Core\Lights.h ..\QtFramework\Core\LinearCombination3.h ..\QtFramework\Core\Materials.h ..\QtFramework\Core\Matrices.h ..\QtFramework\Core\RealSquareMatrices.h ..\QtFramework\Core\ShaderPrograms.h ..\QtFramework\Core\TCoordinates4.h ..\QtFramework\Core\TensorProductSurfaces3.h ..\QtFramework\Core\TriangularFaces.h ..\QtFramework\Core\TriangulatedMeshes3.h ..\QtFramework\GUI\GLWidget.h ..\QtFramework\GUI\MainWindow.h ..\QtFramework\GUI\SideWidget.h ..\QtFramework\Core\Exceptions.h ..\QtFramework\Parametric\ParametricCurves3.h ..\QtFramework\Parametric\ParametricSurfaces3.h ..\QtFramework\Test\TestFunctions.h  ..\QtFramework\Core\BasicFunctions.cpp ..\QtFramework\Core\CyclicCurves3.cpp ..\QtFramework\Core\FOAHCompositeArc.cpp ..\QtFramework\Core\FirstOrderAlgebraic-HyperbolicPatch3.cpp ..\QtFramework\Core\FirstOrderAlgebraicHyperbolicArc3.cpp ..\QtFramework\Core\GenericCurves3.cpp ..\QtFramework\Core\Lights.cpp ..\QtFramework\Core\LinearCombination3.cpp ..\QtFramework\Core\Materials.cpp ..\QtFramework\Core\RealSquareMatrices.cpp ..\QtFramework\Core\ShaderPrograms.cpp ..\QtFramework\Core\TensorProductSurfaces3.cpp ..\QtFramework\Core\TriangulatedMeshes3.cpp ..\QtFramework\Core\stringHelp.cpp ..\QtFramework\GUI\GLWidget.cpp ..\QtFramework\GUI\MainWindow.cpp ..\QtFramework\GUI\SideWidget.cpp ..\QtFramework\Parametric\ParametricCurves3.cpp ..\QtFramework\Parametric\ParametricSurfaces3.cpp ..\QtFramework\Test\TestFunctions.cpp ..\QtFramework\main.cpp ..\QtFramework\GUI\MainWindow.ui ..\QtFramework\GUI\SideWidget.ui    
 
 clean: compiler_clean 
 	-$(DEL_FILE) debug\BasicFunctions.obj debug\CyclicCurves3.obj debug\FOAHCompositeArc.obj debug\FirstOrderAlgebraic-HyperbolicPatch3.obj debug\FirstOrderAlgebraicHyperbolicArc3.obj debug\GenericCurves3.obj debug\Lights.obj debug\LinearCombination3.obj debug\Materials.obj debug\RealSquareMatrices.obj debug\ShaderPrograms.obj debug\TensorProductSurfaces3.obj debug\TriangulatedMeshes3.obj debug\GLWidget.obj debug\MainWindow.obj debug\SideWidget.obj debug\ParametricCurves3.obj debug\ParametricSurfaces3.obj debug\TestFunctions.obj debug\main.obj debug\moc_GLWidget.obj debug\moc_MainWindow.obj
@@ -505,7 +506,7 @@ debug\moc_GLWidget.cpp: ..\QtFramework\GUI\GLWidget.h \
 		..\QtFramework\Core\FOAHCompositeArc.h \
 		debug\moc_predefs.h \
 		C:\Qt\6.2.3\msvc2019_64\bin\moc.exe
-	C:\Qt\6.2.3\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include "C:/Egyetem/IV. felev/grafika/grafikaProjekt/grafikaProjekt2022/build-QtFramework-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/debug/moc_predefs.h" -IC:/Qt/6.2.3/msvc2019_64/mkspecs/win32-msvc -I"C:/Egyetem/IV. felev/grafika/grafikaProjekt/grafikaProjekt2022/QtFramework" -I"C:/Egyetem/IV. felev/grafika/grafikaProjekt/grafikaProjekt2022/QtFramework/Dependencies/Include" -IC:/Qt/6.2.3/msvc2019_64/include -IC:/Qt/6.2.3/msvc2019_64/include/QtOpenGLWidgets -IC:/Qt/6.2.3/msvc2019_64/include/QtWidgets -IC:/Qt/6.2.3/msvc2019_64/include/QtOpenGL -IC:/Qt/6.2.3/msvc2019_64/include/QtGui -IC:/Qt/6.2.3/msvc2019_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\cppwinrt" ..\QtFramework\GUI\GLWidget.h -o debug\moc_GLWidget.cpp
+	C:\Qt\6.2.3\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include "D:/egyetem/masodev/masodik felev/grafika/projekt/grafikaProjekt2022/build-QtFramework-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/debug/moc_predefs.h" -IC:/Qt/6.2.3/msvc2019_64/mkspecs/win32-msvc -I"D:/egyetem/masodev/masodik felev/grafika/projekt/grafikaProjekt2022/QtFramework" -I"D:/egyetem/masodev/masodik felev/grafika/projekt/grafikaProjekt2022/QtFramework/Dependencies/Include" -IC:/Qt/6.2.3/msvc2019_64/include -IC:/Qt/6.2.3/msvc2019_64/include/QtOpenGLWidgets -IC:/Qt/6.2.3/msvc2019_64/include/QtWidgets -IC:/Qt/6.2.3/msvc2019_64/include/QtOpenGL -IC:/Qt/6.2.3/msvc2019_64/include/QtGui -IC:/Qt/6.2.3/msvc2019_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\cppwinrt" ..\QtFramework\GUI\GLWidget.h -o debug\moc_GLWidget.cpp
 
 debug\moc_MainWindow.cpp: ..\QtFramework\GUI\MainWindow.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QMainWindow \
@@ -638,64 +639,9 @@ debug\moc_MainWindow.cpp: ..\QtFramework\GUI\MainWindow.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qtabwidget.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qicon.h \
 		ui_MainWindow.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\QVariant \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\QAction \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qaction.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QApplication \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qcoreapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qeventloop.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qcoreapplication_platform.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfuture.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfutureinterface.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qmutex.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qresultstore.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfuture_impl.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qthreadpool.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qthread.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qdeadlinetimer.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qelapsedtimer.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qrunnable.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qexception.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qguiapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qinputmethod.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qlocale.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qguiapplication_platform.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QMenu \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qmenu.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QMenuBar \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qmenubar.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QStatusBar \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qstatusbar.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QWidget \
 		..\QtFramework\GUI\SideWidget.h \
+		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QWidget \
 		ui_SideWidget.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QCheckBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qcheckbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QDoubleSpinBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qspinbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractspinbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qvalidator.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qregularexpression.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QFormLayout \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qformlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QLayout \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QGroupBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qframe.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QLabel \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlabel.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qpicture.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qtextdocument.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QSlider \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qslider.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractslider.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QSpinBox \
 		..\QtFramework\GUI\GLWidget.h \
 		..\QtFramework\Core\Constants.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtCore\QTimer \
@@ -739,9 +685,10 @@ debug\moc_MainWindow.cpp: ..\QtFramework\GUI\MainWindow.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QScrollArea \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qscrollarea.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractscrollarea.h \
+		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qframe.h \
 		debug\moc_predefs.h \
 		C:\Qt\6.2.3\msvc2019_64\bin\moc.exe
-	C:\Qt\6.2.3\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include "C:/Egyetem/IV. felev/grafika/grafikaProjekt/grafikaProjekt2022/build-QtFramework-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/debug/moc_predefs.h" -IC:/Qt/6.2.3/msvc2019_64/mkspecs/win32-msvc -I"C:/Egyetem/IV. felev/grafika/grafikaProjekt/grafikaProjekt2022/QtFramework" -I"C:/Egyetem/IV. felev/grafika/grafikaProjekt/grafikaProjekt2022/QtFramework/Dependencies/Include" -IC:/Qt/6.2.3/msvc2019_64/include -IC:/Qt/6.2.3/msvc2019_64/include/QtOpenGLWidgets -IC:/Qt/6.2.3/msvc2019_64/include/QtWidgets -IC:/Qt/6.2.3/msvc2019_64/include/QtOpenGL -IC:/Qt/6.2.3/msvc2019_64/include/QtGui -IC:/Qt/6.2.3/msvc2019_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\cppwinrt" ..\QtFramework\GUI\MainWindow.h -o debug\moc_MainWindow.cpp
+	C:\Qt\6.2.3\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include "D:/egyetem/masodev/masodik felev/grafika/projekt/grafikaProjekt2022/build-QtFramework-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/debug/moc_predefs.h" -IC:/Qt/6.2.3/msvc2019_64/mkspecs/win32-msvc -I"D:/egyetem/masodev/masodik felev/grafika/projekt/grafikaProjekt2022/QtFramework" -I"D:/egyetem/masodev/masodik felev/grafika/projekt/grafikaProjekt2022/QtFramework/Dependencies/Include" -IC:/Qt/6.2.3/msvc2019_64/include -IC:/Qt/6.2.3/msvc2019_64/include/QtOpenGLWidgets -IC:/Qt/6.2.3/msvc2019_64/include/QtWidgets -IC:/Qt/6.2.3/msvc2019_64/include/QtOpenGL -IC:/Qt/6.2.3/msvc2019_64/include/QtGui -IC:/Qt/6.2.3/msvc2019_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\cppwinrt" ..\QtFramework\GUI\MainWindow.h -o debug\moc_MainWindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1161,64 +1108,9 @@ debug\MainWindow.obj: ..\QtFramework\GUI\MainWindow.cpp ..\QtFramework\GUI\MainW
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qtabwidget.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qicon.h \
 		ui_MainWindow.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\QVariant \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\QAction \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qaction.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QApplication \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qcoreapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qeventloop.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qcoreapplication_platform.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfuture.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfutureinterface.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qmutex.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qresultstore.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfuture_impl.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qthreadpool.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qthread.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qdeadlinetimer.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qelapsedtimer.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qrunnable.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qexception.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qguiapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qinputmethod.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qlocale.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qguiapplication_platform.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QMenu \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qmenu.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QMenuBar \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qmenubar.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QStatusBar \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qstatusbar.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QWidget \
 		..\QtFramework\GUI\SideWidget.h \
+		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QWidget \
 		ui_SideWidget.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QCheckBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qcheckbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QDoubleSpinBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qspinbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractspinbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qvalidator.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qregularexpression.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QFormLayout \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qformlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QLayout \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QGroupBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qframe.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QLabel \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlabel.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qpicture.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qtextdocument.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QSlider \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qslider.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractslider.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QSpinBox \
 		..\QtFramework\GUI\GLWidget.h \
 		..\QtFramework\Core\Constants.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtCore\QTimer \
@@ -1261,7 +1153,8 @@ debug\MainWindow.obj: ..\QtFramework\GUI\MainWindow.cpp ..\QtFramework\GUI\MainW
 		..\QtFramework\Core\FOAHCompositeArc.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QScrollArea \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qscrollarea.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractscrollarea.h
+		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractscrollarea.h \
+		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qframe.h
 
 debug\SideWidget.obj: ..\QtFramework\GUI\SideWidget.cpp ..\QtFramework\GUI\SideWidget.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QWidget \
@@ -1390,55 +1283,7 @@ debug\SideWidget.obj: ..\QtFramework\GUI\SideWidget.cpp ..\QtFramework\GUI\SideW
 		C:\Qt\6.2.3\msvc2019_64\include\QtCore\QSizeF \
 		C:\Qt\6.2.3\msvc2019_64\include\QtGui\QTransform \
 		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qnativeinterface.h \
-		ui_SideWidget.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\QVariant \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QApplication \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qcoreapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qeventloop.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qcoreapplication_platform.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfuture.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfutureinterface.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qmutex.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qresultstore.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qfuture_impl.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qthreadpool.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qthread.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qdeadlinetimer.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qelapsedtimer.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qrunnable.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qexception.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qguiapplication.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qinputmethod.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qlocale.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qguiapplication_platform.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QCheckBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qcheckbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qicon.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QDoubleSpinBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qspinbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractspinbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qvalidator.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qregularexpression.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QFormLayout \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qformlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QLayout \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QGroupBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qframe.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QLabel \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlabel.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qpicture.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qtextdocument.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QSlider \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qslider.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractslider.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QSpinBox
+		ui_SideWidget.h
 
 debug\ParametricCurves3.obj: ..\QtFramework\Parametric\ParametricCurves3.cpp ..\QtFramework\Parametric\ParametricCurves3.h \
 		..\QtFramework\Core\DCoordinates3.h \
@@ -1610,44 +1455,9 @@ debug\main.obj: ..\QtFramework\main.cpp C:\Qt\6.2.3\msvc2019_64\include\QtWidget
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qtabwidget.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qicon.h \
 		ui_MainWindow.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\QVariant \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\QAction \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qaction.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QMenu \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qmenu.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QMenuBar \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qmenubar.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QStatusBar \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qstatusbar.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QWidget \
 		..\QtFramework\GUI\SideWidget.h \
+		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QWidget \
 		ui_SideWidget.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QCheckBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qcheckbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QDoubleSpinBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qspinbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractspinbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qvalidator.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtCore\qregularexpression.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QFormLayout \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qformlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QLayout \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QGroupBox \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qframe.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QLabel \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qlabel.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qpicture.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtGui\qtextdocument.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QSlider \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qslider.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractslider.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QSpinBox \
 		..\QtFramework\GUI\GLWidget.h \
 		..\QtFramework\Core\Constants.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtCore\QTimer \
@@ -1690,7 +1500,8 @@ debug\main.obj: ..\QtFramework\main.cpp C:\Qt\6.2.3\msvc2019_64\include\QtWidget
 		..\QtFramework\Core\FOAHCompositeArc.h \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\QScrollArea \
 		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qscrollarea.h \
-		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractscrollarea.h
+		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qabstractscrollarea.h \
+		C:\Qt\6.2.3\msvc2019_64\include\QtWidgets\qframe.h
 
 debug\moc_GLWidget.obj: debug\moc_GLWidget.cpp 
 

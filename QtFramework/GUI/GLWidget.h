@@ -52,7 +52,17 @@ namespace cagd
 
         RowMatrix<ShaderProgram*>                _shaders;
         GLuint                                   _selected_shader = 0;
+        bool                                  _enable_shader = true;
         GLdouble                                 _r = 0, _g = 0, _b = 0, _scaling = 0, _smoothing = 0, _shading = 0;
+        RowMatrix<Material>                     _materials;
+        GLuint                                  _selected_material = 0;
+        bool                                    _enable_material = true;
+        QOpenGLTexture *_textures[14];
+        QOpenGLTexture *_text;
+        GLuint                                  _selected_texture = 0;
+        bool                                  _enable_texture = true;
+
+        TriangulatedMesh3                       _potykany;
 
         GLvoid    updateUniformVariables();
 
@@ -106,6 +116,14 @@ namespace cagd
         void set_selected_scaling(double);
         void set_selected_smoothing(double);
         void set_selected_shading(double);
+
+        void set_shader_enable(bool);
+
+        void set_material_index(int);
+        void set_material_enable(bool);
+
+        void set_texture_index(int);
+        void set_texture_enable(bool);
 
 
     signals:
