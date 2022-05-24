@@ -77,6 +77,20 @@ namespace cagd
 
 
         connect(_side_widget->direction_selector, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(set_selected_direction(int)));
+
+        // Patch - Shaders, Textures, ...
+        _side_widget->tabWidget->setCurrentIndex(0);
+        connect(_side_widget->tabWidget, SIGNAL(currentChanged(int)), _gl_widget, SLOT(set_selected_page(int)));
+
+        connect(_side_widget->checkBox_material, SIGNAL(clicked(bool)), _gl_widget, SLOT(set_material_enable(bool)));
+        connect(_side_widget->checkBox_texture, SIGNAL(clicked(bool)), _gl_widget, SLOT(set_texture_enable(bool)));
+        connect(_side_widget->checkBox_shader, SIGNAL(clicked(bool)), _gl_widget, SLOT(set_shader_enable(bool)));
+        connect(_side_widget->comboBox_material, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(set_material_index(int)));
+        connect(_side_widget->comboBox_shader, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(set_selected_shader(int)));
+        connect(_side_widget->comboBox_texture, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(set_texture_index(int)));
+        connect(_side_widget->spinBox_r, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_patch_color_r(double)));
+        connect(_side_widget->spinBox_g, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_patch_color_g(double)));
+        connect(_side_widget->spinBox_b, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_patch_color_b(double)));
     }
 
     //--------------------------------
