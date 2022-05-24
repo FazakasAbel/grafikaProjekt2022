@@ -282,6 +282,76 @@ GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction
     return GL_TRUE;
 }
 
+GLboolean FOAHCompositeArc::MergeExistingArcs(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1)
+{
+    if (index_0 >= _attributes.size() || index_1 >= _attributes.size())
+    {
+        cout << "Arc index is invalid!" << endl;
+        return GL_FALSE;
+    }
+
+    ArcAttributes &attribute_0 = _attributes[index_0];
+    ArcAttributes &attribute_1 = _attributes[index_1];
+
+    if ((direction_0 == LEFT && attribute_0.previous) ||
+        (direction_0 == RIGHT && attribute_0.next) ||
+        (direction_1 == LEFT && attribute_1.previous) ||
+        (direction_1 == RIGHT && attribute_1.next))
+    {
+        cout << "Arc already has a neighbor in given direction!" << endl;
+        return GL_FALSE;
+    }
+
+    DCoordinate3 join_point_0, join_point_1;
+
+    if (direction_0 == LEFT)
+        join_point_0 = (*attribute_0.arc)[1];
+    else if (direction_0 == RIGHT)
+        join_point_0 = (*attribute_0.arc)[2];
+
+    if (direction_1 == LEFT)
+        join_point_1 = (*attribute_1.arc)[1];
+    else if (direction_1 == RIGHT)
+        join_point_1 = (*attribute_1.arc)[2];
+
+    DCoordinate3 midpoint = (join_point_0 + join_point_1) / 2.0f;
+
+    if (direction_0 == LEFT)
+    {
+        (*attribute_0.arc)[0] = midpoint;
+        attribute_0.previous = &attribute_1;
+        attribute_0.previous_connection_type = direction_1;
+    }
+    else if (direction_0 == RIGHT)
+    {
+        (*attribute_0.arc)[3] = midpoint;
+        attribute_0.next = &attribute_1;
+        attribute_0.next_connection_type = direction_1;
+    }
+
+    if (direction_1 == LEFT)
+    {
+        (*attribute_1.arc)[0] = midpoint;
+        attribute_1.previous = &attribute_0;
+        attribute_1.previous_connection_type = direction_0;
+    }
+    else if (direction_1 == RIGHT)
+    {
+        (*attribute_1.arc)[3] = midpoint;
+        attribute_1.next = &attribute_0;
+        attribute_1.next_connection_type = direction_0;
+    }
+
+    if(!_attributes[index_0].arc->UpdateVertexBufferObjectsOfData() || !_attributes[index_1].arc->UpdateVertexBufferObjectsOfData())
+        throw Exception("Could not update VBO of merged arc!");
+
+    _attributes[index_0].image = _attributes[index_0].arc->GenerateImage(2, 200);
+    _attributes[index_1].image = _attributes[index_1].arc->GenerateImage(2, 200);
+    if (!_attributes[index_0].image || !_attributes[index_1].image)
+        throw Exception("Could not generate image of arc!");
+
+    if (!_attributes[index_0].image->UpdateVertexBufferObjects(1) || !_attributes[index_1].image->UpdateVertexBufferObjects(1))
+        throw Exception("Could not update VBO of merged arc image!");
 
     return GL_TRUE;
 }
