@@ -32,6 +32,7 @@ namespace cagd
 
             GLvoid push(GLuint, ArcAttributes*);
             GLvoid pull(GLuint, ArcAttributes*);
+            GLvoid setPoint(GLuint, GLuint, GLdouble);
         };
 
     protected:
@@ -58,11 +59,11 @@ namespace cagd
         GLuint          getArcCount();
         // nth point of knt arc
         DCoordinate3    getPoint(GLuint, GLuint);
-        GLvoid          setPointX(GLuint, GLuint, GLdouble);
-        GLvoid          setPointY(GLuint, GLuint, GLdouble);
-        GLvoid          setPointZ(GLuint, GLuint, GLdouble);
+        GLvoid          setPoint(GLuint, GLuint, GLuint, GLdouble);
         GLvoid          pushArc(GLuint, GLuint);
         GLvoid          pullArc(GLuint, GLuint);
+        ArcAttributes&  getPrevious(GLuint);
+        ArcAttributes&  getNext(GLuint);
     };
 }
 

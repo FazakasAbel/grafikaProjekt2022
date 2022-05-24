@@ -93,7 +93,7 @@ namespace cagd
         void set_trans_z(double value);
 
         void set_show_second_der(bool value);
-        void set_show_first_der(bool value);       
+        void set_show_first_der(bool value);
 
         void update_selected_point_x(double);
         void update_selected_point_y(double);

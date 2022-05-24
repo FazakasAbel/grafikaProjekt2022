@@ -142,13 +142,6 @@ namespace cagd
         _textures[13]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
         _textures[13]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        HCoordinate3 direction(0.0, 0.0, 1.0, 0.0);
-        Color4       ambient(0.4, 0.4, 0.4, 1.0);
-        Color4       diffuse(0.8, 0.8, 0.8, 1.0);
-        Color4       specular(1.0, 1.0, 1.0, 1.0);
-
-        _dl = new (nothrow) DirectionalLight(GL_LIGHT0, direction, ambient, diffuse, specular);
-
         try
         {
             // initializing the OpenGL Extension Wrangler library
@@ -258,6 +251,10 @@ namespace cagd
         {
             cout << e << endl;
         }
+
+        emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
+        emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
+        emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
 
     }    
 
@@ -466,17 +463,17 @@ namespace cagd
     }
 
     void GLWidget::update_selected_point_x(double new_value){
-        _composite_arc->setPointX(_selected_arc, _selected_arc_point, new_value);
+        _composite_arc->setPoint(_selected_arc, _selected_arc_point, 0, new_value);
         update();
     }
 
     void GLWidget::update_selected_point_y(double new_value){
-        _composite_arc->setPointY(_selected_arc, _selected_arc_point, new_value);
+        _composite_arc->setPoint(_selected_arc, _selected_arc_point, 1, new_value);
         update();
     }
 
     void GLWidget::update_selected_point_z(double new_value){
-        _composite_arc->setPointZ(_selected_arc, _selected_arc_point, new_value);
+        _composite_arc->setPoint(_selected_arc, _selected_arc_point, 2, new_value);
         update();
     }
 
