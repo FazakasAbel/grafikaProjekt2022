@@ -12,10 +12,12 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QWidget>
@@ -48,16 +50,18 @@ public:
     QDoubleSpinBox *scale;
     QLabel *NumberOfSubdivisionPointsLabel;
     QSpinBox *set_div_points;
+    QLabel *label_9;
+    QSpinBox *arc_selector;
+    QPushButton *plus;
+    QPushButton *minus;
+    QLabel *label_10;
+    QSpinBox *arc_point_selector;
     QLabel *selectedCurveLabel_3;
     QDoubleSpinBox *x_selector;
     QLabel *selectedCurveLabel_4;
     QDoubleSpinBox *y_selector;
     QLabel *selectedCurveLabel_5;
     QDoubleSpinBox *z_selector;
-    QLabel *selectedCurveLabel_8;
-    QSpinBox *surface_selector;
-    QLabel *selectedCurveLabel_9;
-    QSpinBox *shader_selector;
     QLabel *selectedCurveLabel_10;
     QDoubleSpinBox *r_selector;
     QDoubleSpinBox *g_selector;
@@ -66,6 +70,7 @@ public:
     QDoubleSpinBox *scaling_selector;
     QDoubleSpinBox *smooth_selector;
     QDoubleSpinBox *shade_selector;
+    QComboBox *direction_selector;
 
     void setupUi(QWidget *SideWidget)
     {
@@ -218,10 +223,46 @@ public:
 
         formLayout->setWidget(10, QFormLayout::FieldRole, set_div_points);
 
+        label_9 = new QLabel(layoutWidget);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+
+        formLayout->setWidget(11, QFormLayout::LabelRole, label_9);
+
+        arc_selector = new QSpinBox(layoutWidget);
+        arc_selector->setObjectName(QString::fromUtf8("arc_selector"));
+        arc_selector->setMinimum(0);
+        arc_selector->setMaximum(20);
+        arc_selector->setValue(0);
+
+        formLayout->setWidget(11, QFormLayout::FieldRole, arc_selector);
+
+        plus = new QPushButton(layoutWidget);
+        plus->setObjectName(QString::fromUtf8("plus"));
+
+        formLayout->setWidget(13, QFormLayout::FieldRole, plus);
+
+        minus = new QPushButton(layoutWidget);
+        minus->setObjectName(QString::fromUtf8("minus"));
+
+        formLayout->setWidget(14, QFormLayout::FieldRole, minus);
+
+        label_10 = new QLabel(layoutWidget);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+
+        formLayout->setWidget(15, QFormLayout::LabelRole, label_10);
+
+        arc_point_selector = new QSpinBox(layoutWidget);
+        arc_point_selector->setObjectName(QString::fromUtf8("arc_point_selector"));
+        arc_point_selector->setMinimum(0);
+        arc_point_selector->setMaximum(3);
+        arc_point_selector->setValue(0);
+
+        formLayout->setWidget(15, QFormLayout::FieldRole, arc_point_selector);
+
         selectedCurveLabel_3 = new QLabel(layoutWidget);
         selectedCurveLabel_3->setObjectName(QString::fromUtf8("selectedCurveLabel_3"));
 
-        formLayout->setWidget(11, QFormLayout::LabelRole, selectedCurveLabel_3);
+        formLayout->setWidget(16, QFormLayout::LabelRole, selectedCurveLabel_3);
 
         x_selector = new QDoubleSpinBox(layoutWidget);
         x_selector->setObjectName(QString::fromUtf8("x_selector"));
@@ -229,12 +270,12 @@ public:
         x_selector->setMaximum(100.000000000000000);
         x_selector->setSingleStep(0.100000000000000);
 
-        formLayout->setWidget(11, QFormLayout::FieldRole, x_selector);
+        formLayout->setWidget(16, QFormLayout::FieldRole, x_selector);
 
         selectedCurveLabel_4 = new QLabel(layoutWidget);
         selectedCurveLabel_4->setObjectName(QString::fromUtf8("selectedCurveLabel_4"));
 
-        formLayout->setWidget(12, QFormLayout::LabelRole, selectedCurveLabel_4);
+        formLayout->setWidget(17, QFormLayout::LabelRole, selectedCurveLabel_4);
 
         y_selector = new QDoubleSpinBox(layoutWidget);
         y_selector->setObjectName(QString::fromUtf8("y_selector"));
@@ -242,12 +283,12 @@ public:
         y_selector->setMaximum(100.000000000000000);
         y_selector->setSingleStep(0.100000000000000);
 
-        formLayout->setWidget(12, QFormLayout::FieldRole, y_selector);
+        formLayout->setWidget(17, QFormLayout::FieldRole, y_selector);
 
         selectedCurveLabel_5 = new QLabel(layoutWidget);
         selectedCurveLabel_5->setObjectName(QString::fromUtf8("selectedCurveLabel_5"));
 
-        formLayout->setWidget(13, QFormLayout::LabelRole, selectedCurveLabel_5);
+        formLayout->setWidget(18, QFormLayout::LabelRole, selectedCurveLabel_5);
 
         z_selector = new QDoubleSpinBox(layoutWidget);
         z_selector->setObjectName(QString::fromUtf8("z_selector"));
@@ -255,36 +296,12 @@ public:
         z_selector->setMaximum(100.000000000000000);
         z_selector->setSingleStep(0.100000000000000);
 
-        formLayout->setWidget(13, QFormLayout::FieldRole, z_selector);
-
-        selectedCurveLabel_8 = new QLabel(layoutWidget);
-        selectedCurveLabel_8->setObjectName(QString::fromUtf8("selectedCurveLabel_8"));
-
-        formLayout->setWidget(14, QFormLayout::LabelRole, selectedCurveLabel_8);
-
-        surface_selector = new QSpinBox(layoutWidget);
-        surface_selector->setObjectName(QString::fromUtf8("surface_selector"));
-        surface_selector->setMaximum(10);
-        surface_selector->setValue(0);
-
-        formLayout->setWidget(14, QFormLayout::FieldRole, surface_selector);
-
-        selectedCurveLabel_9 = new QLabel(layoutWidget);
-        selectedCurveLabel_9->setObjectName(QString::fromUtf8("selectedCurveLabel_9"));
-
-        formLayout->setWidget(15, QFormLayout::LabelRole, selectedCurveLabel_9);
-
-        shader_selector = new QSpinBox(layoutWidget);
-        shader_selector->setObjectName(QString::fromUtf8("shader_selector"));
-        shader_selector->setMaximum(10);
-        shader_selector->setValue(0);
-
-        formLayout->setWidget(15, QFormLayout::FieldRole, shader_selector);
+        formLayout->setWidget(18, QFormLayout::FieldRole, z_selector);
 
         selectedCurveLabel_10 = new QLabel(layoutWidget);
         selectedCurveLabel_10->setObjectName(QString::fromUtf8("selectedCurveLabel_10"));
 
-        formLayout->setWidget(16, QFormLayout::LabelRole, selectedCurveLabel_10);
+        formLayout->setWidget(19, QFormLayout::LabelRole, selectedCurveLabel_10);
 
         r_selector = new QDoubleSpinBox(layoutWidget);
         r_selector->setObjectName(QString::fromUtf8("r_selector"));
@@ -292,7 +309,7 @@ public:
         r_selector->setMaximum(1.000000000000000);
         r_selector->setSingleStep(0.010000000000000);
 
-        formLayout->setWidget(16, QFormLayout::FieldRole, r_selector);
+        formLayout->setWidget(19, QFormLayout::FieldRole, r_selector);
 
         g_selector = new QDoubleSpinBox(layoutWidget);
         g_selector->setObjectName(QString::fromUtf8("g_selector"));
@@ -300,7 +317,7 @@ public:
         g_selector->setMaximum(1.000000000000000);
         g_selector->setSingleStep(0.010000000000000);
 
-        formLayout->setWidget(17, QFormLayout::FieldRole, g_selector);
+        formLayout->setWidget(20, QFormLayout::FieldRole, g_selector);
 
         b_selector = new QDoubleSpinBox(layoutWidget);
         b_selector->setObjectName(QString::fromUtf8("b_selector"));
@@ -308,12 +325,12 @@ public:
         b_selector->setMaximum(1.000000000000000);
         b_selector->setSingleStep(0.010000000000000);
 
-        formLayout->setWidget(18, QFormLayout::FieldRole, b_selector);
+        formLayout->setWidget(21, QFormLayout::FieldRole, b_selector);
 
         selectedCurveLabel_11 = new QLabel(layoutWidget);
         selectedCurveLabel_11->setObjectName(QString::fromUtf8("selectedCurveLabel_11"));
 
-        formLayout->setWidget(19, QFormLayout::LabelRole, selectedCurveLabel_11);
+        formLayout->setWidget(22, QFormLayout::LabelRole, selectedCurveLabel_11);
 
         scaling_selector = new QDoubleSpinBox(layoutWidget);
         scaling_selector->setObjectName(QString::fromUtf8("scaling_selector"));
@@ -321,7 +338,7 @@ public:
         scaling_selector->setMaximum(10.000000000000000);
         scaling_selector->setSingleStep(0.100000000000000);
 
-        formLayout->setWidget(19, QFormLayout::FieldRole, scaling_selector);
+        formLayout->setWidget(22, QFormLayout::FieldRole, scaling_selector);
 
         smooth_selector = new QDoubleSpinBox(layoutWidget);
         smooth_selector->setObjectName(QString::fromUtf8("smooth_selector"));
@@ -329,7 +346,7 @@ public:
         smooth_selector->setMaximum(10.000000000000000);
         smooth_selector->setSingleStep(0.100000000000000);
 
-        formLayout->setWidget(20, QFormLayout::FieldRole, smooth_selector);
+        formLayout->setWidget(23, QFormLayout::FieldRole, smooth_selector);
 
         shade_selector = new QDoubleSpinBox(layoutWidget);
         shade_selector->setObjectName(QString::fromUtf8("shade_selector"));
@@ -337,7 +354,15 @@ public:
         shade_selector->setMaximum(10.000000000000000);
         shade_selector->setSingleStep(0.100000000000000);
 
-        formLayout->setWidget(21, QFormLayout::FieldRole, shade_selector);
+        formLayout->setWidget(24, QFormLayout::FieldRole, shade_selector);
+
+        direction_selector = new QComboBox(layoutWidget);
+        direction_selector->addItem(QString());
+        direction_selector->addItem(QString());
+        direction_selector->addItem(QString());
+        direction_selector->setObjectName(QString::fromUtf8("direction_selector"));
+
+        formLayout->setWidget(12, QFormLayout::FieldRole, direction_selector);
 
 #if QT_CONFIG(shortcut)
         label->setBuddy(rotate_x_slider);
@@ -375,13 +400,19 @@ public:
         scale->setToolTip(QString());
 #endif // QT_CONFIG(tooltip)
         NumberOfSubdivisionPointsLabel->setText(QCoreApplication::translate("SideWidget", "Number of subdivision points", nullptr));
+        label_9->setText(QCoreApplication::translate("SideWidget", "Selected arc", nullptr));
+        plus->setText(QCoreApplication::translate("SideWidget", "+", nullptr));
+        minus->setText(QCoreApplication::translate("SideWidget", "-", nullptr));
+        label_10->setText(QCoreApplication::translate("SideWidget", "Selected arc point", nullptr));
         selectedCurveLabel_3->setText(QCoreApplication::translate("SideWidget", "X coordinate:", nullptr));
         selectedCurveLabel_4->setText(QCoreApplication::translate("SideWidget", "Y coordinate:", nullptr));
         selectedCurveLabel_5->setText(QCoreApplication::translate("SideWidget", "Z coordinate:", nullptr));
-        selectedCurveLabel_8->setText(QCoreApplication::translate("SideWidget", "Selected Surface", nullptr));
-        selectedCurveLabel_9->setText(QCoreApplication::translate("SideWidget", "Selected Shader", nullptr));
         selectedCurveLabel_10->setText(QCoreApplication::translate("SideWidget", "Toon variables", nullptr));
         selectedCurveLabel_11->setText(QCoreApplication::translate("SideWidget", "Reflection lines variables", nullptr));
+        direction_selector->setItemText(0, QCoreApplication::translate("SideWidget", "x", nullptr));
+        direction_selector->setItemText(1, QCoreApplication::translate("SideWidget", "y", nullptr));
+        direction_selector->setItemText(2, QCoreApplication::translate("SideWidget", "z", nullptr));
+
     } // retranslateUi
 
 };

@@ -53,6 +53,18 @@ namespace cagd
 
         // other setters and getters
         // ...
+        GLuint          getArcCount();
+        // nth point of knt arc
+        DCoordinate3    getPoint(GLuint, GLuint);
+        GLvoid          setPointX(GLuint, GLuint, GLdouble);
+        GLvoid          setPointY(GLuint, GLuint, GLdouble);
+        GLvoid          setPointZ(GLuint, GLuint, GLdouble);
+        GLvoid          pushArcX(GLuint);
+        GLvoid          pullArcX(GLuint);
+        GLvoid          pushArcY(GLuint);
+        GLvoid          pullArcY(GLuint);
+        GLvoid          pushArcZ(GLuint);
+        GLvoid          pullArcZ(GLuint);
     };
 }
 

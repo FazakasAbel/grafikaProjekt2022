@@ -44,23 +44,16 @@ namespace cagd
         GLenum                          _usage_flag;
         GLdouble                        _scale = 1;
         FOAHCompositeArc*               _composite_arc;
-        FirstOrderAlgebraicHyperbolicArc3* arc;
-        GenericCurve3*                  image;
+        int                             _selected_arc = 0;
+        int                             _selected_arc_point = 0;
+        int                             _direction = 0;
 
         DirectionalLight *_dl = nullptr;
-
-        TriangulatedMesh3 _mouse;
 
         RowMatrix<ShaderProgram*>                _shaders;
         GLuint                                   _selected_shader = 0;
         GLdouble                                 _r = 0, _g = 0, _b = 0, _scaling = 0, _smoothing = 0, _shading = 0;
 
-        GLvoid    update_selected_curve_point_x(double);
-        GLvoid    update_selected_curve_point_y(double);
-        GLvoid    update_selected_curve_point_z(double);
-        GLvoid    update_selected_surface_point_x(double);
-        GLvoid    update_selected_surface_point_y(double);
-        GLvoid    update_selected_surface_point_z(double);
         GLvoid    updateUniformVariables();
 
 
@@ -95,6 +88,15 @@ namespace cagd
         void update_selected_point_x(double);
         void update_selected_point_y(double);
         void update_selected_point_z(double);
+
+        void set_selected_arc(int);
+        void set_selected_point(int);
+
+        void set_selected_direction(int);
+
+        void pushArc();
+        void pullArc();
+
         void set_selected_shader(int);
 
         void set_selected_r(double);

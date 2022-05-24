@@ -17,5 +17,6 @@ namespace cagd
         p.setColor(QPalette::Highlight, QColor(50,255,10).lighter());
 
         rotate_y_slider->setPalette(p);
+        direction_selector->setCurrentIndex(0);
     }
 }
