@@ -241,12 +241,14 @@ GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction
         joiningArc[0] = (*attribute_0.arc)[0];
         joiningArc[1] = 2 * joiningArc[0] - 2 * (*attribute_0.arc)[1];
         attribute_0.previous = &_attributes[arc_count];
+        attribute_0.previous_connection_type = LEFT;
     }
     else if (direction_0 == RIGHT)
     {
         joiningArc[0] = (*attribute_0.arc)[3];
         joiningArc[1] = 2 * joiningArc[0] - 2 * (*attribute_0.arc)[2];
         attribute_0.next = &_attributes[arc_count];
+        attribute_0.next_connection_type = LEFT;
     }
 
     if (direction_1 == LEFT)
@@ -254,12 +256,14 @@ GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction
         joiningArc[3] = (*attribute_1.arc)[0];
         joiningArc[2] = joiningArc[3] - 2 * (*attribute_1.arc)[1];
         attribute_1.previous = &_attributes[arc_count];
+        attribute_1.previous_connection_type = RIGHT;
     }
     else if (direction_1 == RIGHT)
     {
         joiningArc[3] = (*attribute_1.arc)[3];
         joiningArc[2] = joiningArc[3] - 2 * (*attribute_1.arc)[2];
         attribute_1.next = &_attributes[arc_count];
+        attribute_1.next_connection_type = RIGHT;
     }
 
     if (!joiningArc.UpdateVertexBufferObjectsOfData())
@@ -271,6 +275,12 @@ GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction
 
     if (!_attributes[arc_count].image->UpdateVertexBufferObjects(1))
         throw Exception("Could not update VBO of joing arc image!");
+
+    _attributes[arc_count].previous_connection_type = direction_0;
+    _attributes[arc_count].next_connection_type = direction_1;
+
+    return GL_TRUE;
+}
 
 
     return GL_TRUE;
