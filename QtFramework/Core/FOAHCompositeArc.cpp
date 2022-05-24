@@ -1,6 +1,8 @@
 #include "FOAHCompositeArc.h"
 #include "Core/Exceptions.h"
+#if !defined(__APPLE__)
 #include <GL/glu.h>
+#endif
 #include <iostream>
 
 using namespace std;

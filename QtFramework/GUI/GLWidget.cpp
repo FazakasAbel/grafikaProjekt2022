@@ -1,7 +1,10 @@
 #include "GLWidget.h"
 
 #if !defined(__APPLE__)
+#define APPL 0
 #include <GL/glu.h>
+#else
+#define APPL 1
 #endif
 
 #include "../Core/stringHelp.cpp"
@@ -113,20 +116,40 @@ namespace cagd
             for(int i = 0; i < 4; ++i){
                 switch(i){
                     case 0:
-                        vertFileName = "Shaders/directional_light.vert";
-                        fragFileName = "Shaders/directional_light.frag";
+                        if(APPL) {
+                            vertFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/directional_light.vert";
+                            fragFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/directional_light.frag";
+                        } else {
+                            vertFileName = "Shaders/directional_light.vert";
+                            fragFileName = "Shaders/directional_light.frag";
+                        }
                         break;
                     case 1:
-                        vertFileName = "Shaders/reflection_lines.vert";
-                        fragFileName = "Shaders/reflection_lines.frag";
+                        if(APPL){
+                            vertFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/reflection_lines.vert";
+                            fragFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/reflection_lines.frag";
+                        } else {
+                            vertFileName = "Shaders/reflection_lines.vert";
+                            fragFileName = "Shaders/reflection_lines.frag";
+                        }
                         break;
                     case 2:
-                        vertFileName = "Shaders/toon.vert";
-                        fragFileName = "Shaders/toon.frag";
+                        if(APPL){
+                            vertFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/toon.vert";
+                            fragFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/toon.frag";
+                        } else {
+                            vertFileName = "Shaders/toon.vert";
+                            fragFileName = "Shaders/toon.frag";
+                        }
                         break;
                     case 3:
-                        vertFileName = "Shaders/two_sided_lighting.vert";
-                        fragFileName = "Shaders/two_sided_lighting.frag";
+                        if(APPL){
+                            vertFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/two_sided_lighting.vert";
+                            fragFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/two_sided_lighting.frag";
+                        } else {
+                            vertFileName = "Shaders/two_sided_lighting.vert";
+                            fragFileName = "Shaders/two_sided_lighting.frag";
+                        }
                         break;
                 }
 
