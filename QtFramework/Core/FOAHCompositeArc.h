@@ -30,6 +30,8 @@ namespace cagd
             ArcAttributes& operator =(const ArcAttributes&);
             ~ArcAttributes();
 
+            GLvoid push(GLuint, ArcAttributes*);
+            GLvoid pull(GLuint, ArcAttributes*);
         };
 
     protected:
@@ -59,12 +61,8 @@ namespace cagd
         GLvoid          setPointX(GLuint, GLuint, GLdouble);
         GLvoid          setPointY(GLuint, GLuint, GLdouble);
         GLvoid          setPointZ(GLuint, GLuint, GLdouble);
-        GLvoid          pushArcX(GLuint);
-        GLvoid          pullArcX(GLuint);
-        GLvoid          pushArcY(GLuint);
-        GLvoid          pullArcY(GLuint);
-        GLvoid          pushArcZ(GLuint);
-        GLvoid          pullArcZ(GLuint);
+        GLvoid          pushArc(GLuint, GLuint);
+        GLvoid          pullArc(GLuint, GLuint);
     };
 }
 

@@ -352,28 +352,14 @@ namespace cagd
     }
 
     void GLWidget::pushArc(){
-        if(_direction == 0){
-            _composite_arc->pushArcX(_selected_arc);
-        }
-        if(_direction == 1){
-            _composite_arc->pushArcY(_selected_arc);
-        }
-        if(_direction == 2){
-            _composite_arc->pushArcZ(_selected_arc);
-        }
+        _composite_arc->pushArc(_selected_arc, _direction);
+
         update();
     }
 
     void GLWidget::pullArc(){
-        if(_direction == 0){
-            _composite_arc->pullArcX(_selected_arc);
-        }
-        if(_direction == 1){
-            _composite_arc->pullArcY(_selected_arc);
-        }
-        if(_direction == 2){
-            _composite_arc->pullArcZ(_selected_arc);
-        }
+        _composite_arc->pullArc(_selected_arc, _direction);
+
         update();
     }
 
