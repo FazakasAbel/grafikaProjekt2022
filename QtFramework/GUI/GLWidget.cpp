@@ -142,6 +142,9 @@ namespace cagd
         _textures[13]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
         _textures[13]->setMagnificationFilter(QOpenGLTexture::Linear);
 
+        //_potykany.LoadFromOFF("/Users/andorgere/Documents/Egyetem/Grafika/Models/Flying objects/Airplanes/airplane_01.off",GL_TRUE);
+        //_potykany.UpdateVertexBufferObjects(GL_DYNAMIC_DRAW);
+
         HCoordinate3 direction(0.0, 0.0, 1.0, 0.0);
         Color4       ambient(0.4, 0.4, 0.4, 1.0);
         Color4       diffuse(0.8, 0.8, 0.8, 1.0);
@@ -239,6 +242,12 @@ namespace cagd
                 }
                 _shaders[i]->Disable();
             }
+            if(APPL){
+                _potykany.LoadFromOFF("/Users/andorgere/Documents/Egyetem/Grafika/Models/Characters/mouse.off",GL_TRUE);
+            } else {
+                _potykany.LoadFromOFF("Models/Characters/mouse.off",GL_TRUE);
+            }
+            _potykany.UpdateVertexBufferObjects(GL_DYNAMIC_DRAW);
 
             _composite_arc = new FOAHCompositeArc(1, 5);
             _composite_arc->InsertNewArc();
@@ -276,40 +285,49 @@ namespace cagd
             glRotatef(_angle_z, 0.0, 0.0, 1.0);
             glTranslated(_trans_x, _trans_y, _trans_z);
             glScaled(_zoom, _zoom, _zoom);
+            // Arc
+            if(_selected_page == 0) {
+                glDisable(GL_LIGHTING);
+                _composite_arc->RenderAllArcs(0, GL_LINE_STRIP);
+                _composite_arc->RenderAllArcData(GL_LINE_STRIP);
+                glPointSize(10.0f);
+                _composite_arc->RenderAllArcData(GL_POINTS);
+    //          _composite_arc->RenderSelectedArc(0, 0, GL_LINE_STRIP);
+                glEnable(GL_LIGHTING);
+            // Patch
+            } else {
+                glDisable(GL_LIGHTING);
+                _dl->Enable();
+                if(_enable_shader) {
+                    _shaders[_selected_shader]->Enable();
+                }
+                if(_enable_material) {
+                    glEnable(GL_LIGHTING);
+                    _materials[_selected_material].Apply();
+                } else {
 
-            glDisable(GL_LIGHTING);
-            _composite_arc->RenderAllArcs(0, GL_LINE_STRIP);
-            _composite_arc->RenderAllArcData(GL_LINE_STRIP);
-            glPointSize(10.0f);
-            _composite_arc->RenderAllArcData(GL_POINTS);
-//            _composite_arc->RenderSelectedArc(0, 0, GL_LINE_STRIP);
-            glEnable(GL_LIGHTING);
-            _dl->Enable();
-            if(_enable_shader) {
-                _shaders[_selected_shader]->Enable();
-            }
-            if(_enable_material) {
-                _materials[_selected_material].Apply();
-            }
-            if(_enable_texture) {
-                glEnable(GL_TEXTURE_2D);
-                glEnable(GL_LIGHT0);
-                glEnable(GL_NORMALIZE);
-                _textures[_selected_texture]->bind();
-                _text->bind();
+                    glColor3f(patch_r, patch_g, patch_b);
+                }
+                if(_enable_texture) {
+                    glEnable(GL_TEXTURE_2D);
+                    glEnable(GL_LIGHT0);
+                    glEnable(GL_NORMALIZE);
+                    _textures[_selected_texture]->bind();
+                    _text->bind();
 
-            }
+                }
 
-            //content
+                //content
+                _potykany.Render();
 
-
-            if(_enable_shader) {
-                _shaders[_selected_shader]->Disable();
-            }
-            if(_enable_texture) {
-                _textures[_selected_texture]->release();
-                glDisable(GL_TEXTURE_2D);
-                glDisable(GL_NORMALIZE);
+                if(_enable_shader) {
+                    _shaders[_selected_shader]->Disable();
+                }
+                if(_enable_texture) {
+                    _textures[_selected_texture]->release();
+                    glDisable(GL_TEXTURE_2D);
+                    glDisable(GL_NORMALIZE);
+                }
             }
         glPopMatrix();
     }
@@ -562,10 +580,28 @@ namespace cagd
         _selected_texture = value;
         update();
     }
+
     void GLWidget::set_texture_enable(bool value) {
         if(_enable_texture!=value) {
             _enable_texture = value;
             update();
         }
+    }
+
+    void GLWidget::set_selected_page(int value) {
+        _selected_page = value;
+        update();
+    }
+    void GLWidget::set_patch_color_r(GLdouble value){
+        patch_r = value;
+        update();
+    }
+    void GLWidget::set_patch_color_g(GLdouble value){
+        patch_g = value;
+        update();
+    }
+    void GLWidget::set_patch_color_b(GLdouble value){
+        patch_b = value;
+        update();
     }
 }
