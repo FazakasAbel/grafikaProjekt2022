@@ -61,16 +61,22 @@ namespace cagd
         connect(_gl_widget, SIGNAL(set_y_signal(double)), _side_widget->y_selector, SLOT(setValue(double)));
         connect(_gl_widget, SIGNAL(set_z_signal(double)), _side_widget->z_selector, SLOT(setValue(double)));
 
-        connect(_side_widget->shader_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_shader(int)));
-
         connect(_side_widget->r_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_selected_r(double)));
         connect(_side_widget->g_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_selected_g(double)));
         connect(_side_widget->b_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_selected_b(double)));
 
-
         connect(_side_widget->smooth_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_selected_smoothing(double)));
         connect(_side_widget->scaling_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_selected_scaling(double)));
         connect(_side_widget->shade_selector, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_selected_shading(double)));
+
+        connect(_side_widget->arc_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_arc(int)));
+        connect(_side_widget->arc_point_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_point(int)));
+
+        connect(_side_widget->plus, SIGNAL(pressed()), _gl_widget, SLOT(pushArc()));
+        connect(_side_widget->minus, SIGNAL(pressed()), _gl_widget, SLOT(pullArc()));
+
+
+        connect(_side_widget->direction_selector, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(set_selected_direction(int)));
     }
 
     //--------------------------------

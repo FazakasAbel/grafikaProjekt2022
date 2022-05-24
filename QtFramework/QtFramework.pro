@@ -76,6 +76,7 @@ HEADERS += \
     Core/CyclicCurves3.h \
     Core/DCoordinates3.h \
     Core/FOAHCompositeArc.h \
+    Core/FOAHCompositePatch.h \
     Core/FirstOrderAlgebraic-HyperbolicArc3.h \
     Core/FirstOrderAlgebraic-HyperbolicPatch3.h \
     Core/GenericCurves3.h \
