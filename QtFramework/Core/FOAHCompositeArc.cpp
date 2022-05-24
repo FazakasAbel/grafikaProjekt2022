@@ -304,14 +304,14 @@ GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction
     if (direction_0 == LEFT)
     {
         joiningArc[0] = (*attribute_0.arc)[0];
-        joiningArc[1] = 2 * joiningArc[0] - 2 * (*attribute_0.arc)[1];
+        joiningArc[1] = 2 * joiningArc[0] - (*attribute_0.arc)[1];
         attribute_0.previous = &_attributes[arc_count];
         attribute_0.previous_connection_type = LEFT;
     }
     else if (direction_0 == RIGHT)
     {
         joiningArc[0] = (*attribute_0.arc)[3];
-        joiningArc[1] = 2 * joiningArc[0] - 2 * (*attribute_0.arc)[2];
+        joiningArc[1] = 2 * joiningArc[0] - (*attribute_0.arc)[2];
         attribute_0.next = &_attributes[arc_count];
         attribute_0.next_connection_type = LEFT;
     }
@@ -319,14 +319,14 @@ GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction
     if (direction_1 == LEFT)
     {
         joiningArc[3] = (*attribute_1.arc)[0];
-        joiningArc[2] = joiningArc[3] - 2 * (*attribute_1.arc)[1];
+        joiningArc[2] = 2 * joiningArc[3] - (*attribute_1.arc)[1];
         attribute_1.previous = &_attributes[arc_count];
         attribute_1.previous_connection_type = RIGHT;
     }
     else if (direction_1 == RIGHT)
     {
         joiningArc[3] = (*attribute_1.arc)[3];
-        joiningArc[2] = joiningArc[3] - 2 * (*attribute_1.arc)[2];
+        joiningArc[2] = 2 * joiningArc[3] - (*attribute_1.arc)[2];
         attribute_1.next = &_attributes[arc_count];
         attribute_1.next_connection_type = RIGHT;
     }
