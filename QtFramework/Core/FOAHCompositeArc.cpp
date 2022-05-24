@@ -1,6 +1,8 @@
 #include "FOAHCompositeArc.h"
 #include "Core/Exceptions.h"
+#if !defined(__APPLE__)
 #include <GL/glu.h>
+#endif
 #include <iostream>
 
 using namespace std;
@@ -148,6 +150,10 @@ GLboolean FOAHCompositeArc::RenderAllArcData(GLenum render_mode) const
     return GL_TRUE;
 }
 
+GLuint FOAHCompositeArc::getArcCount(){
+    return _attributes.size();
+}
+
 GLboolean FOAHCompositeArc::ContinueExisitingArc(GLuint index, Direction direction)
 {
     if (index >= _attributes.size())
@@ -201,6 +207,35 @@ GLboolean FOAHCompositeArc::ContinueExisitingArc(GLuint index, Direction directi
         throw Exception("Could not update VBO of arc image!");
 
     return GL_TRUE;
+}
+
+DCoordinate3 FOAHCompositeArc::getPoint(GLuint arcIndex, GLuint pointIndex){
+
+    return (*_attributes[arcIndex].arc)[pointIndex];
+}
+
+GLvoid FOAHCompositeArc::setPointX(GLuint arcIndex, GLuint pointIndex, GLdouble newValue){
+
+    (*_attributes[arcIndex].arc)[pointIndex][0] = newValue;
+    _attributes[arcIndex].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[arcIndex].image = _attributes[arcIndex].arc->GenerateImage(2, 200);
+    _attributes[arcIndex].image->UpdateVertexBufferObjects(1);
+}
+
+GLvoid FOAHCompositeArc::setPointY(GLuint arcIndex, GLuint pointIndex, GLdouble newValue){
+
+    (*_attributes[arcIndex].arc)[pointIndex][1] = newValue;
+    _attributes[arcIndex].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[arcIndex].image = _attributes[arcIndex].arc->GenerateImage(2, 200);
+    _attributes[arcIndex].image->UpdateVertexBufferObjects(1);
+}
+
+GLvoid FOAHCompositeArc::setPointZ(GLuint arcIndex, GLuint pointIndex, GLdouble newValue){
+
+    (*_attributes[arcIndex].arc)[pointIndex][2] = newValue;
+    _attributes[arcIndex].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[arcIndex].image = _attributes[arcIndex].arc->GenerateImage(2, 200);
+    _attributes[arcIndex].image->UpdateVertexBufferObjects(1);
 }
 
 GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1)
@@ -272,6 +307,66 @@ GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction
 
 
     return GL_TRUE;
+}
+
+GLvoid FOAHCompositeArc::pullArcX(GLuint index){
+    (*_attributes.at(index).arc)[0][0] -= 1;
+    (*_attributes.at(index).arc)[1][0] -= 1;
+    (*_attributes.at(index).arc)[2][0] -= 1;
+    (*_attributes.at(index).arc)[3][0] -= 1;
+    _attributes[index].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[index].image = _attributes[index].arc->GenerateImage(2, 200);
+    _attributes[index].image->UpdateVertexBufferObjects(1);
+}
+
+GLvoid FOAHCompositeArc::pushArcX(GLuint index){
+    (*_attributes.at(index).arc)[0][0] += 1;
+    (*_attributes.at(index).arc)[1][0] += 1;
+    (*_attributes.at(index).arc)[2][0] += 1;
+    (*_attributes.at(index).arc)[3][0] += 1;
+    _attributes[index].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[index].image = _attributes[index].arc->GenerateImage(2, 200);
+    _attributes[index].image->UpdateVertexBufferObjects(1);
+}
+
+GLvoid FOAHCompositeArc::pullArcY(GLuint index){
+    (*_attributes.at(index).arc)[0][1] -= 1;
+    (*_attributes.at(index).arc)[1][1] -= 1;
+    (*_attributes.at(index).arc)[2][1] -= 1;
+    (*_attributes.at(index).arc)[3][1] -= 1;
+    _attributes[index].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[index].image = _attributes[index].arc->GenerateImage(2, 200);
+    _attributes[index].image->UpdateVertexBufferObjects(1);
+}
+
+GLvoid FOAHCompositeArc::pushArcY(GLuint index){
+    (*_attributes.at(index).arc)[0][1] += 1;
+    (*_attributes.at(index).arc)[1][1] += 1;
+    (*_attributes.at(index).arc)[2][1] += 1;
+    (*_attributes.at(index).arc)[3][1] += 1;
+    _attributes[index].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[index].image = _attributes[index].arc->GenerateImage(2, 200);
+    _attributes[index].image->UpdateVertexBufferObjects(1);
+}
+
+GLvoid FOAHCompositeArc::pullArcZ(GLuint index){
+    (*_attributes.at(index).arc)[0][2] -= 1;
+    (*_attributes.at(index).arc)[1][2] -= 1;
+    (*_attributes.at(index).arc)[2][2] -= 1;
+    (*_attributes.at(index).arc)[3][2] -= 1;
+    _attributes[index].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[index].image = _attributes[index].arc->GenerateImage(2, 200);
+    _attributes[index].image->UpdateVertexBufferObjects(1);
+}
+
+GLvoid FOAHCompositeArc::pushArcZ(GLuint index){
+    (*_attributes.at(index).arc)[0][2] += 1;
+    (*_attributes.at(index).arc)[1][2] += 1;
+    (*_attributes.at(index).arc)[2][2] += 1;
+    (*_attributes.at(index).arc)[3][2] += 1;
+    _attributes[index].arc->UpdateVertexBufferObjectsOfData();
+    _attributes[index].image = _attributes[index].arc->GenerateImage(2, 200);
+    _attributes[index].image->UpdateVertexBufferObjects(1);
 }
 
 FOAHCompositeArc::~FOAHCompositeArc()

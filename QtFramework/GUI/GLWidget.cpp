@@ -1,7 +1,10 @@
 #include "GLWidget.h"
 
 #if !defined(__APPLE__)
+#define APPL 0
 #include <GL/glu.h>
+#else
+#define APPL 1
 #endif
 
 #include "../Core/stringHelp.cpp"
@@ -182,20 +185,40 @@ namespace cagd
             for(int i = 0; i < 4; ++i){
                 switch(i){
                     case 0:
-                        vertFileName = "Shaders/directional_light.vert";
-                        fragFileName = "Shaders/directional_light.frag";
+                        if(APPL) {
+                            vertFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/directional_light.vert";
+                            fragFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/directional_light.frag";
+                        } else {
+                            vertFileName = "Shaders/directional_light.vert";
+                            fragFileName = "Shaders/directional_light.frag";
+                        }
                         break;
                     case 1:
-                        vertFileName = "Shaders/reflection_lines.vert";
-                        fragFileName = "Shaders/reflection_lines.frag";
+                        if(APPL){
+                            vertFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/reflection_lines.vert";
+                            fragFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/reflection_lines.frag";
+                        } else {
+                            vertFileName = "Shaders/reflection_lines.vert";
+                            fragFileName = "Shaders/reflection_lines.frag";
+                        }
                         break;
                     case 2:
-                        vertFileName = "Shaders/toon.vert";
-                        fragFileName = "Shaders/toon.frag";
+                        if(APPL){
+                            vertFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/toon.vert";
+                            fragFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/toon.frag";
+                        } else {
+                            vertFileName = "Shaders/toon.vert";
+                            fragFileName = "Shaders/toon.frag";
+                        }
                         break;
                     case 3:
-                        vertFileName = "Shaders/two_sided_lighting.vert";
-                        fragFileName = "Shaders/two_sided_lighting.frag";
+                        if(APPL){
+                            vertFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/two_sided_lighting.vert";
+                            fragFileName = "/Users/andorgere/Documents/Egyetem/Grafika/Shaders/two_sided_lighting.frag";
+                        } else {
+                            vertFileName = "Shaders/two_sided_lighting.vert";
+                            fragFileName = "Shaders/two_sided_lighting.frag";
+                        }
                         break;
                 }
 
@@ -402,51 +425,74 @@ namespace cagd
         update();
     }
 
+    void GLWidget::set_selected_arc(int index){
+        if(index != _selected_arc && _selected_arc >= 0 && _selected_arc < _composite_arc->getArcCount()){
+            _selected_arc = index;
+        }
+
+        emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
+        emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
+        emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
+        update();
+    }
+
+    void GLWidget::set_selected_point(int index){
+        if(index >= 0 && index < 4){
+            _selected_arc_point = index;
+        }
+
+        emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
+        emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
+        emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
+        update();
+    }
+
+    void GLWidget::pushArc(){
+        if(_direction == 0){
+            _composite_arc->pushArcX(_selected_arc);
+        }
+        if(_direction == 1){
+            _composite_arc->pushArcY(_selected_arc);
+        }
+        if(_direction == 2){
+            _composite_arc->pushArcZ(_selected_arc);
+        }
+        update();
+    }
+
+    void GLWidget::pullArc(){
+        if(_direction == 0){
+            _composite_arc->pullArcX(_selected_arc);
+        }
+        if(_direction == 1){
+            _composite_arc->pullArcY(_selected_arc);
+        }
+        if(_direction == 2){
+            _composite_arc->pullArcZ(_selected_arc);
+        }
+        update();
+    }
+
+    void GLWidget::set_selected_direction(int value){
+        if(value >= 0 && value <= 3){
+            _direction = value;
+        }
+    }
+
     void GLWidget::update_selected_point_x(double new_value){
-        update_selected_surface_point_x(new_value);
+        _composite_arc->setPointX(_selected_arc, _selected_arc_point, new_value);
+        update();
     }
 
     void GLWidget::update_selected_point_y(double new_value){
-        update_selected_curve_point_y(new_value);
+        _composite_arc->setPointY(_selected_arc, _selected_arc_point, new_value);
+        update();
     }
 
     void GLWidget::update_selected_point_z(double new_value){
-        update_selected_curve_point_z(new_value);
+        _composite_arc->setPointZ(_selected_arc, _selected_arc_point, new_value);
+        update();
     }
-
-    void GLWidget::update_selected_surface_point_x(double new_value){
-//        int x = _selected_point / 4;
-//        int y = _selected_point % 4;
-
-//        _surface_cpoints(x, y)[0] = new_value;
-//        update();
-    }
-
-    void GLWidget::update_selected_surface_point_y(double new_value){
-//        int x = _selected_point / 4;
-//        int y = _selected_point % 4;
-
-//        _surface_cpoints(x, y)[1] = new_value;
-//        update();
-    }
-
-    void GLWidget::update_selected_surface_point_z(double new_value){
-//        int x = _selected_point / 4;
-//        int y = _selected_point % 4;
-
-//        _surface_cpoints(x, y)[2] = new_value;
-//        update();
-    }
-
-    void GLWidget::update_selected_curve_point_x(double new_value){
-    }
-
-    void GLWidget::update_selected_curve_point_y(double new_value){
-    }
-
-    void GLWidget::update_selected_curve_point_z(double new_value){
-    }
-
 
     GLvoid GLWidget::set_selected_shader(int index){
         if(index < 0 || index >= _shaders.GetColumnCount()){

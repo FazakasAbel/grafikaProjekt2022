@@ -281,13 +281,67 @@
       </widget>
      </item>
      <item row="11" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Selected arc</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QSpinBox" name="arc_selector">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>20</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="1">
+      <widget class="QPushButton" name="plus">
+       <property name="text">
+        <string>+</string>
+       </property>
+      </widget>
+     </item>
+     <item row="14" column="1">
+      <widget class="QPushButton" name="minus">
+       <property name="text">
+        <string>-</string>
+       </property>
+      </widget>
+     </item>
+     <item row="15" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>Selected arc point</string>
+       </property>
+      </widget>
+     </item>
+     <item row="15" column="1">
+      <widget class="QSpinBox" name="arc_point_selector">
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>3</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="16" column="0">
       <widget class="QLabel" name="selectedCurveLabel_3">
        <property name="text">
         <string>X coordinate:</string>
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
+     <item row="16" column="1">
       <widget class="QDoubleSpinBox" name="x_selector">
        <property name="minimum">
         <double>-100.000000000000000</double>
@@ -300,14 +354,14 @@
        </property>
       </widget>
      </item>
-     <item row="12" column="0">
+     <item row="17" column="0">
       <widget class="QLabel" name="selectedCurveLabel_4">
        <property name="text">
         <string>Y coordinate:</string>
        </property>
       </widget>
      </item>
-     <item row="12" column="1">
+     <item row="17" column="1">
       <widget class="QDoubleSpinBox" name="y_selector">
        <property name="minimum">
         <double>-100.000000000000000</double>
@@ -320,14 +374,14 @@
        </property>
       </widget>
      </item>
-     <item row="13" column="0">
+     <item row="18" column="0">
       <widget class="QLabel" name="selectedCurveLabel_5">
        <property name="text">
         <string>Z coordinate:</string>
        </property>
       </widget>
      </item>
-     <item row="13" column="1">
+     <item row="18" column="1">
       <widget class="QDoubleSpinBox" name="z_selector">
        <property name="minimum">
         <double>-100.000000000000000</double>
@@ -340,48 +394,14 @@
        </property>
       </widget>
      </item>
-     <item row="14" column="0">
-      <widget class="QLabel" name="selectedCurveLabel_8">
-       <property name="text">
-        <string>Selected Surface</string>
-       </property>
-      </widget>
-     </item>
-     <item row="14" column="1">
-      <widget class="QSpinBox" name="surface_selector">
-       <property name="maximum">
-        <number>10</number>
-       </property>
-       <property name="value">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-     <item row="15" column="0">
-      <widget class="QLabel" name="selectedCurveLabel_9">
-       <property name="text">
-        <string>Selected Shader</string>
-       </property>
-      </widget>
-     </item>
-     <item row="15" column="1">
-      <widget class="QSpinBox" name="shader_selector">
-       <property name="maximum">
-        <number>10</number>
-       </property>
-       <property name="value">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-     <item row="16" column="0">
+     <item row="19" column="0">
       <widget class="QLabel" name="selectedCurveLabel_10">
        <property name="text">
         <string>Toon variables</string>
        </property>
       </widget>
      </item>
-     <item row="16" column="1">
+     <item row="19" column="1">
       <widget class="QDoubleSpinBox" name="r_selector">
        <property name="minimum">
         <double>0.000000000000000</double>
@@ -394,7 +414,7 @@
        </property>
       </widget>
      </item>
-     <item row="17" column="1">
+     <item row="20" column="1">
       <widget class="QDoubleSpinBox" name="g_selector">
        <property name="minimum">
         <double>0.000000000000000</double>
@@ -407,7 +427,7 @@
        </property>
       </widget>
      </item>
-     <item row="18" column="1">
+     <item row="21" column="1">
       <widget class="QDoubleSpinBox" name="b_selector">
        <property name="minimum">
         <double>0.000000000000000</double>
@@ -420,14 +440,14 @@
        </property>
       </widget>
      </item>
-     <item row="19" column="0">
+     <item row="22" column="0">
       <widget class="QLabel" name="selectedCurveLabel_11">
        <property name="text">
         <string>Reflection lines variables</string>
        </property>
       </widget>
      </item>
-     <item row="19" column="1">
+     <item row="22" column="1">
       <widget class="QDoubleSpinBox" name="scaling_selector">
        <property name="minimum">
         <double>0.000000000000000</double>
@@ -440,7 +460,7 @@
        </property>
       </widget>
      </item>
-     <item row="20" column="1">
+     <item row="23" column="1">
       <widget class="QDoubleSpinBox" name="smooth_selector">
        <property name="minimum">
         <double>0.000000000000000</double>
@@ -453,7 +473,7 @@
        </property>
       </widget>
      </item>
-     <item row="21" column="1">
+     <item row="24" column="1">
       <widget class="QDoubleSpinBox" name="shade_selector">
        <property name="minimum">
         <double>0.000000000000000</double>
@@ -464,6 +484,25 @@
        <property name="singleStep">
         <double>0.100000000000000</double>
        </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QComboBox" name="direction_selector">
+       <item>
+        <property name="text">
+         <string>x</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>y</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>z</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
