@@ -441,7 +441,7 @@ namespace cagd
     }
 
     void GLWidget::set_selected_arc(int index){
-        if(index != _selected_arc && index >= 0 && index < _composite_arc->getArcCount()-1){
+        if(index != _selected_arc && _selected_arc >= 0 && _selected_arc < _composite_arc->getArcCount()-1){
             cout<<"ifben"<<endl;
             _selected_arc = index;
             emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
