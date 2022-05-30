@@ -184,6 +184,8 @@ GLboolean FOAHCompositeArc::ContinueExisitingArc(GLuint index, Direction directi
 
         attribute->previous = &_attributes[arc_count];
         _attributes[arc_count].next = attribute;
+        attribute->previous_connection_type = RIGHT;
+        _attributes[arc_count].next_connection_type = LEFT;
     }
     else if (direction == RIGHT)
     {
@@ -194,6 +196,8 @@ GLboolean FOAHCompositeArc::ContinueExisitingArc(GLuint index, Direction directi
 
         attribute->next = &_attributes[arc_count];
         _attributes[arc_count].previous = attribute;
+        attribute->next_connection_type = LEFT;
+        _attributes[arc_count].previous_connection_type = RIGHT;
     }
 
     if (!newArc.UpdateVertexBufferObjectsOfData())
