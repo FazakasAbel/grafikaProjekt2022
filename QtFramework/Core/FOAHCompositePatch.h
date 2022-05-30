@@ -42,6 +42,9 @@ namespace cagd
         std::vector<PatchAttributes> _attributes;
 
         Matrix<DCoordinate3>         _big_control_net; // only in case of B-spline projects!
+        struct Pair{
+            GLuint row_index, column_index;
+        };
 
     public:
         // special/default ctor
@@ -60,6 +63,7 @@ namespace cagd
 
         // other setters and getters
         // ...
+        Matrix<Pair> GetIndexesFromDirection(Direction);
     };
 }
 

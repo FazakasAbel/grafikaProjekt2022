@@ -91,6 +91,16 @@ namespace cagd
         connect(_side_widget->spinBox_r, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_patch_color_r(double)));
         connect(_side_widget->spinBox_g, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_patch_color_g(double)));
         connect(_side_widget->spinBox_b, SIGNAL(valueChanged(double)), _gl_widget, SLOT(set_patch_color_b(double)));
+        // Join, merge and extend
+        connect(_side_widget->comboBox_curve1_direction, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(set_direction_curve_1(int)));
+        connect(_side_widget->spinBox_curve1, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_curve_1(int)));
+        connect(_side_widget->comboBox_curve2_direction, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(set_direction_curve_2(int)));
+        connect(_side_widget->spinBox_curve2, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_curve_2(int)));
+        connect(_side_widget->pushButton_join, SIGNAL(pressed()), _gl_widget, SLOT(call_join()));
+        connect(_side_widget->pushButton_insert, SIGNAL(pressed()), _gl_widget, SLOT(call_insert()));
+        connect(_side_widget->pushButton_extend, SIGNAL(pressed()), _gl_widget, SLOT(call_extend()));
+        connect(_side_widget->pushButton_merge, SIGNAL(pressed()), _gl_widget, SLOT(call_merge()));
+
     }
 
     //--------------------------------
