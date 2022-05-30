@@ -242,10 +242,10 @@ namespace cagd
             }
             _potykany.UpdateVertexBufferObjects(GL_DYNAMIC_DRAW);
 
-            _composite_arc = new FOAHCompositeArc(1, 5);
+            _composite_arc = new FOAHCompositeArc(1, 100);
             _composite_arc->InsertNewArc();
-            _composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::RIGHT);
-            _composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::LEFT);
+            //_composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::RIGHT);
+            //_composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::LEFT);
 
             glEnable(GL_POLYGON_SMOOTH);
             glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
@@ -441,16 +441,96 @@ namespace cagd
     }
 
     void GLWidget::set_selected_arc(int index){
-        if(index != _selected_arc && _selected_arc >= 0 && _selected_arc < _composite_arc->getArcCount()){
+        if(index != _selected_arc && index >= 0 && index < _composite_arc->getArcCount()-1){
+            cout<<"ifben"<<endl;
             _selected_arc = index;
+            emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
+            emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
+            emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
+            update();
         }
 
-        emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
-        emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
-        emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
+    }
+    void GLWidget::set_selected_curve_1(int index){
+        if(index != _selected_curve_1){
+            _selected_curve_1 = index;
+        }
         update();
     }
-
+    void GLWidget::set_selected_curve_2(int index){
+        if(index != _selected_curve_2){
+            _selected_curve_2 = index;
+        }
+        update();
+    }
+    void GLWidget::set_direction_curve_1(int dir){
+        if(_selected_curve_1_direction != dir){
+            _selected_curve_1_direction = dir;
+        }
+        update();
+    }
+    void GLWidget::set_direction_curve_2(int dir){
+        if(_selected_curve_2_direction != dir){
+            _selected_curve_2_direction = dir;
+        }
+        update();
+    }
+    void GLWidget::call_insert(){
+        _composite_arc->InsertNewArc();
+        update();
+    }
+    void GLWidget::call_extend(){
+        if(_selected_curve_1 >= 0 && _selected_curve_1 <= _composite_arc->getArcCount()){
+            if(_selected_curve_1_direction == 0){
+                _composite_arc->ContinueExisitingArc(_selected_curve_1, FOAHCompositeArc::LEFT);
+            } else {
+                _composite_arc->ContinueExisitingArc(_selected_curve_1, FOAHCompositeArc::RIGHT);
+            }
+            update();
+        }
+    }
+    void GLWidget::call_join(){
+        if((_selected_curve_1 == _selected_curve_2) || _selected_curve_1 < 0 || _selected_curve_2 < 0 || _selected_curve_1 >_composite_arc->getArcCount() || _selected_curve_1 > _composite_arc->getArcCount()){
+            return;
+        } else {
+            FOAHCompositeArc::Direction dir_curve_1, dir_curve_2;
+            if(_selected_curve_1_direction == 0){
+                dir_curve_1 = FOAHCompositeArc::LEFT;
+            } else {
+                dir_curve_1 = FOAHCompositeArc::RIGHT;
+            }
+            if(_selected_curve_2_direction == 0){
+                dir_curve_2 = FOAHCompositeArc::LEFT;
+            } else {
+                dir_curve_2 = FOAHCompositeArc::RIGHT;
+            }
+            GLuint _selected_curve_1_gl = _selected_curve_1;
+            GLuint _selected_curve_2_gl = _selected_curve_2;
+            _composite_arc->JoinExistingArcs(_selected_curve_1_gl, dir_curve_1, _selected_curve_2_gl, dir_curve_2);
+            update();
+        }
+    }
+    void GLWidget::call_merge() {
+        if((_selected_curve_1 == _selected_curve_2) || _selected_curve_1 < 0 || _selected_curve_2 < 0 || _selected_curve_1 >_composite_arc->getArcCount() || _selected_curve_1 > _composite_arc->getArcCount()){
+            return;
+        } else {
+            FOAHCompositeArc::Direction dir_curve_1, dir_curve_2;
+            if(_selected_curve_1_direction == 0){
+                dir_curve_1 = FOAHCompositeArc::LEFT;
+            } else {
+                dir_curve_1 = FOAHCompositeArc::RIGHT;
+            }
+            if(_selected_curve_2_direction == 0){
+                dir_curve_2 = FOAHCompositeArc::LEFT;
+            } else {
+                dir_curve_2 = FOAHCompositeArc::RIGHT;
+            }
+            GLuint _selected_curve_1_gl = _selected_curve_1;
+            GLuint _selected_curve_2_gl = _selected_curve_2;
+            _composite_arc->MergeExistingArcs(_selected_curve_1_gl, dir_curve_1, _selected_curve_2_gl, dir_curve_2);
+            update();
+        }
+    }
     void GLWidget::set_selected_point(int index){
         if(index >= 0 && index < 4){
             _selected_arc_point = index;
