@@ -240,7 +240,7 @@ namespace cagd
             } else {
                 _potykany.LoadFromOFF("Models/Characters/mouse.off",GL_TRUE);
             }
-            _potykany.UpdateVertexBufferObjects(GL_DYNAMIC_DRAW);
+            //_potykany.UpdateVertexBufferObjects(GL_DYNAMIC_DRAW);
 
             _composite_arc = new FOAHCompositeArc(1, 5);
             _composite_arc->InsertNewArc();
