@@ -57,6 +57,9 @@ namespace cagd
 
         // other setters and getters
         // ...
+        /*
+        Adott irányba visszaadja
+        */
         Matrix<Pair> GetIndexesFromDirection(Direction);
     };
 }

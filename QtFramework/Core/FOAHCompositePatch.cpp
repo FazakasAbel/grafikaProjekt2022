@@ -1,7 +1,6 @@
 #include "../Core/FOAHCompositePatch.h"
 
-using namespace cagd;
-
+namespace cagd{
 GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction direction){
     if(direction == NW || direction == SW || direction == SE || direction == NE){
         return GL_FALSE;
@@ -322,6 +321,7 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
     }
 
     //Set neighbours!!!
+}
 }
 
 
