@@ -14,6 +14,7 @@
 #include "../Core/FirstOrderAlgebraic-HyperbolicArc3.h"
 #include "../Core/ShaderPrograms.h"
 #include "../Core/FOAHCompositeArc.h"
+#include "../Core/FOAHCompositePatch.h"
 
 namespace cagd
 {
@@ -47,6 +48,8 @@ namespace cagd
         int                             _selected_arc = 0;
         int                             _selected_arc_point = 0;
         int                             _direction = 0;
+
+        FOAHCompositePatch3* 			_composite_patch;
 
         DirectionalLight *_dl = nullptr;
 

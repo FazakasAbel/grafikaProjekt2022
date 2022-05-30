@@ -247,6 +247,9 @@ namespace cagd
             //_composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::RIGHT);
             //_composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::LEFT);
 
+            _composite_patch = new FOAHCompositePatch3(1, 100);
+            _composite_patch->InsertNewPatch();
+
             glEnable(GL_POLYGON_SMOOTH);
             glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 
@@ -315,7 +318,9 @@ namespace cagd
                 }
 
                 //content
-                _potykany.Render();
+//                _potykany.Render();
+                _composite_patch->RenderAllPatches(0, GL_TRIANGLES);
+                _composite_patch->RenderAllPatchData(GL_LINE_STRIP);
 
                 if(_enable_shader) {
                     _shaders[_selected_shader]->Disable();
