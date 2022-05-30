@@ -15,6 +15,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFormLayout>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
@@ -68,6 +69,19 @@ public:
     QDoubleSpinBox *y_selector;
     QLabel *selectedCurveLabel_5;
     QDoubleSpinBox *z_selector;
+    QPushButton *pushButton_insert;
+    QWidget *gridLayoutWidget;
+    QGridLayout *gridLayout;
+    QPushButton *pushButton_merge;
+    QLabel *label_19;
+    QLabel *label_18;
+    QSpinBox *spinBox_curve1;
+    QSpinBox *spinBox_curve2;
+    QComboBox *comboBox_curve1_direction;
+    QComboBox *comboBox_curve2_direction;
+    QPushButton *pushButton_join;
+    QPushButton *pushButton_extend;
+    QLabel *label_17;
     QWidget *tab_2;
     QWidget *formLayoutWidget_2;
     QFormLayout *formLayout_4;
@@ -226,19 +240,19 @@ public:
 
         tabWidget = new QTabWidget(groupBox);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 240, 431, 621));
+        tabWidget->setGeometry(QRect(10, 240, 431, 841));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         formLayoutWidget = new QWidget(tab);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(0, 0, 421, 361));
+        formLayoutWidget->setGeometry(QRect(0, 0, 421, 341));
         formLayout_2 = new QFormLayout(formLayoutWidget);
         formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
         formLayout_2->setContentsMargins(0, 0, 0, 0);
         label_8 = new QLabel(formLayoutWidget);
         label_8->setObjectName(QString::fromUtf8("label_8"));
 
-        formLayout_2->setWidget(0, QFormLayout::LabelRole, label_8);
+        formLayout_2->setWidget(2, QFormLayout::LabelRole, label_8);
 
         scale = new QDoubleSpinBox(formLayoutWidget);
         scale->setObjectName(QString::fromUtf8("scale"));
@@ -248,12 +262,12 @@ public:
         scale->setSingleStep(0.100000000000000);
         scale->setValue(1.000000000000000);
 
-        formLayout_2->setWidget(0, QFormLayout::FieldRole, scale);
+        formLayout_2->setWidget(2, QFormLayout::FieldRole, scale);
 
         NumberOfSubdivisionPointsLabel = new QLabel(formLayoutWidget);
         NumberOfSubdivisionPointsLabel->setObjectName(QString::fromUtf8("NumberOfSubdivisionPointsLabel"));
 
-        formLayout_2->setWidget(1, QFormLayout::LabelRole, NumberOfSubdivisionPointsLabel);
+        formLayout_2->setWidget(3, QFormLayout::LabelRole, NumberOfSubdivisionPointsLabel);
 
         set_div_points = new QSpinBox(formLayoutWidget);
         set_div_points->setObjectName(QString::fromUtf8("set_div_points"));
@@ -261,12 +275,12 @@ public:
         set_div_points->setMaximum(1000);
         set_div_points->setValue(200);
 
-        formLayout_2->setWidget(1, QFormLayout::FieldRole, set_div_points);
+        formLayout_2->setWidget(3, QFormLayout::FieldRole, set_div_points);
 
         label_9 = new QLabel(formLayoutWidget);
         label_9->setObjectName(QString::fromUtf8("label_9"));
 
-        formLayout_2->setWidget(2, QFormLayout::LabelRole, label_9);
+        formLayout_2->setWidget(4, QFormLayout::LabelRole, label_9);
 
         arc_selector = new QSpinBox(formLayoutWidget);
         arc_selector->setObjectName(QString::fromUtf8("arc_selector"));
@@ -274,7 +288,7 @@ public:
         arc_selector->setMaximum(20);
         arc_selector->setValue(0);
 
-        formLayout_2->setWidget(2, QFormLayout::FieldRole, arc_selector);
+        formLayout_2->setWidget(4, QFormLayout::FieldRole, arc_selector);
 
         direction_selector = new QComboBox(formLayoutWidget);
         direction_selector->addItem(QString());
@@ -282,22 +296,22 @@ public:
         direction_selector->addItem(QString());
         direction_selector->setObjectName(QString::fromUtf8("direction_selector"));
 
-        formLayout_2->setWidget(3, QFormLayout::FieldRole, direction_selector);
+        formLayout_2->setWidget(5, QFormLayout::FieldRole, direction_selector);
 
         plus = new QPushButton(formLayoutWidget);
         plus->setObjectName(QString::fromUtf8("plus"));
 
-        formLayout_2->setWidget(4, QFormLayout::FieldRole, plus);
+        formLayout_2->setWidget(6, QFormLayout::FieldRole, plus);
 
         minus = new QPushButton(formLayoutWidget);
         minus->setObjectName(QString::fromUtf8("minus"));
 
-        formLayout_2->setWidget(5, QFormLayout::FieldRole, minus);
+        formLayout_2->setWidget(7, QFormLayout::FieldRole, minus);
 
         label_10 = new QLabel(formLayoutWidget);
         label_10->setObjectName(QString::fromUtf8("label_10"));
 
-        formLayout_2->setWidget(6, QFormLayout::LabelRole, label_10);
+        formLayout_2->setWidget(8, QFormLayout::LabelRole, label_10);
 
         arc_point_selector = new QSpinBox(formLayoutWidget);
         arc_point_selector->setObjectName(QString::fromUtf8("arc_point_selector"));
@@ -305,12 +319,12 @@ public:
         arc_point_selector->setMaximum(3);
         arc_point_selector->setValue(0);
 
-        formLayout_2->setWidget(6, QFormLayout::FieldRole, arc_point_selector);
+        formLayout_2->setWidget(8, QFormLayout::FieldRole, arc_point_selector);
 
         selectedCurveLabel_3 = new QLabel(formLayoutWidget);
         selectedCurveLabel_3->setObjectName(QString::fromUtf8("selectedCurveLabel_3"));
 
-        formLayout_2->setWidget(7, QFormLayout::LabelRole, selectedCurveLabel_3);
+        formLayout_2->setWidget(9, QFormLayout::LabelRole, selectedCurveLabel_3);
 
         x_selector = new QDoubleSpinBox(formLayoutWidget);
         x_selector->setObjectName(QString::fromUtf8("x_selector"));
@@ -318,12 +332,12 @@ public:
         x_selector->setMaximum(100.000000000000000);
         x_selector->setSingleStep(0.100000000000000);
 
-        formLayout_2->setWidget(7, QFormLayout::FieldRole, x_selector);
+        formLayout_2->setWidget(9, QFormLayout::FieldRole, x_selector);
 
         selectedCurveLabel_4 = new QLabel(formLayoutWidget);
         selectedCurveLabel_4->setObjectName(QString::fromUtf8("selectedCurveLabel_4"));
 
-        formLayout_2->setWidget(8, QFormLayout::LabelRole, selectedCurveLabel_4);
+        formLayout_2->setWidget(10, QFormLayout::LabelRole, selectedCurveLabel_4);
 
         y_selector = new QDoubleSpinBox(formLayoutWidget);
         y_selector->setObjectName(QString::fromUtf8("y_selector"));
@@ -331,12 +345,12 @@ public:
         y_selector->setMaximum(100.000000000000000);
         y_selector->setSingleStep(0.100000000000000);
 
-        formLayout_2->setWidget(8, QFormLayout::FieldRole, y_selector);
+        formLayout_2->setWidget(10, QFormLayout::FieldRole, y_selector);
 
         selectedCurveLabel_5 = new QLabel(formLayoutWidget);
         selectedCurveLabel_5->setObjectName(QString::fromUtf8("selectedCurveLabel_5"));
 
-        formLayout_2->setWidget(9, QFormLayout::LabelRole, selectedCurveLabel_5);
+        formLayout_2->setWidget(11, QFormLayout::LabelRole, selectedCurveLabel_5);
 
         z_selector = new QDoubleSpinBox(formLayoutWidget);
         z_selector->setObjectName(QString::fromUtf8("z_selector"));
@@ -344,8 +358,73 @@ public:
         z_selector->setMaximum(100.000000000000000);
         z_selector->setSingleStep(0.100000000000000);
 
-        formLayout_2->setWidget(9, QFormLayout::FieldRole, z_selector);
+        formLayout_2->setWidget(11, QFormLayout::FieldRole, z_selector);
 
+        pushButton_insert = new QPushButton(formLayoutWidget);
+        pushButton_insert->setObjectName(QString::fromUtf8("pushButton_insert"));
+
+        formLayout_2->setWidget(0, QFormLayout::FieldRole, pushButton_insert);
+
+        gridLayoutWidget = new QWidget(tab);
+        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
+        gridLayoutWidget->setGeometry(QRect(0, 370, 421, 121));
+        gridLayout = new QGridLayout(gridLayoutWidget);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        pushButton_merge = new QPushButton(gridLayoutWidget);
+        pushButton_merge->setObjectName(QString::fromUtf8("pushButton_merge"));
+
+        gridLayout->addWidget(pushButton_merge, 2, 1, 1, 1);
+
+        label_19 = new QLabel(gridLayoutWidget);
+        label_19->setObjectName(QString::fromUtf8("label_19"));
+
+        gridLayout->addWidget(label_19, 1, 0, 1, 1);
+
+        label_18 = new QLabel(gridLayoutWidget);
+        label_18->setObjectName(QString::fromUtf8("label_18"));
+
+        gridLayout->addWidget(label_18, 0, 0, 1, 1);
+
+        spinBox_curve1 = new QSpinBox(gridLayoutWidget);
+        spinBox_curve1->setObjectName(QString::fromUtf8("spinBox_curve1"));
+        spinBox_curve1->setMaximum(50);
+
+        gridLayout->addWidget(spinBox_curve1, 0, 1, 1, 1);
+
+        spinBox_curve2 = new QSpinBox(gridLayoutWidget);
+        spinBox_curve2->setObjectName(QString::fromUtf8("spinBox_curve2"));
+        spinBox_curve2->setMaximum(50);
+
+        gridLayout->addWidget(spinBox_curve2, 1, 1, 1, 1);
+
+        comboBox_curve1_direction = new QComboBox(gridLayoutWidget);
+        comboBox_curve1_direction->addItem(QString());
+        comboBox_curve1_direction->addItem(QString());
+        comboBox_curve1_direction->setObjectName(QString::fromUtf8("comboBox_curve1_direction"));
+
+        gridLayout->addWidget(comboBox_curve1_direction, 0, 2, 1, 1);
+
+        comboBox_curve2_direction = new QComboBox(gridLayoutWidget);
+        comboBox_curve2_direction->addItem(QString());
+        comboBox_curve2_direction->addItem(QString());
+        comboBox_curve2_direction->setObjectName(QString::fromUtf8("comboBox_curve2_direction"));
+
+        gridLayout->addWidget(comboBox_curve2_direction, 1, 2, 1, 1);
+
+        pushButton_join = new QPushButton(gridLayoutWidget);
+        pushButton_join->setObjectName(QString::fromUtf8("pushButton_join"));
+
+        gridLayout->addWidget(pushButton_join, 2, 0, 1, 1);
+
+        pushButton_extend = new QPushButton(gridLayoutWidget);
+        pushButton_extend->setObjectName(QString::fromUtf8("pushButton_extend"));
+
+        gridLayout->addWidget(pushButton_extend, 2, 2, 1, 1);
+
+        label_17 = new QLabel(tab);
+        label_17->setObjectName(QString::fromUtf8("label_17"));
+        label_17->setGeometry(QRect(0, 350, 91, 16));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
@@ -549,7 +628,7 @@ public:
 
         retranslateUi(SideWidget);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(SideWidget);
@@ -587,6 +666,19 @@ public:
         selectedCurveLabel_3->setText(QCoreApplication::translate("SideWidget", "X coordinate:", nullptr));
         selectedCurveLabel_4->setText(QCoreApplication::translate("SideWidget", "Y coordinate:", nullptr));
         selectedCurveLabel_5->setText(QCoreApplication::translate("SideWidget", "Z coordinate:", nullptr));
+        pushButton_insert->setText(QCoreApplication::translate("SideWidget", "Insert New Arc", nullptr));
+        pushButton_merge->setText(QCoreApplication::translate("SideWidget", "Merge", nullptr));
+        label_19->setText(QCoreApplication::translate("SideWidget", "Select Curve 2", nullptr));
+        label_18->setText(QCoreApplication::translate("SideWidget", "Select Curve 1", nullptr));
+        comboBox_curve1_direction->setItemText(0, QCoreApplication::translate("SideWidget", "Left", nullptr));
+        comboBox_curve1_direction->setItemText(1, QCoreApplication::translate("SideWidget", "Right", nullptr));
+
+        comboBox_curve2_direction->setItemText(0, QCoreApplication::translate("SideWidget", "Left", nullptr));
+        comboBox_curve2_direction->setItemText(1, QCoreApplication::translate("SideWidget", "Right", nullptr));
+
+        pushButton_join->setText(QCoreApplication::translate("SideWidget", "Join", nullptr));
+        pushButton_extend->setText(QCoreApplication::translate("SideWidget", "Extend", nullptr));
+        label_17->setText(QCoreApplication::translate("SideWidget", "Manipulation", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("SideWidget", "Arc", nullptr));
         label_14->setText(QCoreApplication::translate("SideWidget", "R", nullptr));
         label_11->setText(QCoreApplication::translate("SideWidget", "Enable Texture", nullptr));

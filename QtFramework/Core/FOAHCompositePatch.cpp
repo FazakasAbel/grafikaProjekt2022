@@ -8,14 +8,14 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
     }
 
     if(index >= _attributes.size()){
-        cout << "Patch index invalid!" << endl;
+        std::cout << "Patch index invalid!" << std::endl;
         return GL_FALSE;
     }
 
     PatchAttributes* attribute = &_attributes[index];
     if (attribute->neighbours[direction])
     {
-        cout << "Patch already has a neighbor in given direction!";
+        std::cout << "Patch already has a neighbor in given direction!";
         return GL_FALSE;
     }
 
@@ -231,6 +231,7 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
         }
         break;
     }
+    return result;
 }
 
 GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1){
@@ -240,7 +241,7 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
     }
 
     if(index_0 >= _attributes.size() && index_1 >= _attributes.size()){
-        cout << "Patch index invalid!" << endl;
+        std::cout << "Patch index invalid!" << std::endl;
         return GL_FALSE;
     }
 
@@ -249,7 +250,7 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
 
     if (attribute_0->neighbours[direction_0] || attribute_1->neighbours[direction_1])
     {
-        cout << "Patch already has a neighbor in given direction!";
+        std::cout << "Patch already has a neighbor in given direction!";
         return GL_FALSE;
     }
 
@@ -272,7 +273,7 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
     }
 
     if(index_0 >= _attributes.size() && index_1 >= _attributes.size()){
-        cout << "Patch index invalid!" << endl;
+        std::cout << "Patch index invalid!" << std::endl;
         return GL_FALSE;
     }
 
@@ -281,7 +282,7 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
 
     if (attribute_0->neighbours[direction_0] || attribute_1->neighbours[direction_1])
     {
-        cout << "Patch already has a neighbor in given direction!";
+        std::cout << "Patch already has a neighbor in given direction!";
         return GL_FALSE;
     }
 

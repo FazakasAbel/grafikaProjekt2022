@@ -102,6 +102,7 @@ SOURCES += \
     Core/BasicFunctions.cpp \
     Core/CyclicCurves3.cpp \
     Core/FOAHCompositeArc.cpp \
+    Core/FOAHCompositePatch.cpp \
     Core/FirstOrderAlgebraic-HyperbolicPatch3.cpp \
     Core/FirstOrderAlgebraicHyperbolicArc3.cpp \
     Core/GenericCurves3.cpp \
