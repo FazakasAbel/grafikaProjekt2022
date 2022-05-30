@@ -26,14 +26,19 @@ namespace cagd
             // other attributes
             // ...
 
-            PatchAttributes   *neighbours[8];
-            Direction         connection_type[8];
+            std::vector<PatchAttributes*>   neighbours;
+            std::vector<Direction>         	connection_type;
 
             // ctor, copy ctor, assignment operator, dtor (they are required by the std::vector!)
+            PatchAttributes();
+            PatchAttributes(FirstOrderAlgebraicHyperbolicPatch&);
+            PatchAttributes(const PatchAttributes&);
+            PatchAttributes& operator =(const PatchAttributes&);
+            ~PatchAttributes();
         };
 
     protected:
-        GLdouble                     _alpha[2];     // possible (shared) shape variables in directions u and v
+        GLdouble                     _alpha;     // possible (shared) shape variables in directions u and v
         std::vector<PatchAttributes> _attributes;
 
         Matrix<DCoordinate3>         _big_control_net; // only in case of B-spline projects!
@@ -43,7 +48,7 @@ namespace cagd
 
     public:
         // special/default ctor
-        FOAHCompositePatch3(/*GLdouble u_alpha = ..., GLdouble v_alpha = ..., GLuint minimial_patch_count_to_be_reserved = ...*/);
+        FOAHCompositePatch3(GLdouble alpha, GLuint minimal_patch_count_to_be_reserved);
 
         // operations
         GLboolean InsertNewPatch();
@@ -54,6 +59,7 @@ namespace cagd
 
         GLboolean RenderAllPatches(GLuint order, GLenum render_mode) const;
         GLboolean RenderSelectedPatch(GLuint index, GLuint order, GLenum render_mode) const;
+        GLboolean RenderAllPatchData(GLenum render_mode) const;
 
         // other setters and getters
         // ...
