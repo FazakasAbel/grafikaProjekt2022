@@ -69,6 +69,11 @@ namespace cagd
         double patch_r = 255.0;
         double patch_g = 0.0;
         double patch_b = 0.0;
+        // Curve merge, join ... GUI
+        int                             _selected_curve_1 = 0;
+        int                             _selected_curve_2 = 0;
+        int                             _selected_curve_1_direction = 0;
+        int                             _selected_curve_2_direction = 0;
 
 
     public:
@@ -103,7 +108,6 @@ namespace cagd
         void update_selected_point_y(double);
         void update_selected_point_z(double);
 
-        void set_selected_arc(int);
         void set_selected_point(int);
 
         void set_selected_direction(int);
@@ -133,7 +137,16 @@ namespace cagd
         void set_patch_color_r(double);
         void set_patch_color_g(double);
         void set_patch_color_b(double);
-
+        // Merge, join and extend
+        void set_selected_arc(int);
+        void set_selected_curve_1(int);
+        void set_selected_curve_2(int);
+        void set_direction_curve_1(int);
+        void set_direction_curve_2(int);
+        void call_join();
+        void call_insert();
+        void call_merge();
+        void call_extend();
 
     signals:
         void set_x_signal(double);
