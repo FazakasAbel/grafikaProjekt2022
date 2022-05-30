@@ -43,7 +43,7 @@ namespace cagd
         FOAHCompositePatch3(/*GLdouble u_alpha = ..., GLdouble v_alpha = ..., GLuint minimial_patch_count_to_be_reserved = ...*/);
 
         // operations
-        GLboolean InsertNewPatch(...);
+        GLboolean InsertNewPatch();
         GLboolean DeleteExistingPatch(GLuint index);
         GLboolean ContinueExistingPatch(GLuint index, Direction direction);
         GLboolean JoinExistingPatches(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1);
