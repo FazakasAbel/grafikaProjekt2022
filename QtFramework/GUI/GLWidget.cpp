@@ -332,9 +332,22 @@ namespace cagd
                 glDisable(GL_LIGHTING);
                 _composite_arc->RenderAllArcs(0, GL_LINE_STRIP);
                 _composite_arc->RenderAllArcData(GL_LINE_STRIP);
+                if(_show_first_der) {
+                    std::cout<<"hello";
+                    _composite_arc->RenderAllArcs(1,GL_LINES);
+                }
+                if(_show_second_der) {
+                    _composite_arc->RenderAllArcs(2,GL_LINES);
+                }
                 glPointSize(10.0f);
                 _composite_arc->RenderAllArcData(GL_POINTS);
     //          _composite_arc->RenderSelectedArc(0, 0, GL_LINE_STRIP);
+//                if(_show_first_der) {
+//                    _composite_arc->RenderSelectedArcs(1,0,GL_LINES);
+//                }
+//                if(_show_second_der) {
+//                    _composite_arc->RenderSelectedArcs(2,0,GL_LINES);
+//                }
                 glEnable(GL_LIGHTING);
             // Patch
             } else {
