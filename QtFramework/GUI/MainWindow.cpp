@@ -119,6 +119,9 @@ namespace cagd
         connect(_side_widget->pushButton_join_patch, SIGNAL(pressed()),_gl_widget, SLOT(call_join_patch()));
         connect(_side_widget->pushButton_extend_patch, SIGNAL(pressed()),_gl_widget, SLOT(call_extend_patch()));
         connect(_side_widget->pushButton_merge_patch, SIGNAL(pressed()),_gl_widget,SLOT(call_merge_patch()));
+        connect(_side_widget->comboBox_lightsource, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(set_selected_light(int)));
+        connect(_side_widget->first_der_patch, SIGNAL(clicked(bool)),_gl_widget, SLOT(set_show_first_der_patch(bool)));
+        connect(_side_widget->second_der_patch, SIGNAL(clicked(bool)),_gl_widget, SLOT(set_show_second_der_patch(bool)));
     }
 
     //--------------------------------

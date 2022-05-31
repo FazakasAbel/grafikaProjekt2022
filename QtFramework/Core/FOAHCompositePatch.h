@@ -80,7 +80,7 @@ namespace cagd
         GLuint getPatchCount();
         DCoordinate3    getPoint(GLuint, GLuint, GLuint);
 
-        Matrix<Pair> GetIndexesFromDirection(Direction);
+        Matrix<Pair> GetIndexesFromDirection(Direction direction, Direction other_direction);
     };
 }
 

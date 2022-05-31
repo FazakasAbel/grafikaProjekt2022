@@ -65,8 +65,13 @@ GLboolean FOAHCompositePatch3::PatchAttributes::UpdateIsoparametricCurves(GLuint
     v_curves = patch->GenerateVIsoparametricLines(iso_line_count, 2, 200);
     for (GLuint i = 0; i < iso_line_count; i++)
     {
+        if ((*u_curves)[i])
+            (*u_curves)[i]->DeleteVertexBufferObjects();
         if (!(*u_curves)[i]->UpdateVertexBufferObjects(1))
             return GL_FALSE;
+
+        if ((*v_curves)[i])
+            (*v_curves)[i]->DeleteVertexBufferObjects();
         if (!(*v_curves)[i]->UpdateVertexBufferObjects(1))
             return GL_FALSE;
     }
@@ -76,11 +81,17 @@ GLboolean FOAHCompositePatch3::PatchAttributes::UpdateIsoparametricCurves(GLuint
 
 GLboolean FOAHCompositePatch3::PatchAttributes::UpdateImageAndVBO()
 {
+    if (patch)
+        patch->DeleteVertexBufferObjectsOfData();
+
     if (!patch->UpdateVertexBufferObjectsOfData())
     {
         std::cout << "Error updating VBO of patch data!" << std::endl;
         return GL_FALSE;
     }
+
+    if (image)
+        image->DeleteVertexBufferObjects();
 
     image = patch->GenerateImage(30, 30);
     if (!image || !image->UpdateVertexBufferObjects())
@@ -376,7 +387,7 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
     return GL_TRUE;
 }
 
-Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(Direction direction){
+Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(Direction direction, Direction other_direction){
     Matrix<Pair> result(2, 4);
 
     switch(direction){
@@ -398,6 +409,17 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
             result(1, 1).row_index = 1;
             result(1, 2).row_index = 1;
             result(1, 3).row_index = 1;
+
+            if (other_direction == E) {
+                result(0, 0).column_index = 3;
+                result(0, 1).column_index = 2;
+                result(0, 2).column_index = 1;
+                result(0, 3).column_index = 0;
+                result(1, 0).column_index = 3;
+                result(1, 1).column_index = 2;
+                result(1, 2).column_index = 1;
+                result(1, 3).column_index = 0;
+            }
         }
         break;
         case (W):
@@ -418,6 +440,17 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
             result(1, 1).row_index = 1;
             result(1, 2).row_index = 2;
             result(1, 3).row_index = 3;
+
+            if (N) {
+                result(0, 0).row_index = 3;
+                result(0, 1).row_index = 2;
+                result(0, 2).row_index = 1;
+                result(0, 3).row_index = 0;
+                result(1, 0).row_index = 3;
+                result(1, 1).row_index = 2;
+                result(1, 2).row_index = 1;
+                result(1, 3).row_index = 0;
+            }
         }
         break;
         case (S):
@@ -438,6 +471,17 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
             result(1, 1).row_index = 2;
             result(1, 2).row_index = 2;
             result(1, 3).row_index = 2;
+
+            if (W) {
+                result(0, 0).column_index = 3;
+                result(0, 1).column_index = 2;
+                result(0, 2).column_index = 1;
+                result(0, 3).column_index = 0;
+                result(1, 0).column_index = 3;
+                result(1, 1).column_index = 2;
+                result(1, 2).column_index = 1;
+                result(1, 3).column_index = 0;
+            }
         }
         break;
         case (E):
@@ -458,6 +502,17 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
             result(1, 1).row_index = 1;
             result(1, 2).row_index = 2;
             result(1, 3).row_index = 3;
+
+            if (S) {
+                result(0, 0).row_index = 3;
+                result(0, 1).row_index = 2;
+                result(0, 2).row_index = 1;
+                result(0, 3).row_index = 0;
+                result(1, 0).row_index = 3;
+                result(1, 1).row_index = 2;
+                result(1, 2).row_index = 1;
+                result(1, 3).row_index = 0;
+            }
         }
         break;
     }
@@ -484,8 +539,8 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
         return GL_FALSE;
     }
 
-    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0);
-    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1);
+    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, direction_1);
+    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, direction_0);
     DCoordinate3 temp;
     for(GLuint i = 0; i < 4; ++i){
         temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_1->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2.0f;
@@ -538,44 +593,44 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
 
     FirstOrderAlgebraicHyperbolicPatch &patch = *_attributes[patch_count].patch;
 
-    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0);
-    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1);
+    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, W);
+    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, E);
 
     patch(0, 0) = (*attribute_0->patch)(first_indexes(0, 0).row_index, first_indexes(0, 0).column_index);
     patch(1, 0) = (*attribute_0->patch)(first_indexes(0, 1).row_index, first_indexes(0, 1).column_index);
     patch(2, 0) = (*attribute_0->patch)(first_indexes(0, 2).row_index, first_indexes(0, 2).column_index);
     patch(3, 0) = (*attribute_0->patch)(first_indexes(0, 3).row_index, first_indexes(0, 3).column_index);
 
-    patch(0, 3) = (*attribute_0->patch)(second_indexes(0, 0).row_index, first_indexes(0, 0).column_index);
-    patch(1, 3) = (*attribute_0->patch)(second_indexes(0, 1).row_index, first_indexes(0, 1).column_index);
-    patch(2, 3) = (*attribute_0->patch)(second_indexes(0, 2).row_index, first_indexes(0, 2).column_index);
-    patch(3, 3) = (*attribute_0->patch)(second_indexes(0, 3).row_index, first_indexes(0, 3).column_index);
+    patch(0, 3) = (*attribute_1->patch)(second_indexes(0, 0).row_index, second_indexes(0, 0).column_index);
+    patch(1, 3) = (*attribute_1->patch)(second_indexes(0, 1).row_index, second_indexes(0, 1).column_index);
+    patch(2, 3) = (*attribute_1->patch)(second_indexes(0, 2).row_index, second_indexes(0, 2).column_index);
+    patch(3, 3) = (*attribute_1->patch)(second_indexes(0, 3).row_index, second_indexes(0, 3).column_index);
 
     patch(0, 1) = patch(0, 0) + ((*attribute_0->patch)(first_indexes(0, 0).row_index, first_indexes(0, 0).column_index) - (*attribute_0->patch)(first_indexes(1, 0).row_index, first_indexes(1, 0).column_index));
     patch(1, 1) = patch(1, 0) + ((*attribute_0->patch)(first_indexes(0, 1).row_index, first_indexes(0, 1).column_index) - (*attribute_0->patch)(first_indexes(1, 1).row_index, first_indexes(1, 1).column_index));
     patch(2, 1) = patch(2, 0) + ((*attribute_0->patch)(first_indexes(0, 2).row_index, first_indexes(0, 2).column_index) - (*attribute_0->patch)(first_indexes(1, 2).row_index, first_indexes(1, 2).column_index));
     patch(3, 1) = patch(3, 0) + ((*attribute_0->patch)(first_indexes(0, 3).row_index, first_indexes(0, 3).column_index) - (*attribute_0->patch)(first_indexes(1, 3).row_index, first_indexes(1, 3).column_index));
 
-    patch(0, 2) = patch(0, 3) + ((*attribute_0->patch)(second_indexes(0, 0).row_index, second_indexes(0, 0).column_index) - (*attribute_0->patch)(second_indexes(1, 0).row_index, second_indexes(1, 0).column_index));
-    patch(1, 2) = patch(1, 3) + ((*attribute_0->patch)(second_indexes(0, 1).row_index, second_indexes(0, 1).column_index) - (*attribute_0->patch)(second_indexes(1, 1).row_index, second_indexes(1, 1).column_index));
-    patch(2, 2) = patch(2, 3) + ((*attribute_0->patch)(second_indexes(0, 2).row_index, second_indexes(0, 2).column_index) - (*attribute_0->patch)(second_indexes(1, 2).row_index, second_indexes(1, 2).column_index));
-    patch(3, 2) = patch(3, 3) + ((*attribute_0->patch)(second_indexes(0, 3).row_index, second_indexes(0, 3).column_index) - (*attribute_0->patch)(second_indexes(1, 3).row_index, second_indexes(1, 3).column_index));
+    patch(0, 2) = patch(0, 3) + ((*attribute_1->patch)(second_indexes(0, 0).row_index, second_indexes(0, 0).column_index) - (*attribute_1->patch)(second_indexes(1, 0).row_index, second_indexes(1, 0).column_index));
+    patch(1, 2) = patch(1, 3) + ((*attribute_1->patch)(second_indexes(0, 1).row_index, second_indexes(0, 1).column_index) - (*attribute_1->patch)(second_indexes(1, 1).row_index, second_indexes(1, 1).column_index));
+    patch(2, 2) = patch(2, 3) + ((*attribute_1->patch)(second_indexes(0, 2).row_index, second_indexes(0, 2).column_index) - (*attribute_1->patch)(second_indexes(1, 2).row_index, second_indexes(1, 2).column_index));
+    patch(3, 2) = patch(3, 3) + ((*attribute_1->patch)(second_indexes(0, 3).row_index, second_indexes(0, 3).column_index) - (*attribute_1->patch)(second_indexes(1, 3).row_index, second_indexes(1, 3).column_index));
 
-    DCoordinate3 temp;
-    for(GLuint i = 0; i < 4; ++i){
-        temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_1->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2;
-        (*attribute_0->patch)(first_indexes(0, i).row_index, first_indexes(0, i).column_index) = temp;
-        (*attribute_1->patch)(second_indexes(0, i).row_index, second_indexes(0, i).column_index) = temp;
-    }
 
     //Set neighbours!!!
-    _attributes[index_0].connection_type[direction_0] = direction_1;
-    _attributes[index_0].neighbours[direction_0] = &_attributes[index_1];
-    _attributes[index_1].connection_type[direction_1] = direction_0;
-    _attributes[index_1].neighbours[direction_1] = &_attributes[index_0];
+    _attributes[index_0].connection_type[direction_0] = W;
+    _attributes[index_0].neighbours[direction_0] = &_attributes[patch_count];
+    _attributes[index_1].connection_type[direction_1] = E;
+    _attributes[index_1].neighbours[direction_1] = &_attributes[patch_count];
+
+    _attributes[patch_count].neighbours[W] = &_attributes[index_0];
+    _attributes[patch_count].neighbours[E] = &_attributes[index_1];
+    _attributes[patch_count].connection_type[W] = direction_0;
+    _attributes[patch_count].connection_type[E] = direction_1;
 
     if (!_attributes[index_0].UpdateImageAndVBO() ||
-        !_attributes[index_1].UpdateImageAndVBO())
+        !_attributes[index_1].UpdateImageAndVBO() ||
+        !_attributes[patch_count].UpdateImageAndVBO())
     {
         std::cout << "Error updating after JoinExistingPatches!" << std::endl;
         return GL_FALSE;
