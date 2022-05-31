@@ -172,6 +172,13 @@ namespace cagd
         void set_selected_patch_2(int);
         void set_direction_patch_1(int);
         void set_direction_patch_2(int);
+
+        void pushPatch();
+        void pullPatch();
+
+        void call_join_patch();
+        void call_extend_patch();
+        void call_merge_patch();
     signals:
         void set_x_signal(double);
         void set_y_signal(double);
@@ -179,9 +186,6 @@ namespace cagd
         void set_x_signal_patch(double);
         void set_y_signal_patch(double);
         void set_z_signal_patch(double);
-        void call_join_patch();
-        void call_extend_patch();
-        void call_merge_patch();
 
     };
 }

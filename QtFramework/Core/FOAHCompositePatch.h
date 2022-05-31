@@ -81,9 +81,6 @@ namespace cagd
         DCoordinate3    getPoint(GLuint, GLuint, GLuint);
 
         Matrix<Pair> GetIndexesFromDirection(Direction);
-
-        GLvoid pushPatch(GLuint, GLuint);
-        GLvoid pullPatch(GLuint, GLuint);
     };
 }
 
