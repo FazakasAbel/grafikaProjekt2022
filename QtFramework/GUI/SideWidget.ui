@@ -624,28 +624,28 @@
          </property>
         </widget>
        </item>
-       <item row="15" column="0">
+       <item row="16" column="0">
         <widget class="QLabel" name="label_11">
          <property name="text">
           <string>Enable Texture</string>
          </property>
         </widget>
        </item>
-       <item row="15" column="1">
+       <item row="16" column="1">
         <widget class="QCheckBox" name="checkBox_texture">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="16" column="0">
+       <item row="17" column="0">
         <widget class="QLabel" name="label_12">
          <property name="text">
           <string>Select Texture</string>
          </property>
         </widget>
        </item>
-       <item row="16" column="1">
+       <item row="17" column="1">
         <widget class="QComboBox" name="comboBox_texture">
          <item>
           <property name="text">
@@ -719,28 +719,28 @@
          </item>
         </widget>
        </item>
-       <item row="17" column="0">
+       <item row="18" column="0">
         <widget class="QLabel" name="label_13">
          <property name="text">
           <string>Enable Shader</string>
          </property>
         </widget>
        </item>
-       <item row="17" column="1">
+       <item row="18" column="1">
         <widget class="QCheckBox" name="checkBox_shader">
          <property name="text">
           <string/>
          </property>
         </widget>
        </item>
-       <item row="18" column="0">
+       <item row="19" column="0">
         <widget class="QLabel" name="label_27">
          <property name="text">
           <string>Select Shader</string>
          </property>
         </widget>
        </item>
-       <item row="18" column="1">
+       <item row="19" column="1">
         <widget class="QComboBox" name="comboBox_shader">
          <item>
           <property name="text">
@@ -764,14 +764,14 @@
          </item>
         </widget>
        </item>
-       <item row="19" column="0">
+       <item row="20" column="0">
         <widget class="QLabel" name="label_28">
          <property name="text">
           <string>Enable Material</string>
          </property>
         </widget>
        </item>
-       <item row="19" column="1">
+       <item row="20" column="1">
         <widget class="QCheckBox" name="checkBox_material">
          <property name="text">
           <string/>
@@ -781,14 +781,14 @@
          </property>
         </widget>
        </item>
-       <item row="20" column="0">
+       <item row="21" column="0">
         <widget class="QLabel" name="label_29">
          <property name="text">
           <string>Select Material</string>
          </property>
         </widget>
        </item>
-       <item row="20" column="1">
+       <item row="21" column="1">
         <widget class="QComboBox" name="comboBox_material">
          <item>
           <property name="text">
@@ -827,14 +827,14 @@
          </item>
         </widget>
        </item>
-       <item row="21" column="0">
+       <item row="22" column="0">
         <widget class="QLabel" name="selectedCurveLabel_10">
          <property name="text">
           <string>Toon variables</string>
          </property>
         </widget>
        </item>
-       <item row="21" column="1">
+       <item row="22" column="1">
         <widget class="QDoubleSpinBox" name="r_selector">
          <property name="minimum">
           <double>0.000000000000000</double>
@@ -847,7 +847,7 @@
          </property>
         </widget>
        </item>
-       <item row="22" column="1">
+       <item row="23" column="1">
         <widget class="QDoubleSpinBox" name="g_selector">
          <property name="minimum">
           <double>0.000000000000000</double>
@@ -860,7 +860,7 @@
          </property>
         </widget>
        </item>
-       <item row="23" column="1">
+       <item row="24" column="1">
         <widget class="QDoubleSpinBox" name="b_selector">
          <property name="minimum">
           <double>0.000000000000000</double>
@@ -873,14 +873,14 @@
          </property>
         </widget>
        </item>
-       <item row="24" column="0">
+       <item row="25" column="0">
         <widget class="QLabel" name="selectedCurveLabel_11">
          <property name="text">
           <string>Reflection lines variables</string>
          </property>
         </widget>
        </item>
-       <item row="24" column="1">
+       <item row="25" column="1">
         <widget class="QDoubleSpinBox" name="scaling_selector">
          <property name="minimum">
           <double>0.000000000000000</double>
@@ -893,7 +893,7 @@
          </property>
         </widget>
        </item>
-       <item row="25" column="1">
+       <item row="26" column="1">
         <widget class="QDoubleSpinBox" name="smooth_selector">
          <property name="minimum">
           <double>0.000000000000000</double>
@@ -906,7 +906,7 @@
          </property>
         </widget>
        </item>
-       <item row="26" column="1">
+       <item row="27" column="1">
         <widget class="QDoubleSpinBox" name="shade_selector">
          <property name="minimum">
           <double>0.000000000000000</double>
@@ -1023,6 +1023,32 @@
         <widget class="QLabel" name="label_32">
          <property name="text">
           <string>VISUAL</string>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="1">
+        <widget class="QComboBox" name="comboBox_lightsource">
+         <item>
+          <property name="text">
+           <string>Directional Light</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Point Light</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Spotlight</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="15" column="0">
+        <widget class="QLabel" name="label_33">
+         <property name="text">
+          <string>Select Light Source</string>
          </property>
         </widget>
        </item>

@@ -269,7 +269,7 @@ public:
 
         tabWidget = new QTabWidget(groupBox);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 240, 431, 1121));
+        tabWidget->setGeometry(QRect(10, 260, 431, 1121));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         formLayoutWidget = new QWidget(tab);
@@ -736,7 +736,7 @@ public:
 
         gridLayoutWidget_2 = new QWidget(tab_2);
         gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
-        gridLayoutWidget_2->setGeometry(QRect(0, 770, 421, 124));
+        gridLayoutWidget_2->setGeometry(QRect(0, 850, 421, 151));
         gridLayout_2 = new QGridLayout(gridLayoutWidget_2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
