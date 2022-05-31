@@ -53,8 +53,6 @@ namespace cagd
         RowMatrix<GenericCurve3*>		*_u_lines, *_v_lines;
 
         DirectionalLight *_dl = nullptr;
-        PointLight *_pl = nullptr;
-        Spotlight *_sl = nullptr;
 
         RowMatrix<ShaderProgram*>                _shaders;
         GLuint                                   _selected_shader = 0;
@@ -69,7 +67,6 @@ namespace cagd
         bool                                  _enable_texture = false;
         bool                                  _enable_color = false;
         int _selected_page = 0;
-        int _selected_light = 0;
 
         TriangulatedMesh3                       _potykany;
         GLvoid    updateUniformVariables();
@@ -92,7 +89,6 @@ namespace cagd
         int                             _selected_patch_2 = 0;
         int                             _selected_direction_patch_1 = 0;
         int                             _selected_direction_patch_2 = 0;
-
 
     public:
         // special and default constructor
@@ -152,7 +148,6 @@ namespace cagd
         void set_texture_enable(bool);
 
         void set_selected_page(int);
-        void set_selected_light(int);
         void set_patch_color_r(double);
         void set_patch_color_g(double);
         void set_patch_color_b(double);
