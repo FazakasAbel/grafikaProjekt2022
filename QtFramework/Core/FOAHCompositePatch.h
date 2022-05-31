@@ -28,6 +28,8 @@ namespace cagd
 
             std::vector<PatchAttributes*>   neighbours;
             std::vector<Direction>         	connection_type;
+            RowMatrix<GenericCurve3*>*		u_curves;
+            RowMatrix<GenericCurve3*>*		v_curves;
 
             // ctor, copy ctor, assignment operator, dtor (they are required by the std::vector!)
             PatchAttributes();
@@ -35,6 +37,12 @@ namespace cagd
             PatchAttributes(const PatchAttributes&);
             PatchAttributes& operator =(const PatchAttributes&);
             ~PatchAttributes();
+
+            GLboolean UpdateIsoparametricCurves(GLuint iso_line_count = 4);
+            GLboolean UpdateImageAndVBO();
+
+            GLvoid push(GLuint, PatchAttributes*);
+            GLvoid pull(GLuint, PatchAttributes*);
         };
 
     protected:
@@ -60,6 +68,7 @@ namespace cagd
         GLboolean RenderAllPatches(GLuint order, GLenum render_mode) const;
         GLboolean RenderSelectedPatch(GLuint index, GLuint order, GLenum render_mode) const;
         GLboolean RenderAllPatchData(GLenum render_mode) const;
+        GLboolean RenderIsoparametricCurves(GLuint order, GLenum render_mode) const;
 
         // other setters and getters
         // ...
@@ -67,6 +76,9 @@ namespace cagd
         Adott irányba visszaadja
         */
         Matrix<Pair> GetIndexesFromDirection(Direction);
+
+        GLvoid pushPatch(GLuint, GLuint);
+        GLvoid pullPatch(GLuint, GLuint);
     };
 }
 
