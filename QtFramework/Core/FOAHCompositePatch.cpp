@@ -727,16 +727,36 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     DCoordinate3 movement = newPosition - point;
     DCoordinate3 prev_pos = point;
 
+    _attributes[patch_index].patch->SetData(row, column, newPosition);
+
     // TODO: szel
     if (row == 0 && column == 1) {
         if (_attributes[patch_index].neighbours[N]) {
             Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, _attributes[patch_index].connection_type[N]);
             Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], N);
+            _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
             _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+
+            _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
+            _attributes[patch_index].neighbours[N]->patch->SetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement);
             _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[N]->patch->SetData(secondIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+            _attributes[patch_index].neighbours[N]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement);
 
             _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
+        }
+
+        if (_attributes[patch_index].neighbours[E]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, _attributes[patch_index].connection_type[E]);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], E);
+            _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
+            _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+
+            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, 0).row_index ,secondIndexes(1, 0).column_index, prev_pos);
+            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(1, 0).row_index ,secondIndexes(1, 0).column_index, prev_pos - movement);
+            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, 1).row_index ,secondIndexes(1, 1).column_index, prev_pos);
+            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(1, 1).row_index ,secondIndexes(1, 1).column_index, prev_pos - movement);
+
+            _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
         }
 
     }
