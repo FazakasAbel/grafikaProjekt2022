@@ -61,11 +61,16 @@ namespace cagd
         GLboolean RenderSelectedPatch(GLuint index, GLuint order, GLenum render_mode) const;
         GLboolean RenderAllPatchData(GLenum render_mode) const;
 
+
         // other setters and getters
         // ...
-        /*
-        Adott irányba visszaadja
-        */
+
+//        Adott irányba visszaadja
+        GLvoid pushPatch(GLuint index, GLuint direction);
+        GLvoid pullPatch(GLuint index, GLuint direction);
+        GLuint getPatchCount();
+        DCoordinate3    getPoint(GLuint, GLuint, GLuint);
+
         Matrix<Pair> GetIndexesFromDirection(Direction);
     };
 }
