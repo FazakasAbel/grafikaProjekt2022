@@ -705,7 +705,6 @@ DCoordinate3 FOAHCompositePatch3::getPoint(GLuint patchIndex, GLuint patchPointX
     _attributes[patchIndex].patch->GetData(patchPointX,patchPointY,res);
     return res;
 }
-
 GLuint FOAHCompositePatch3::getPatchCount()
 {
     return _attributes.size();

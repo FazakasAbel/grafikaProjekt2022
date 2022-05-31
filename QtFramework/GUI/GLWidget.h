@@ -188,6 +188,10 @@ namespace cagd
 
         void set_show_second_der_patch(bool value);
         void set_show_first_der_patch(bool value);
+
+        void update_selected_point_patch_x(double value);
+        void update_selected_point_patch_y(double value);
+        void update_selected_point_patch_z(double value);
     signals:
         void set_x_signal(double);
         void set_y_signal(double);
