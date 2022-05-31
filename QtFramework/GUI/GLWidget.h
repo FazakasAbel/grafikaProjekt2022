@@ -92,6 +92,8 @@ namespace cagd
         int                             _selected_patch_2 = 0;
         int                             _selected_direction_patch_1 = 0;
         int                             _selected_direction_patch_2 = 0;
+        GLboolean                       _show_first_der_patch = false;
+        GLboolean                       _show_second_der_patch = false;
 
     public:
         // special and default constructor
@@ -183,6 +185,9 @@ namespace cagd
         void call_join_patch();
         void call_extend_patch();
         void call_merge_patch();
+
+        void set_show_second_der_patch(bool value);
+        void set_show_first_der_patch(bool value);
     signals:
         void set_x_signal(double);
         void set_y_signal(double);

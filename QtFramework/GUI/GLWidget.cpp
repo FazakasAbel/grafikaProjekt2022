@@ -388,7 +388,13 @@ namespace cagd
                 glPointSize(10.0f);
                 _composite_patch->RenderAllPatchData(GL_POINTS);
                 glColor3f(0.0f, 1.0f, 0.0f);
-//                _composite_patch->RenderIsoparametricCurves(1, GL_LINES);
+                if(_show_first_der_patch) {
+                    _composite_patch->RenderIsoparametricCurves(1, GL_LINES);
+                }
+                if(_show_second_der_patch) {
+                    _composite_patch->RenderIsoparametricCurves(2, GL_LINES);
+                }
+
 
                 if(_enable_shader) {
                     _shaders[_selected_shader]->Disable();
@@ -520,14 +526,24 @@ namespace cagd
 
         update();
     }
+    void GLWidget::set_show_first_der_patch(bool value)
+    {
+        _show_first_der_patch = value;
 
+        update();
+    }
     void GLWidget::set_show_second_der(bool value)
     {
         _show_second_der = value;
 
         update();
     }
+    void GLWidget::set_show_second_der_patch(bool value)
+    {
+        _show_second_der_patch = value;
 
+        update();
+    }
     void GLWidget::set_selected_arc(int index){
         if(index != _selected_arc && _selected_arc >= 0 && _selected_arc <= _composite_arc->getArcCount()-1 && index<=_composite_arc->getArcCount()-1){
             cout<<"ifben"<<endl;
