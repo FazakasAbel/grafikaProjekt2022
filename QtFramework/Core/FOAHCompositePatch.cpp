@@ -275,6 +275,22 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
             _attributes[index].connection_type[direction] = S;
             _attributes[patch_count].neighbours[S] = &_attributes[index];
             _attributes[patch_count].connection_type[S] = direction;
+
+            if (_attributes[index].neighbours[W])
+            {
+                _attributes[patch_count].neighbours[SW] = _attributes[index].neighbours[W];
+                _attributes[patch_count].connection_type[SW] = NE;
+                _attributes[index].neighbours[W]->neighbours[NE] = &_attributes[patch_count];
+                _attributes[index].neighbours[W]->neighbours[NE]->connection_type[NE] = SW;
+            }
+            if (_attributes[index].neighbours[E])
+            {
+                _attributes[patch_count].neighbours[SE] = _attributes[index].neighbours[E];
+                _attributes[patch_count].connection_type[SE] = NW;
+                _attributes[index].neighbours[E]->neighbours[NW] = &_attributes[patch_count];
+                _attributes[index].neighbours[E]->neighbours[NW]->connection_type[NW] = SE;
+            }
+
         }
         break;
         case (W):
@@ -307,6 +323,21 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
             _attributes[index].connection_type[direction] = E;
             _attributes[patch_count].neighbours[E] = &_attributes[index];
             _attributes[patch_count].connection_type[E] = direction;
+
+            if (_attributes[index].neighbours[N])
+            {
+                _attributes[patch_count].neighbours[NE] = _attributes[index].neighbours[N];
+                _attributes[patch_count].connection_type[NE] = SW;
+                _attributes[index].neighbours[N]->neighbours[SW] = &_attributes[patch_count];
+                _attributes[index].neighbours[N]->neighbours[SW]->connection_type[SW] = NE;
+            }
+            if (_attributes[index].neighbours[S])
+            {
+                _attributes[patch_count].neighbours[SE] = _attributes[index].neighbours[S];
+                _attributes[patch_count].connection_type[SE] = NW;
+                _attributes[index].neighbours[S]->neighbours[NW] = &_attributes[patch_count];
+                _attributes[index].neighbours[S]->neighbours[NW]->connection_type[NW] = SE;
+            }
         }
         break;
         case (E):
@@ -339,6 +370,21 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
             _attributes[index].connection_type[direction] = W;
             _attributes[patch_count].neighbours[W] = &_attributes[index];
             _attributes[patch_count].connection_type[W] = direction;
+
+            if (_attributes[index].neighbours[N])
+            {
+                _attributes[patch_count].neighbours[NW] = _attributes[index].neighbours[N];
+                _attributes[patch_count].connection_type[NW] = SE;
+                _attributes[index].neighbours[N]->neighbours[SE] = &_attributes[patch_count];
+                _attributes[index].neighbours[N]->neighbours[SE]->connection_type[SE] = NW;
+            }
+            if (_attributes[index].neighbours[S])
+            {
+                _attributes[patch_count].neighbours[SW] = _attributes[index].neighbours[S];
+                _attributes[patch_count].connection_type[SW] = NE;
+                _attributes[index].neighbours[S]->neighbours[NE] = &_attributes[patch_count];
+                _attributes[index].neighbours[S]->neighbours[NE]->connection_type[NE] = SW;
+            }
         }
         break;
         case (S):
@@ -371,6 +417,21 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
             _attributes[index].connection_type[direction] = N;
             _attributes[patch_count].neighbours[N] = &_attributes[index];
             _attributes[patch_count].connection_type[N] = direction;
+
+            if (_attributes[index].neighbours[W])
+            {
+                _attributes[patch_count].neighbours[NW] = _attributes[index].neighbours[W];
+                _attributes[patch_count].connection_type[NW] = SE;
+                _attributes[index].neighbours[W]->neighbours[SE] = &_attributes[patch_count];
+                _attributes[index].neighbours[W]->neighbours[SE]->connection_type[SE] = NW;
+            }
+            if (_attributes[index].neighbours[E])
+            {
+                _attributes[patch_count].neighbours[NE] = _attributes[index].neighbours[E];
+                _attributes[patch_count].connection_type[NE] = SW;
+                _attributes[index].neighbours[E]->neighbours[SW] = &_attributes[patch_count];
+                _attributes[index].neighbours[E]->neighbours[SW]->connection_type[SW] =NE;
+            }
         }
         break;
     }
@@ -643,7 +704,6 @@ DCoordinate3 FOAHCompositePatch3::getPoint(GLuint patchIndex, GLuint patchPointX
     _attributes[patchIndex].patch->GetData(patchPointX,patchPointY,res);
     return res;
 }
-
 GLuint FOAHCompositePatch3::getPatchCount()
 {
     return _attributes.size();
