@@ -128,6 +128,8 @@ public:
     QLabel *label_24;
     QLabel *label_25;
     QLabel *label_32;
+    QComboBox *comboBox_lightsource;
+    QLabel *label_33;
     QWidget *gridLayoutWidget_2;
     QGridLayout *gridLayout_2;
     QLabel *label_26;
@@ -505,17 +507,17 @@ public:
         label_11 = new QLabel(formLayoutWidget_2);
         label_11->setObjectName(QString::fromUtf8("label_11"));
 
-        formLayout_4->setWidget(15, QFormLayout::LabelRole, label_11);
+        formLayout_4->setWidget(16, QFormLayout::LabelRole, label_11);
 
         checkBox_texture = new QCheckBox(formLayoutWidget_2);
         checkBox_texture->setObjectName(QString::fromUtf8("checkBox_texture"));
 
-        formLayout_4->setWidget(15, QFormLayout::FieldRole, checkBox_texture);
+        formLayout_4->setWidget(16, QFormLayout::FieldRole, checkBox_texture);
 
         label_12 = new QLabel(formLayoutWidget_2);
         label_12->setObjectName(QString::fromUtf8("label_12"));
 
-        formLayout_4->setWidget(16, QFormLayout::LabelRole, label_12);
+        formLayout_4->setWidget(17, QFormLayout::LabelRole, label_12);
 
         comboBox_texture = new QComboBox(formLayoutWidget_2);
         comboBox_texture->addItem(QString());
@@ -534,22 +536,22 @@ public:
         comboBox_texture->addItem(QString());
         comboBox_texture->setObjectName(QString::fromUtf8("comboBox_texture"));
 
-        formLayout_4->setWidget(16, QFormLayout::FieldRole, comboBox_texture);
+        formLayout_4->setWidget(17, QFormLayout::FieldRole, comboBox_texture);
 
         label_13 = new QLabel(formLayoutWidget_2);
         label_13->setObjectName(QString::fromUtf8("label_13"));
 
-        formLayout_4->setWidget(17, QFormLayout::LabelRole, label_13);
+        formLayout_4->setWidget(18, QFormLayout::LabelRole, label_13);
 
         checkBox_shader = new QCheckBox(formLayoutWidget_2);
         checkBox_shader->setObjectName(QString::fromUtf8("checkBox_shader"));
 
-        formLayout_4->setWidget(17, QFormLayout::FieldRole, checkBox_shader);
+        formLayout_4->setWidget(18, QFormLayout::FieldRole, checkBox_shader);
 
         label_27 = new QLabel(formLayoutWidget_2);
         label_27->setObjectName(QString::fromUtf8("label_27"));
 
-        formLayout_4->setWidget(18, QFormLayout::LabelRole, label_27);
+        formLayout_4->setWidget(19, QFormLayout::LabelRole, label_27);
 
         comboBox_shader = new QComboBox(formLayoutWidget_2);
         comboBox_shader->addItem(QString());
@@ -558,23 +560,23 @@ public:
         comboBox_shader->addItem(QString());
         comboBox_shader->setObjectName(QString::fromUtf8("comboBox_shader"));
 
-        formLayout_4->setWidget(18, QFormLayout::FieldRole, comboBox_shader);
+        formLayout_4->setWidget(19, QFormLayout::FieldRole, comboBox_shader);
 
         label_28 = new QLabel(formLayoutWidget_2);
         label_28->setObjectName(QString::fromUtf8("label_28"));
 
-        formLayout_4->setWidget(19, QFormLayout::LabelRole, label_28);
+        formLayout_4->setWidget(20, QFormLayout::LabelRole, label_28);
 
         checkBox_material = new QCheckBox(formLayoutWidget_2);
         checkBox_material->setObjectName(QString::fromUtf8("checkBox_material"));
         checkBox_material->setChecked(false);
 
-        formLayout_4->setWidget(19, QFormLayout::FieldRole, checkBox_material);
+        formLayout_4->setWidget(20, QFormLayout::FieldRole, checkBox_material);
 
         label_29 = new QLabel(formLayoutWidget_2);
         label_29->setObjectName(QString::fromUtf8("label_29"));
 
-        formLayout_4->setWidget(20, QFormLayout::LabelRole, label_29);
+        formLayout_4->setWidget(21, QFormLayout::LabelRole, label_29);
 
         comboBox_material = new QComboBox(formLayoutWidget_2);
         comboBox_material->addItem(QString());
@@ -586,12 +588,12 @@ public:
         comboBox_material->addItem(QString());
         comboBox_material->setObjectName(QString::fromUtf8("comboBox_material"));
 
-        formLayout_4->setWidget(20, QFormLayout::FieldRole, comboBox_material);
+        formLayout_4->setWidget(21, QFormLayout::FieldRole, comboBox_material);
 
         selectedCurveLabel_10 = new QLabel(formLayoutWidget_2);
         selectedCurveLabel_10->setObjectName(QString::fromUtf8("selectedCurveLabel_10"));
 
-        formLayout_4->setWidget(21, QFormLayout::LabelRole, selectedCurveLabel_10);
+        formLayout_4->setWidget(22, QFormLayout::LabelRole, selectedCurveLabel_10);
 
         r_selector = new QDoubleSpinBox(formLayoutWidget_2);
         r_selector->setObjectName(QString::fromUtf8("r_selector"));
@@ -599,7 +601,7 @@ public:
         r_selector->setMaximum(1.000000000000000);
         r_selector->setSingleStep(0.010000000000000);
 
-        formLayout_4->setWidget(21, QFormLayout::FieldRole, r_selector);
+        formLayout_4->setWidget(22, QFormLayout::FieldRole, r_selector);
 
         g_selector = new QDoubleSpinBox(formLayoutWidget_2);
         g_selector->setObjectName(QString::fromUtf8("g_selector"));
@@ -607,7 +609,7 @@ public:
         g_selector->setMaximum(1.000000000000000);
         g_selector->setSingleStep(0.010000000000000);
 
-        formLayout_4->setWidget(22, QFormLayout::FieldRole, g_selector);
+        formLayout_4->setWidget(23, QFormLayout::FieldRole, g_selector);
 
         b_selector = new QDoubleSpinBox(formLayoutWidget_2);
         b_selector->setObjectName(QString::fromUtf8("b_selector"));
@@ -615,12 +617,12 @@ public:
         b_selector->setMaximum(1.000000000000000);
         b_selector->setSingleStep(0.010000000000000);
 
-        formLayout_4->setWidget(23, QFormLayout::FieldRole, b_selector);
+        formLayout_4->setWidget(24, QFormLayout::FieldRole, b_selector);
 
         selectedCurveLabel_11 = new QLabel(formLayoutWidget_2);
         selectedCurveLabel_11->setObjectName(QString::fromUtf8("selectedCurveLabel_11"));
 
-        formLayout_4->setWidget(24, QFormLayout::LabelRole, selectedCurveLabel_11);
+        formLayout_4->setWidget(25, QFormLayout::LabelRole, selectedCurveLabel_11);
 
         scaling_selector = new QDoubleSpinBox(formLayoutWidget_2);
         scaling_selector->setObjectName(QString::fromUtf8("scaling_selector"));
@@ -628,7 +630,7 @@ public:
         scaling_selector->setMaximum(10.000000000000000);
         scaling_selector->setSingleStep(0.100000000000000);
 
-        formLayout_4->setWidget(24, QFormLayout::FieldRole, scaling_selector);
+        formLayout_4->setWidget(25, QFormLayout::FieldRole, scaling_selector);
 
         smooth_selector = new QDoubleSpinBox(formLayoutWidget_2);
         smooth_selector->setObjectName(QString::fromUtf8("smooth_selector"));
@@ -636,7 +638,7 @@ public:
         smooth_selector->setMaximum(10.000000000000000);
         smooth_selector->setSingleStep(0.100000000000000);
 
-        formLayout_4->setWidget(25, QFormLayout::FieldRole, smooth_selector);
+        formLayout_4->setWidget(26, QFormLayout::FieldRole, smooth_selector);
 
         shade_selector = new QDoubleSpinBox(formLayoutWidget_2);
         shade_selector->setObjectName(QString::fromUtf8("shade_selector"));
@@ -644,7 +646,7 @@ public:
         shade_selector->setMaximum(10.000000000000000);
         shade_selector->setSingleStep(0.100000000000000);
 
-        formLayout_4->setWidget(26, QFormLayout::FieldRole, shade_selector);
+        formLayout_4->setWidget(27, QFormLayout::FieldRole, shade_selector);
 
         pushButton_insert_patch = new QPushButton(formLayoutWidget_2);
         pushButton_insert_patch->setObjectName(QString::fromUtf8("pushButton_insert_patch"));
@@ -733,6 +735,19 @@ public:
         label_32->setObjectName(QString::fromUtf8("label_32"));
 
         formLayout_4->setWidget(14, QFormLayout::FieldRole, label_32);
+
+        comboBox_lightsource = new QComboBox(formLayoutWidget_2);
+        comboBox_lightsource->addItem(QString());
+        comboBox_lightsource->addItem(QString());
+        comboBox_lightsource->addItem(QString());
+        comboBox_lightsource->setObjectName(QString::fromUtf8("comboBox_lightsource"));
+
+        formLayout_4->setWidget(15, QFormLayout::FieldRole, comboBox_lightsource);
+
+        label_33 = new QLabel(formLayoutWidget_2);
+        label_33->setObjectName(QString::fromUtf8("label_33"));
+
+        formLayout_4->setWidget(15, QFormLayout::LabelRole, label_33);
 
         gridLayoutWidget_2 = new QWidget(tab_2);
         gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
@@ -919,6 +934,11 @@ public:
         label_24->setText(QCoreApplication::translate("SideWidget", "Y coordinate", nullptr));
         label_25->setText(QCoreApplication::translate("SideWidget", "Z coordinate", nullptr));
         label_32->setText(QCoreApplication::translate("SideWidget", "VISUAL", nullptr));
+        comboBox_lightsource->setItemText(0, QCoreApplication::translate("SideWidget", "Directional Light", nullptr));
+        comboBox_lightsource->setItemText(1, QCoreApplication::translate("SideWidget", "Point Light", nullptr));
+        comboBox_lightsource->setItemText(2, QCoreApplication::translate("SideWidget", "Spotlight", nullptr));
+
+        label_33->setText(QCoreApplication::translate("SideWidget", "Select Light Source", nullptr));
         label_26->setText(QCoreApplication::translate("SideWidget", "Select Patch 2", nullptr));
         comboBox_patch2_direction->setItemText(0, QCoreApplication::translate("SideWidget", "North", nullptr));
         comboBox_patch2_direction->setItemText(1, QCoreApplication::translate("SideWidget", "East", nullptr));

@@ -790,7 +790,7 @@ namespace cagd
         update();
     }
     void GLWidget::set_selected_point_patch_x(int index) {
-        if(index>= 0 && index<=4) {
+        if(index>= 0 && index<4) {
             _selected_patch_point_x = index;
         }
         //todo javitani
@@ -800,7 +800,7 @@ namespace cagd
         update();
     }
     void GLWidget::set_selected_point_patch_y(int index) {
-        if(index>=0 && index<=4) {
+        if(index>=0 && index<4) {
             _selected_patch_point_y = index;
         }
         //todo javitani
