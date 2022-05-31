@@ -555,7 +555,6 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
     _attributes[index_1].connection_type[direction_1] = direction_0;
     _attributes[index_1].neighbours[direction_1] = &_attributes[index_0];
 
-
     if (!_attributes[index_0].UpdateImageAndVBO() ||
         !_attributes[index_1].UpdateImageAndVBO())
     {
@@ -658,4 +657,36 @@ GLvoid FOAHCompositePatch3::pushPatch(GLuint index, GLuint direction)
 GLvoid FOAHCompositePatch3::pullPatch(GLuint index, GLuint direction)
 {
     _attributes[index].pull(direction, nullptr);
+}
+
+GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition)
+{
+    // TODO: 3 eset: szel, kozepso, sarok
+    DCoordinate3 point;
+    _attributes[patch_index].patch->GetData(row, column, point);
+    DCoordinate3 movement = newPosition - point;
+    DCoordinate3 prev_pos = point;
+
+    // TODO: szel
+    if (row == 0 && column == 1) {
+        if (_attributes[patch_index].neighbours[N]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, _attributes[patch_index].connection_type[N]);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], N);
+            _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+            _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+            _attributes[patch_index].neighbours[N]->patch->SetData(secondIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+
+            _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
+        }
+
+    }
+
+    // TODO: sarok
+
+    // TODO:  kozep
+
+
+
+
+    _attributes[patch_index].UpdateImageAndVBO();
 }
