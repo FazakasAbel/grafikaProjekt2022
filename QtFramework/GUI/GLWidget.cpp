@@ -978,4 +978,22 @@ namespace cagd
         patch_b = value;
         update();
     }
+    void GLWidget::update_selected_point_patch_x(double newValue) {
+        DCoordinate3 temp = _composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y);
+        DCoordinate3 *temp2 = new DCoordinate3(newValue,temp.y(),temp.z());
+        _composite_patch->setPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y,*temp2);
+        update();
+    }
+    void GLWidget::update_selected_point_patch_y(double newValue) {
+        DCoordinate3 temp = _composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y);
+        DCoordinate3 *temp2 = new DCoordinate3(temp.x(),newValue,temp.z());
+        _composite_patch->setPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y,*temp2);
+        update();
+    }
+    void GLWidget::update_selected_point_patch_z(double newValue) {
+        DCoordinate3 temp = _composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y);
+        DCoordinate3 *temp2 = new DCoordinate3(temp.x(),temp.y(),newValue);
+        _composite_patch->setPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y,*temp2);
+        update();
+    }
 }
