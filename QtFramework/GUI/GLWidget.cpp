@@ -323,7 +323,6 @@ namespace cagd
                     glEnable(GL_LIGHT0);
                     glEnable(GL_NORMALIZE);
                     _textures[_selected_texture]->bind();
-                    _text->bind();
 
                 }
 
