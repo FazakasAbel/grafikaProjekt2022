@@ -157,7 +157,7 @@ public:
         groupBox->setGeometry(QRect(20, 20, 441, 1371));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 20, 431, 221));
+        layoutWidget->setGeometry(QRect(10, 20, 431, 238));
         formLayout = new QFormLayout(layoutWidget);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
@@ -274,7 +274,7 @@ public:
         tab->setObjectName(QString::fromUtf8("tab"));
         formLayoutWidget = new QWidget(tab);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(0, 0, 421, 341));
+        formLayoutWidget->setGeometry(QRect(0, 0, 421, 374));
         formLayout_2 = new QFormLayout(formLayoutWidget);
         formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
         formLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -396,7 +396,7 @@ public:
 
         gridLayoutWidget = new QWidget(tab);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(0, 350, 421, 121));
+        gridLayoutWidget->setGeometry(QRect(0, 350, 421, 124));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -461,7 +461,7 @@ public:
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
         formLayoutWidget_2 = new QWidget(tab_2);
         formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
-        formLayoutWidget_2->setGeometry(QRect(0, 0, 421, 765));
+        formLayoutWidget_2->setGeometry(QRect(0, 0, 421, 845));
         formLayout_4 = new QFormLayout(formLayoutWidget_2);
         formLayout_4->setObjectName(QString::fromUtf8("formLayout_4"));
         formLayout_4->setContentsMargins(0, 0, 0, 0);
@@ -736,7 +736,7 @@ public:
 
         gridLayoutWidget_2 = new QWidget(tab_2);
         gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
-        gridLayoutWidget_2->setGeometry(QRect(0, 770, 421, 121));
+        gridLayoutWidget_2->setGeometry(QRect(0, 770, 421, 124));
         gridLayout_2 = new QGridLayout(gridLayoutWidget_2);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -811,7 +811,7 @@ public:
 
         retranslateUi(SideWidget);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(SideWidget);

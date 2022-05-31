@@ -563,7 +563,7 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
 
     DCoordinate3 temp;
     for(GLuint i = 0; i < 4; ++i){
-        temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_0->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2;
+        temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_1->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2;
         (*attribute_0->patch)(first_indexes(0, i).row_index, first_indexes(0, i).column_index) = temp;
         (*attribute_1->patch)(second_indexes(0, i).row_index, second_indexes(0, i).column_index) = temp;
     }
@@ -582,6 +582,17 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
     }
 
     return GL_TRUE;
+}
+
+DCoordinate3 FOAHCompositePatch3::getPoint(GLuint patchIndex, GLuint patchPointX, GLuint patchPointY) {
+    DCoordinate3 res;
+    _attributes[patchIndex].patch->GetData(patchPointX,patchPointY,res);
+    return res;
+}
+
+GLuint FOAHCompositePatch3::getPatchCount()
+{
+    return _attributes.size();
 }
 
 GLvoid FOAHCompositePatch3::pushPatch(GLuint index, GLuint direction)

@@ -50,6 +50,7 @@ namespace cagd
         int                             _direction = 0;
 
         FOAHCompositePatch3* 			_composite_patch;
+        RowMatrix<GenericCurve3*>		*_u_lines, *_v_lines;
 
         DirectionalLight *_dl = nullptr;
 
@@ -78,6 +79,16 @@ namespace cagd
         int                             _selected_curve_1_direction = 0;
         int                             _selected_curve_2_direction = 0;
 
+        //patch
+        int                             _selected_patch = 0;
+        int                             _direction_patch = 0;
+        int                             _selected_patch_point_x = 0;
+        int                             _selected_patch_point_y = 0;
+
+        int                             _selected_patch_1 = 0;
+        int                             _selected_patch_2 = 0;
+        int                             _selected_direction_patch_1 = 0;
+        int                             _selected_direction_patch_2 = 0;
 
     public:
         // special and default constructor
@@ -151,10 +162,30 @@ namespace cagd
         void call_merge();
         void call_extend();
 
+        //patch
+        void call_insert_patch();
+        void set_selected_patch(int);
+        void set_selected_direction_patch(int);
+        void set_selected_point_patch_x(int);
+        void set_selected_point_patch_y(int);
+        void set_selected_patch_1(int);
+        void set_selected_patch_2(int);
+        void set_direction_patch_1(int);
+        void set_direction_patch_2(int);
+
+        void pushPatch();
+        void pullPatch();
+
+        void call_join_patch();
+        void call_extend_patch();
+        void call_merge_patch();
     signals:
         void set_x_signal(double);
         void set_y_signal(double);
         void set_z_signal(double);
+        void set_x_signal_patch(double);
+        void set_y_signal_patch(double);
+        void set_z_signal_patch(double);
 
     };
 }

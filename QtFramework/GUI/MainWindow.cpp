@@ -101,6 +101,24 @@ namespace cagd
         connect(_side_widget->pushButton_extend, SIGNAL(pressed()), _gl_widget, SLOT(call_extend()));
         connect(_side_widget->pushButton_merge, SIGNAL(pressed()), _gl_widget, SLOT(call_merge()));
 
+        //PATCH
+        connect(_side_widget->patch_selector, SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_patch(int)));
+        connect(_side_widget->pushButton_insert_patch, SIGNAL(pressed()),_gl_widget, SLOT(call_insert_patch()));
+        connect(_side_widget->direction_selector_patch, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(set_selected_direction_patch(int)));
+        connect(_side_widget->plus_patch, SIGNAL(pressed()), _gl_widget, SLOT(pushPatch()));
+        connect(_side_widget->minus_patch, SIGNAL(pressed()),_gl_widget, SLOT(pullPatch()));
+        connect(_side_widget->patch_point_selector_x,SIGNAL(valueChanged(int)), _gl_widget, SLOT(set_selected_point_patch_x(int)));
+        connect(_side_widget->patch_point_selector_y,SIGNAL(valueChanged(int)),_gl_widget, SLOT(set_selected_point_patch_y(int)));
+        connect(_gl_widget, SIGNAL(set_x_signal_patch(double)), _side_widget->x_selector_patch, SLOT(setValue(double)));
+        connect(_gl_widget, SIGNAL(set_y_signal_patch(double)), _side_widget->y_selector_patch, SLOT(setValue(double)));
+        connect(_gl_widget, SIGNAL(set_z_signal_patch(double)), _side_widget->z_selector_patch, SLOT(setValue(double)));
+        connect(_side_widget->spinBox_patch1, SIGNAL(valueChanged(int)),_gl_widget, SLOT(set_selected_patch_1(int)));
+        connect(_side_widget->spinBox_patch2, SIGNAL(valueChanged(int)),_gl_widget, SLOT(set_selected_patch_2(int)));
+        connect(_side_widget->comboBox_patch1_direction, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(set_direction_patch_1(int)));
+        connect(_side_widget->comboBox_patch2_direction, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(set_direction_patch_2(int)));
+        connect(_side_widget->pushButton_join_patch, SIGNAL(pressed()),_gl_widget, SLOT(call_join_patch()));
+        connect(_side_widget->pushButton_extend_patch, SIGNAL(pressed()),_gl_widget, SLOT(call_extend_patch()));
+        connect(_side_widget->pushButton_merge_patch, SIGNAL(pressed()),_gl_widget,SLOT(call_merge_patch()));
     }
 
     //--------------------------------
