@@ -3,14 +3,14 @@
 using namespace std;
 using namespace cagd;
 
-FOAHCompositePatch3::PatchAttributes::PatchAttributes() : patch(nullptr), image(nullptr), neighbours(8, nullptr)
+FOAHCompositePatch3::PatchAttributes::PatchAttributes() : patch(nullptr), image(nullptr), neighbours(8, nullptr), connection_type(8, N)
 {
 }
 
 FOAHCompositePatch3::PatchAttributes::PatchAttributes(FirstOrderAlgebraicHyperbolicPatch& patch)
 {
     this->patch = new FirstOrderAlgebraicHyperbolicPatch(patch);
-    image = this->patch->GenerateImage(200, 200);
+    image = this->patch->GenerateImage(30, 30);
     this->neighbours.resize(8);
     this->connection_type.resize(8);
     for (auto& neighbor : this->neighbours)
@@ -59,6 +59,63 @@ FOAHCompositePatch3::PatchAttributes::~PatchAttributes()
     }
 }
 
+GLboolean FOAHCompositePatch3::PatchAttributes::UpdateIsoparametricCurves(GLuint iso_line_count)
+{
+    u_curves = patch->GenerateUIsoparametricLines(iso_line_count, 2, 200);
+    v_curves = patch->GenerateVIsoparametricLines(iso_line_count, 2, 200);
+    for (GLuint i = 0; i < iso_line_count; i++)
+    {
+        if (!(*u_curves)[i]->UpdateVertexBufferObjects(1))
+            return GL_FALSE;
+        if (!(*v_curves)[i]->UpdateVertexBufferObjects(1))
+            return GL_FALSE;
+    }
+
+    return GL_TRUE;
+}
+
+GLboolean FOAHCompositePatch3::PatchAttributes::UpdateImageAndVBO()
+{
+    if (!patch->UpdateVertexBufferObjectsOfData())
+    {
+        std::cout << "Error updating VBO of patch data!" << std::endl;
+        return GL_FALSE;
+    }
+
+    image = patch->GenerateImage(30, 30);
+    if (!image || !image->UpdateVertexBufferObjects())
+    {
+        std::cout << "Error updating VBO of patch image!" << std::endl;
+        return GL_FALSE;
+    }
+
+    if (!UpdateIsoparametricCurves())
+    {
+        std::cout << "Error updating isoparametric curves of patch!" << std::endl;
+        return GL_FALSE;
+    }
+
+    return GL_TRUE;
+}
+
+GLvoid FOAHCompositePatch3::PatchAttributes::push(GLuint axis, PatchAttributes* prev)
+{
+    for (GLuint i = 0; i < 4; i++)
+        for (GLuint j = 0; j < 4; j++)
+            (*patch)(i,j)[axis] += 1;
+
+    UpdateImageAndVBO();
+}
+
+GLvoid FOAHCompositePatch3::PatchAttributes::pull(GLuint axis, PatchAttributes* prev)
+{
+    for (GLuint i = 0; i < 4; i++)
+        for (GLuint j = 0; j < 4; j++)
+            (*patch)(i,j)[axis] -= 1;
+
+   UpdateImageAndVBO();
+}
+
 FOAHCompositePatch3::FOAHCompositePatch3(GLdouble alpha, GLuint minimal_patch_count_to_be_reserved) : _alpha(alpha)
 {
     _attributes.reserve(minimal_patch_count_to_be_reserved);
@@ -79,13 +136,13 @@ GLboolean FOAHCompositePatch3::InsertNewPatch()
         newPatch(0,3) = DCoordinate3(0,0,3);
 
         newPatch(1,0) = DCoordinate3(1,0,0);
-        newPatch(1,1) = DCoordinate3(1,0,1);
-        newPatch(1,2) = DCoordinate3(1,0,2);
+        newPatch(1,1) = DCoordinate3(1,2,1);
+        newPatch(1,2) = DCoordinate3(1,2,2);
         newPatch(1,3) = DCoordinate3(1,0,3);
 
         newPatch(2,0) = DCoordinate3(2,0,0);
-        newPatch(2,1) = DCoordinate3(2,0,1);
-        newPatch(2,2) = DCoordinate3(2,0,2);
+        newPatch(2,1) = DCoordinate3(2,2,1);
+        newPatch(2,2) = DCoordinate3(2,2,2);
         newPatch(2,3) = DCoordinate3(2,0,3);
 
         newPatch(3,0) = DCoordinate3(3,0,0);
@@ -93,12 +150,7 @@ GLboolean FOAHCompositePatch3::InsertNewPatch()
         newPatch(3,2) = DCoordinate3(3,0,2);
         newPatch(3,3) = DCoordinate3(3,0,3);
 
-        newPatch.UpdateVertexBufferObjectsOfData();
-        _attributes[patch_count].image = newPatch.GenerateImage(2, 200);
-        TriangulatedMesh3 &image = *_attributes[patch_count].image;
-        image.UpdateVertexBufferObjects();
-
-        return GL_TRUE;
+        return _attributes[patch_count].UpdateImageAndVBO();
     }
     catch (Exception e)
     {
@@ -138,6 +190,22 @@ GLboolean FOAHCompositePatch3::RenderAllPatchData(GLenum render_mode) const
     for (auto& patchAttr : _attributes)
         patchAttr.patch->RenderData(render_mode);
 
+    return GL_TRUE;
+}
+
+GLboolean FOAHCompositePatch3::RenderIsoparametricCurves(GLuint order, GLenum render_mode) const
+{
+    for (auto& patchAttr : _attributes)
+    {
+        for (GLuint i = 0; i < patchAttr.u_curves->GetColumnCount(); i++)
+        {
+            if (!(*patchAttr.u_curves)[i] || !(*patchAttr.v_curves)[i])
+                return GL_FALSE;
+
+            (*patchAttr.u_curves)[i]->RenderDerivatives(order, render_mode);
+            (*patchAttr.v_curves)[i]->RenderDerivatives(order, render_mode);
+        }
+    }
     return GL_TRUE;
 }
 
@@ -192,6 +260,10 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
             patch.SetData(0, 1, (*attribute->patch)(0, 1) + 3 * delta1);
             patch.SetData(0, 2, (*attribute->patch)(0, 2) + 3 * delta2);
             patch.SetData(0, 3, (*attribute->patch)(0, 3) + 3 * delta3);
+
+            _attributes[index].connection_type[direction] = S;
+            _attributes[patch_count].neighbours[S] = &_attributes[index];
+            _attributes[patch_count].connection_type[S] = direction;
         }
         break;
         case (W):
@@ -220,6 +292,10 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
             patch.SetData(1, 0, (*attribute->patch)(1, 0) + 3 * delta1);
             patch.SetData(2, 0, (*attribute->patch)(2, 0) + 3 * delta2);
             patch.SetData(3, 0, (*attribute->patch)(3, 0) + 3 * delta3);
+
+            _attributes[index].connection_type[direction] = E;
+            _attributes[patch_count].neighbours[E] = &_attributes[index];
+            _attributes[patch_count].connection_type[E] = direction;
         }
         break;
         case (E):
@@ -249,6 +325,9 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
             patch.SetData(2, 3, (*attribute->patch)(2, 3) + 3 * delta2);
             patch.SetData(3, 3, (*attribute->patch)(3, 3) + 3 * delta3);
 
+            _attributes[index].connection_type[direction] = W;
+            _attributes[patch_count].neighbours[W] = &_attributes[index];
+            _attributes[patch_count].connection_type[W] = direction;
         }
         break;
         case (S):
@@ -278,11 +357,23 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
             patch.SetData(3, 2, (*attribute->patch)(3, 2) + 3 * delta2);
             patch.SetData(3, 3, (*attribute->patch)(3, 3) + 3 * delta3);
 
+            _attributes[index].connection_type[direction] = N;
+            _attributes[patch_count].neighbours[N] = &_attributes[index];
+            _attributes[patch_count].connection_type[N] = direction;
         }
         break;
     }
 
-    //Set neighbours!!!
+    _attributes[index].neighbours[direction] = &_attributes[patch_count];
+
+    if (!_attributes[index].UpdateImageAndVBO() ||
+        !_attributes[patch_count].UpdateImageAndVBO())
+    {
+        std::cout << "Error updating after ContinueExistingPatch!" << std::endl;
+        return GL_FALSE;
+    }
+
+    return GL_TRUE;
 }
 
 Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(Direction direction){
@@ -397,12 +488,28 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
     Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1);
     DCoordinate3 temp;
     for(GLuint i = 0; i < 4; ++i){
-        temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_0->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2;
+        temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_1->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2.0f;
         (*attribute_0->patch)(first_indexes(0, i).row_index, first_indexes(0, i).column_index) = temp;
         (*attribute_1->patch)(second_indexes(0, i).row_index, second_indexes(0, i).column_index) = temp;
     }
 
     //Set neighbours!!!
+
+    _attributes[index_0].connection_type[direction_0] = direction_1;
+    _attributes[index_0].neighbours[direction_0] = &_attributes[index_1];
+    _attributes[index_1].connection_type[direction_1] = direction_0;
+    _attributes[index_1].neighbours[direction_1] = &_attributes[index_0];
+
+
+    if (!_attributes[index_0].UpdateImageAndVBO() ||
+        !_attributes[index_1].UpdateImageAndVBO())
+    {
+        std::cout << "Error updating after MergeExistingPatches!" << std::endl;
+        return GL_FALSE;
+    }
+
+
+    return GL_TRUE;
 }
 
 GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1){
@@ -462,9 +569,31 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
     }
 
     //Set neighbours!!!
+    _attributes[index_0].connection_type[direction_0] = direction_1;
+    _attributes[index_0].neighbours[direction_0] = &_attributes[index_1];
+    _attributes[index_1].connection_type[direction_1] = direction_0;
+    _attributes[index_1].neighbours[direction_1] = &_attributes[index_0];
+
+    if (!_attributes[index_0].UpdateImageAndVBO() ||
+        !_attributes[index_1].UpdateImageAndVBO())
+    {
+        std::cout << "Error updating after JoinExistingPatches!" << std::endl;
+        return GL_FALSE;
+    }
+
+    return GL_TRUE;
 }
 DCoordinate3 FOAHCompositePatch3::getPoint(GLuint patchIndex, GLuint patchPointX, GLuint patchPointY) {
     DCoordinate3 res;
     _attributes[patchIndex].patch->GetData(patchPointX,patchPointY,res);
     return res;
+
+GLvoid FOAHCompositePatch3::pushPatch(GLuint index, GLuint direction)
+{
+    _attributes[index].push(direction, nullptr);
+}
+
+GLvoid FOAHCompositePatch3::pullPatch(GLuint index, GLuint direction)
+{
+    _attributes[index].pull(direction, nullptr);
 }
