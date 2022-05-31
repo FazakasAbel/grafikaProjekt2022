@@ -30,8 +30,8 @@ namespace cagd
             ArcAttributes& operator =(const ArcAttributes&);
             ~ArcAttributes();
 
-            GLvoid push(GLuint, ArcAttributes*);
-            GLvoid pull(GLuint, ArcAttributes*);
+            GLvoid push(GLuint);
+            GLvoid pull(GLuint);
             GLvoid setPoint(GLuint, GLuint, GLdouble);
         };
 
@@ -56,14 +56,17 @@ namespace cagd
 
         // other setters and getters
         // ...
-        GLuint          getArcCount();
+        GLuint              getArcCount();
         // nth point of knt arc
-        DCoordinate3    getPoint(GLuint, GLuint);
-        GLvoid          setPoint(GLuint, GLuint, GLuint, GLdouble);
-        GLvoid          pushArc(GLuint, GLuint);
-        GLvoid          pullArc(GLuint, GLuint);
-        ArcAttributes&  getPrevious(GLuint);
-        ArcAttributes&  getNext(GLuint);
+        DCoordinate3        getPoint(GLuint, GLuint);
+        GLvoid              setPoint(GLuint, GLuint, GLuint, GLdouble);
+        GLvoid              pushArc(GLuint, GLuint);
+        GLvoid              pullArc(GLuint, GLuint);
+        ArcAttributes&      getPrevious(GLuint);
+        ArcAttributes&      getNext(GLuint);
+        GLvoid              getAllNeighbours(GLuint, RowMatrix<GLuint>&);
+        GLuint              getAttributeIndex(ArcAttributes* attribute);
+
     };
 }
 

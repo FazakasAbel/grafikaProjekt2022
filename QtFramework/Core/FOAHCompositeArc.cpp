@@ -213,34 +213,32 @@ GLboolean FOAHCompositeArc::ContinueExisitingArc(GLuint index, Direction directi
     return GL_TRUE;
 }
 
-GLvoid FOAHCompositeArc::ArcAttributes::push(GLuint axis, ArcAttributes* prev){
+GLvoid FOAHCompositeArc::ArcAttributes::push(GLuint axis){
     (*arc)[0][axis] += 1;
     (*arc)[1][axis] += 1;
     (*arc)[2][axis] += 1;
     (*arc)[3][axis] += 1;
-    if(previous && previous != prev){
-        previous->push(axis, this);
-    }
-    if(next && next != prev){
-        next->push(axis, this);
-    }
+
+    arc->DeleteVertexBufferObjectsOfData();
     arc->UpdateVertexBufferObjectsOfData();
+    if(image){
+        image->DeleteVertexBufferObjects();
+    }
     image = arc->GenerateImage(2, 200);
     image->UpdateVertexBufferObjects(1);
 }
 
-GLvoid FOAHCompositeArc::ArcAttributes::pull(GLuint axis, ArcAttributes* prev){
+GLvoid FOAHCompositeArc::ArcAttributes::pull(GLuint axis){
     (*arc)[0][axis] -= 1;
     (*arc)[1][axis] -= 1;
     (*arc)[2][axis] -= 1;
     (*arc)[3][axis] -= 1;
-    if(previous && previous != prev){
-        previous->pull(axis, this);
-    }
-    if(next && next != prev){
-        next->pull(axis, this);
-    }
+
+    arc->DeleteVertexBufferObjectsOfData();
     arc->UpdateVertexBufferObjectsOfData();
+    if(image){
+        image->DeleteVertexBufferObjects();
+    }
     image = arc->GenerateImage(2, 200);
     image->UpdateVertexBufferObjects(1);
 }
@@ -285,8 +283,8 @@ GLvoid FOAHCompositeArc::setPoint(GLuint arcIndex, GLuint pointIndex, GLuint dir
 
 
             if(pointIndex == 0){
-                temp_point_index = _attributes[arcIndex].previous_connection_type == RIGHT ? 0 : 3;
-                temp_point_index_2 = _attributes[arcIndex].previous_connection_type == RIGHT ? 1 : 2;
+                temp_point_index = _attributes[arcIndex].previous_connection_type == RIGHT ? 3 :0;
+                temp_point_index_2 = _attributes[arcIndex].previous_connection_type == RIGHT ? 2 : 1;
 
                 (*_attributes[arcIndex].previous->arc)[temp_point_index][direction] += delta;
                 (*_attributes[arcIndex].previous->arc)[temp_point_index_2][direction] += delta;
@@ -294,7 +292,7 @@ GLvoid FOAHCompositeArc::setPoint(GLuint arcIndex, GLuint pointIndex, GLuint dir
             }
 
             if(pointIndex == 1){
-                temp_point_index = _attributes[arcIndex].previous_connection_type == RIGHT ? 1 : 2;
+                temp_point_index = _attributes[arcIndex].previous_connection_type == RIGHT ? 2 : 1;
 
                 (*_attributes[arcIndex].previous->arc)[temp_point_index][direction] -= delta;
             }
@@ -474,12 +472,62 @@ GLboolean FOAHCompositeArc::MergeExistingArcs(GLuint index_0, Direction directio
     return GL_TRUE;
 }
 
+GLuint FOAHCompositeArc::getAttributeIndex(ArcAttributes* attribute){
+    for(GLuint i = 0; i < getArcCount(); ++i){
+        if(&_attributes[i] == attribute){
+            return i;
+        }
+    }
+    return -1;
+}
+
+GLboolean innit(RowMatrix<GLuint> rm,GLuint e){
+    for(GLuint i = 0; i < rm.GetColumnCount(); ++i){
+        if(rm[i] == e){
+            return GL_TRUE;
+        }
+    }
+
+    return GL_FALSE;
+}
+
+GLvoid FOAHCompositeArc::getAllNeighbours(GLuint index, RowMatrix<GLuint>& neighbours){
+    if(index >= getArcCount()){
+        return;
+    }
+
+    neighbours.ResizeColumns(neighbours.GetColumnCount() + 1);
+    neighbours[neighbours.GetColumnCount() - 1] = index;
+    GLuint tempIndex;
+    if(_attributes[index].next){
+        tempIndex = getAttributeIndex(_attributes[index].next);
+        if(!innit(neighbours, tempIndex))
+            getAllNeighbours(getAttributeIndex(_attributes[index].next), neighbours);
+    }
+
+    if(_attributes[index].previous && _attributes[index].previous != _attributes[index].next){
+        tempIndex = getAttributeIndex(_attributes[index].previous);
+        if(!innit(neighbours, tempIndex))
+            getAllNeighbours(getAttributeIndex(_attributes[index].previous), neighbours);
+    }
+}
+
 GLvoid FOAHCompositeArc::pullArc(GLuint index, GLuint direction){
-    _attributes.at(index).pull(direction, nullptr);
+    RowMatrix<GLuint> neighbours(0);
+    getAllNeighbours(index, neighbours);
+    cout << neighbours << endl;
+    for(GLuint i = 0; i < neighbours.GetColumnCount(); ++i){
+        _attributes.at(neighbours[i]).pull(direction);
+    }
 }
 
 GLvoid FOAHCompositeArc::pushArc(GLuint index, GLuint direction){
-    _attributes.at(index).push(direction, nullptr);
+    RowMatrix<GLuint> neighbours(0);
+    getAllNeighbours(index, neighbours);
+    cout << neighbours << endl;
+    for(GLuint i = 0; i < neighbours.GetColumnCount(); ++i){
+        _attributes.at(neighbours[i]).push(direction);
+    }
 }
 
 FOAHCompositeArc::~FOAHCompositeArc()
