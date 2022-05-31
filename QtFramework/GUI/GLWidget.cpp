@@ -247,8 +247,16 @@ namespace cagd
             //_composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::RIGHT);
             //_composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::LEFT);
 
+            // TODO: fuck this shit
             _composite_patch = new FOAHCompositePatch3(1, 100);
             _composite_patch->InsertNewPatch();
+            _composite_patch->pushPatch(0, 1);
+            _composite_patch->pushPatch(0, 0);
+            _composite_patch->pushPatch(0, 0);
+            _composite_patch->pushPatch(0, 0);
+            _composite_patch->pushPatch(0, 0);
+            _composite_patch->InsertNewPatch();
+            _composite_patch->MergeExistingPatches(0, FOAHCompositePatch3::N, 1, FOAHCompositePatch3::W);
 
             glEnable(GL_POLYGON_SMOOTH);
             glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
@@ -318,9 +326,13 @@ namespace cagd
                 }
 
                 //content
-//                _potykany.Render();
                 _composite_patch->RenderAllPatches(0, GL_TRIANGLES);
                 _composite_patch->RenderAllPatchData(GL_LINE_STRIP);
+                glColor3f(0.0f, 0.0f, 1.0f);
+                glPointSize(10.0f);
+                _composite_patch->RenderAllPatchData(GL_POINTS);
+                glColor3f(0.0f, 1.0f, 0.0f);
+//                _composite_patch->RenderIsoparametricCurves(1, GL_LINES);
 
                 if(_enable_shader) {
                     _shaders[_selected_shader]->Disable();

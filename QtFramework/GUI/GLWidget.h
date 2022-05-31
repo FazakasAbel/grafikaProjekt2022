@@ -50,6 +50,7 @@ namespace cagd
         int                             _direction = 0;
 
         FOAHCompositePatch3* 			_composite_patch;
+        RowMatrix<GenericCurve3*>		*_u_lines, *_v_lines;
 
         DirectionalLight *_dl = nullptr;
 
