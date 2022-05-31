@@ -583,6 +583,10 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
 
     return GL_TRUE;
 }
+DCoordinate3 FOAHCompositePatch3::getPoint(GLuint patchIndex, GLuint patchPointX, GLuint patchPointY) {
+    DCoordinate3 res;
+    _attributes[patchIndex].patch->GetData(patchPointX,patchPointY,res);
+    return res;
 
 GLvoid FOAHCompositePatch3::pushPatch(GLuint index, GLuint direction)
 {

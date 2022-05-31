@@ -275,7 +275,9 @@ namespace cagd
         emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
         emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
         emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
-
+        emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y)[0]);
+        emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y)[1]);
+        emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y)[2]);
     }    
 
     //-----------------------
@@ -468,6 +470,17 @@ namespace cagd
         }
 
     }
+    void GLWidget::set_selected_patch(int index) {
+        if(index != _selected_patch && _selected_patch >= 0 && _selected_patch < _composite_patch->getPatchCount()-1){
+            cout<<"ifben"<<endl;
+            _selected_patch = index;
+            //TODO allitani az indexeket
+            emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[0]);
+            emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[1]);
+            emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
+            update();
+        }
+    }
     void GLWidget::set_selected_curve_1(int index){
         if(index != _selected_curve_1){
             _selected_curve_1 = index;
@@ -492,8 +505,36 @@ namespace cagd
         }
         update();
     }
+    void GLWidget::set_selected_patch_1(int index) {
+        if(index!=_selected_patch_1) {
+            _selected_patch_1 = index;
+        }
+        update();
+    }
+    void GLWidget::set_selected_patch_2(int index) {
+        if(index!=_selected_patch_2) {
+            _selected_patch_2 = index;
+        }
+        update();
+    }
+    void GLWidget::set_direction_patch_1(int dir) {
+        if(_selected_direction_patch_1!=dir) {
+            _selected_direction_patch_1 = dir;
+        }
+        update();
+    }
+    void GLWidget::set_direction_patch_2(int dir) {
+        if(_selected_direction_patch_2!=dir) {
+            _selected_direction_patch_2 = dir;
+        }
+        update();
+    }
     void GLWidget::call_insert(){
         _composite_arc->InsertNewArc();
+        update();
+    }
+    void GLWidget::call_insert_patch() {
+        _composite_patch->InsertNewPatch();
         update();
     }
     void GLWidget::call_extend(){
@@ -502,6 +543,29 @@ namespace cagd
                 _composite_arc->ContinueExisitingArc(_selected_curve_1, FOAHCompositeArc::LEFT);
             } else {
                 _composite_arc->ContinueExisitingArc(_selected_curve_1, FOAHCompositeArc::RIGHT);
+            }
+            update();
+        }
+    }
+    void GLWidget::call_extend_patch() {
+        if(_selected_patch_1>=0 && _selected_patch_1<=_composite_patch->getPatchCount()) {
+            switch(_selected_direction_patch_1) {
+            case 0: {
+                _composite_patch->ContinueExistingPatch(_selected_patch_1,FOAHCompositePatch3::N);
+                break;
+            }
+            case 1: {
+                _composite_patch->ContinueExistingPatch(_selected_patch_1,FOAHCompositePatch3::W);
+                break;
+            }
+            case 2: {
+                _composite_patch->ContinueExistingPatch(_selected_patch_1,FOAHCompositePatch3::S);
+                break;
+            }
+            case 3: {
+                _composite_patch->ContinueExistingPatch(_selected_patch_1,FOAHCompositePatch3::E);
+                break;
+            }
             }
             update();
         }
@@ -527,6 +591,53 @@ namespace cagd
             update();
         }
     }
+    void GLWidget::call_join_patch() {
+        if((_selected_patch_1==_selected_patch_2) || _selected_patch_1<0 || _selected_patch_2<0 || _selected_patch_1>_composite_patch->getPatchCount() || _selected_patch_2> _composite_patch->getPatchCount()) {
+            return;
+        } else {
+            FOAHCompositePatch3::Direction dir_patch_1, dir_patch_2;
+            switch(_selected_direction_patch_1) {
+            case 0: {
+                dir_patch_1 = FOAHCompositePatch3::N;
+                break;
+            }
+            case 1: {
+                dir_patch_1 = FOAHCompositePatch3::W;
+                break;
+            }
+            case 2: {
+                dir_patch_1 = FOAHCompositePatch3::S;
+                break;
+            }
+            case 3: {
+                dir_patch_1 = FOAHCompositePatch3::E;
+                break;
+            }
+            }
+            switch(_selected_direction_patch_2) {
+            case 0: {
+                dir_patch_2 = FOAHCompositePatch3::N;
+                break;
+            }
+            case 1: {
+                dir_patch_2 = FOAHCompositePatch3::W;
+                break;
+            }
+            case 2: {
+                dir_patch_2 = FOAHCompositePatch3::S;
+                break;
+            }
+            case 3: {
+                dir_patch_2 = FOAHCompositePatch3::E;
+                break;
+            }
+            }
+            GLuint _selected_patch_1_gl = _selected_patch_1;
+            GLuint _selected_patch_2_gl = _selected_patch_2;
+            _composite_patch->JoinExistingPatches(_selected_patch_1_gl,dir_patch_1,_selected_patch_2_gl,dir_patch_2);
+            update();
+        }
+    }
     void GLWidget::call_merge() {
         if((_selected_curve_1 == _selected_curve_2) || _selected_curve_1 < 0 || _selected_curve_2 < 0 || _selected_curve_1 >_composite_arc->getArcCount() || _selected_curve_1 > _composite_arc->getArcCount()){
             return;
@@ -548,6 +659,53 @@ namespace cagd
             update();
         }
     }
+    void GLWidget::call_merge_patch() {
+        if((_selected_patch_1==_selected_patch_2) || _selected_patch_1<0 || _selected_patch_2<0 || _selected_patch_1>_composite_patch->getPatchCount() || _selected_patch_2> _composite_patch->getPatchCount()) {
+            return;
+        } else {
+            FOAHCompositePatch3::Direction dir_patch_1, dir_patch_2;
+            switch(_selected_direction_patch_1) {
+            case 0: {
+                dir_patch_1 = FOAHCompositePatch3::N;
+                break;
+            }
+            case 1: {
+                dir_patch_1 = FOAHCompositePatch3::W;
+                break;
+            }
+            case 2: {
+                dir_patch_1 = FOAHCompositePatch3::S;
+                break;
+            }
+            case 3: {
+                dir_patch_1 = FOAHCompositePatch3::E;
+                break;
+            }
+            }
+            switch(_selected_direction_patch_2) {
+            case 0: {
+                dir_patch_2 = FOAHCompositePatch3::N;
+                break;
+            }
+            case 1: {
+                dir_patch_2 = FOAHCompositePatch3::W;
+                break;
+            }
+            case 2: {
+                dir_patch_2 = FOAHCompositePatch3::S;
+                break;
+            }
+            case 3: {
+                dir_patch_2 = FOAHCompositePatch3::E;
+                break;
+            }
+            }
+            GLuint _selected_patch_1_gl = _selected_patch_1;
+            GLuint _selected_patch_2_gl = _selected_patch_2;
+            _composite_patch->MergeExistingPatches(_selected_patch_1_gl,dir_patch_1,_selected_patch_2_gl,dir_patch_2);
+            update();
+        }
+    }
     void GLWidget::set_selected_point(int index){
         if(index >= 0 && index < 4){
             _selected_arc_point = index;
@@ -558,7 +716,27 @@ namespace cagd
         emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
         update();
     }
+    void GLWidget::set_selected_point_patch_x(int index) {
+        if(index>= 0 && index<=4) {
+            _selected_patch_point_x = index;
+        }
+        //todo javitani
+        emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[0]);
+        emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[1]);
+        emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
+        update();
+    }
+    void GLWidget::set_selected_point_patch_y(int index) {
+        if(index>=0 && index<=4) {
+            _selected_patch_point_y = index;
+        }
+        //todo javitani
+        emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[0]);
+        emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[1]);
+        emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
+        update();
 
+    }
     void GLWidget::pushArc(){
         _composite_arc->pushArc(_selected_arc, _direction);
 
@@ -571,12 +749,25 @@ namespace cagd
         update();
     }
 
+    void GLWidget::pushPatch() {
+        _composite_patch->pushPatch(_selected_patch, _direction_patch);
+        update();
+    }
+    void GLWidget::pullPatch() {
+        _composite_patch->pullPatch(_selected_patch, _direction_patch);
+        update();
+    }
+
     void GLWidget::set_selected_direction(int value){
         if(value >= 0 && value <= 3){
             _direction = value;
         }
     }
-
+    void GLWidget::set_selected_direction_patch(int value) {
+        if(value >= 0 && value <= 3){
+            _direction_patch = value;
+        }
+    }
     void GLWidget::update_selected_point_x(double new_value){
         _composite_arc->setPoint(_selected_arc, _selected_arc_point, 0, new_value);
         update();
