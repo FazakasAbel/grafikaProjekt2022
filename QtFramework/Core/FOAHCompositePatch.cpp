@@ -65,8 +65,13 @@ GLboolean FOAHCompositePatch3::PatchAttributes::UpdateIsoparametricCurves(GLuint
     v_curves = patch->GenerateVIsoparametricLines(iso_line_count, 2, 200);
     for (GLuint i = 0; i < iso_line_count; i++)
     {
+        if ((*u_curves)[i])
+            (*u_curves)[i]->DeleteVertexBufferObjects();
         if (!(*u_curves)[i]->UpdateVertexBufferObjects(1))
             return GL_FALSE;
+
+        if ((*v_curves)[i])
+            (*v_curves)[i]->DeleteVertexBufferObjects();
         if (!(*v_curves)[i]->UpdateVertexBufferObjects(1))
             return GL_FALSE;
     }
@@ -76,11 +81,17 @@ GLboolean FOAHCompositePatch3::PatchAttributes::UpdateIsoparametricCurves(GLuint
 
 GLboolean FOAHCompositePatch3::PatchAttributes::UpdateImageAndVBO()
 {
+    if (patch)
+        patch->DeleteVertexBufferObjectsOfData();
+
     if (!patch->UpdateVertexBufferObjectsOfData())
     {
         std::cout << "Error updating VBO of patch data!" << std::endl;
         return GL_FALSE;
     }
+
+    if (image)
+        image->DeleteVertexBufferObjects();
 
     image = patch->GenerateImage(30, 30);
     if (!image || !image->UpdateVertexBufferObjects())
