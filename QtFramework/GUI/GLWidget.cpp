@@ -174,6 +174,38 @@ namespace cagd
                 throw Exception("Could not create the directional light object!");
             }
 
+            HCoordinate3    direction2   (0.0, 0.0, 1.0, 1.0);
+            Color4          ambient2     (0.4f, 0.4f, 0.4f, 1.0f);
+            Color4          diffuse2     (0.8f, 0.8f, 0.8f, 1.0f);
+            Color4          specular2    (1.0, 1.0, 1.0, 1.0);
+            GLfloat         constant_attenuation2(1.0);
+            GLfloat         linear_attenuation2(0.0);
+            GLfloat         quadratic_attenuation2(0.0);
+            HCoordinate3    spot_direction2(0.0, 0.0, -1.0);
+
+            _pl = new (nothrow) PointLight(GL_LIGHT1, direction2, ambient2, diffuse2, specular2, constant_attenuation2, linear_attenuation2, quadratic_attenuation2);
+
+            if(!_pl){
+               throw Exception("Could not create the point light object!");
+            }
+
+            HCoordinate3 direction3(0.0f, 0.0f, 1.0f, 0.1f);
+            Color4 ambient3(0.4f, 0.4f, 0.4f, 1.0f);
+            Color4 diffuse3(0.8f, 0.8f, 0.8f, 1.0f);
+            Color4 specular3(1.0, 1.0, 1.0, 1.0);
+            GLfloat constant_attenuation3(0.1f);
+            GLfloat linear_attenuation3(0.1f);
+            GLfloat quadratic_attenuation3(0.01f);
+            HCoordinate3 spot_direction3(0.0f, 0.0f, -1.0f, 1.0f);
+            GLfloat spot_cutoff3(4.5f);
+            GLfloat spot_exponent3(2.0f);
+
+            _sl = new (nothrow) Spotlight(GL_LIGHT2, direction3, ambient3, diffuse3, specular3, constant_attenuation3, linear_attenuation3, quadratic_attenuation3, spot_direction3, spot_cutoff3, spot_exponent3);
+
+            if(!_sl){
+               throw Exception("Could not create the spotlight object!");
+            }
+
             glEnable(GL_LIGHTING);
             glEnable(GL_NORMALIZE);
             _shaders.ResizeColumns(4);
@@ -307,7 +339,17 @@ namespace cagd
             // Patch
             } else {
                 glDisable(GL_LIGHTING);
-                _dl->Enable();
+                switch(_selected_light){
+                    case 0:
+                        _dl->Enable();
+                    break;
+                    case 1:
+                        _pl->Enable();
+                    break;
+                    case 2:
+                        _sl->Enable();
+                    break;
+                }
                 if(_enable_shader) {
                     _shaders[_selected_shader]->Enable();
                 }
@@ -317,8 +359,8 @@ namespace cagd
                 } else {
 
                     glColor3f(patch_r, patch_g, patch_b);
-                }
-                if(_enable_texture) {
+             }
+             if(_enable_texture) {
                     glEnable(GL_TEXTURE_2D);
                     glEnable(GL_LIGHT0);
                     glEnable(GL_NORMALIZE);
@@ -342,6 +384,17 @@ namespace cagd
                     _textures[_selected_texture]->release();
                     glDisable(GL_TEXTURE_2D);
                     glDisable(GL_NORMALIZE);
+                }
+                switch(_selected_light){
+                    case 0:
+                        _dl->Disable();
+                    break;
+                    case 1:
+                        _pl->Disable();
+                    break;
+                    case 2:
+                        _sl->Disable();
+                    break;
                 }
             }
         glPopMatrix();
@@ -377,6 +430,10 @@ namespace cagd
     GLWidget::~GLWidget(){
         delete _dl;
         _dl = nullptr;
+        delete _pl;
+        _pl = nullptr;
+        delete _sl;
+        _sl = nullptr;
         delete _composite_arc;
         _composite_arc = nullptr;
     }
@@ -479,6 +536,10 @@ namespace cagd
             emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
             update();
         }
+    }
+    void GLWidget::set_selected_light(int value) {
+        _selected_light = value;
+        update();
     }
     void GLWidget::set_selected_curve_1(int index){
         if(index != _selected_curve_1){
