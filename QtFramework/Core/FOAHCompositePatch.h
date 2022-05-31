@@ -79,8 +79,10 @@ namespace cagd
         GLvoid pullPatch(GLuint index, GLuint direction);
         GLuint getPatchCount();
         DCoordinate3    getPoint(GLuint, GLuint, GLuint);
+        GLvoid setPoint(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition);
 
         Matrix<Pair> GetIndexesFromDirection(Direction direction, Direction other_direction);
+
     };
 }
 
