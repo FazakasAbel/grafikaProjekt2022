@@ -174,8 +174,28 @@ namespace cagd
                 throw Exception("Could not create the directional light object!");
             }
 
+            HCoordinate3 position(-2.0, -2.0, 0.0, 1.0);
+            GLfloat constant = 1.0;
+            GLfloat linear = 1.0;
+            GLfloat quadratic = 1.0;
+
+            _pl = new (nothrow) PointLight(GL_LIGHT0, position, ambient, diffuse, specular, constant, linear, quadratic);
+
+            if(!_pl){
+                throw Exception("Could not create the point light object!");
+            }
+            HCoordinate3 s_direction(0.0,0.0,0.0,0.0);
+            GLfloat s_cutoff = 1.0;
+            GLfloat s_exponent = 2.0;
+            _sl = new (nothrow) Spotlight(GL_LIGHT0, position, ambient, diffuse, specular, constant, linear, quadratic, s_direction, s_cutoff, s_exponent);
+
+            if(!_sl){
+                throw Exception("Could not create the point light object!");
+            }
+
             glEnable(GL_LIGHTING);
             glEnable(GL_NORMALIZE);
+
             _shaders.ResizeColumns(4);
             string vertFileName, fragFileName;
             for(int i = 0; i < 4; ++i){
@@ -306,8 +326,18 @@ namespace cagd
                 glEnable(GL_LIGHTING);
             // Patch
             } else {
-                glDisable(GL_LIGHTING);
-                _dl->Enable();
+                glEnable(GL_LIGHTING);
+                switch(_selected_light){
+                    case 0:
+                        _dl->Enable();
+                        break;
+                    case 1:
+                        _pl->Enable();
+                        break;
+                    case 2:
+                        _sl->Enable();
+                        break;
+                }
                 if(_enable_shader) {
                     _shaders[_selected_shader]->Enable();
                 }
@@ -315,7 +345,7 @@ namespace cagd
                     glEnable(GL_LIGHTING);
                     _materials[_selected_material].Apply();
                 } else {
-
+                    //glDisable(GL_LIGHTING);
                     glColor3f(patch_r, patch_g, patch_b);
                 }
                 if(_enable_texture) {
@@ -343,6 +373,17 @@ namespace cagd
                     _textures[_selected_texture]->release();
                     glDisable(GL_TEXTURE_2D);
                     glDisable(GL_NORMALIZE);
+                }
+                switch(_selected_light){
+                    case 0:
+                        _dl->Disable();
+                        break;
+                    case 1:
+                        _pl->Disable();
+                        break;
+                    case 2:
+                        _sl->Disable();
+                        break;
                 }
             }
         glPopMatrix();
@@ -378,6 +419,10 @@ namespace cagd
     GLWidget::~GLWidget(){
         delete _dl;
         _dl = nullptr;
+        delete _pl;
+        _pl = nullptr;
+        delete _sl;
+        _sl = nullptr;
         delete _composite_arc;
         _composite_arc = nullptr;
     }
@@ -875,6 +920,10 @@ namespace cagd
 
     void GLWidget::set_selected_page(int value) {
         _selected_page = value;
+        update();
+    }
+    void GLWidget::set_selected_light(int value) {
+        _selected_light = value;
         update();
     }
     void GLWidget::set_patch_color_r(GLdouble value){
