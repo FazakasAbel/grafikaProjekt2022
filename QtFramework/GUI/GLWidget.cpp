@@ -460,7 +460,7 @@ namespace cagd
     }
 
     void GLWidget::set_selected_arc(int index){
-        if(index != _selected_arc && _selected_arc >= 0 && _selected_arc < _composite_arc->getArcCount()-1){
+        if(index != _selected_arc && _selected_arc >= 0 && _selected_arc <= _composite_arc->getArcCount()-1 && index<=_composite_arc->getArcCount()-1){
             cout<<"ifben"<<endl;
             _selected_arc = index;
             emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
@@ -471,7 +471,7 @@ namespace cagd
 
     }
     void GLWidget::set_selected_patch(int index) {
-        if(index != _selected_patch && _selected_patch >= 0 && _selected_patch < _composite_patch->getPatchCount()-1){
+        if(index != _selected_patch && _selected_patch >= 0 && _selected_patch <= _composite_patch->getPatchCount()-1 && index<=_composite_patch->getPatchCount()-1){
             cout<<"ifben"<<endl;
             _selected_patch = index;
             //TODO allitani az indexeket
