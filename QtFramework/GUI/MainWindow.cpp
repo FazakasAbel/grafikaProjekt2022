@@ -111,7 +111,7 @@ namespace cagd
         connect(_side_widget->patch_point_selector_y,SIGNAL(valueChanged(int)),_gl_widget, SLOT(set_selected_point_patch_y(int)));
         connect(_side_widget->x_selector_patch, SIGNAL(valueChanged(double)),_gl_widget, SLOT(update_selected_point_patch_x(double)));
         connect(_side_widget->y_selector_patch, SIGNAL(valueChanged(double)),_gl_widget, SLOT(update_selected_point_patch_y(double)));
-        connect(_side_widget->z_selector_patch, SIGNAL(valueChanged(double)),_gl_widget, SLOT(update_selected_point_patch_z(dobule)));
+        connect(_side_widget->z_selector_patch, SIGNAL(valueChanged(double)),_gl_widget, SLOT(update_selected_point_patch_z(double)));
         connect(_gl_widget, SIGNAL(set_x_signal_patch(double)), _side_widget->x_selector_patch, SLOT(setValue(double)));
         connect(_gl_widget, SIGNAL(set_y_signal_patch(double)), _side_widget->y_selector_patch, SLOT(setValue(double)));
         connect(_gl_widget, SIGNAL(set_z_signal_patch(double)), _side_widget->z_selector_patch, SLOT(setValue(double)));

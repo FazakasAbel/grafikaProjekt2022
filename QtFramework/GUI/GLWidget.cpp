@@ -384,6 +384,16 @@ namespace cagd
                 //content
                 _composite_patch->RenderAllPatches(0, GL_TRIANGLES);
                 _composite_patch->RenderAllPatchData(GL_LINE_STRIP);
+                glColor3f(0.0f, 1.0f, 0.0f);
+                DCoordinate3 selected_point = _composite_patch->getPoint(_selected_patch, _selected_patch_point_x, _selected_patch_point_y);
+                glDisable(GL_LIGHTING);
+                glBegin(GL_POINTS);
+                    glPointSize(100.0f);
+                        glVertex3f(selected_point.x(), selected_point.y(), selected_point.z());
+                    glPointSize(1.0f);
+                glEnd();
+//                glEnable(GL_LIGHTING);
+
                 glColor3f(0.0f, 0.0f, 1.0f);
                 glPointSize(10.0f);
                 _composite_patch->RenderAllPatchData(GL_POINTS);
@@ -399,14 +409,6 @@ namespace cagd
                 if(_enable_shader) {
                     _shaders[_selected_shader]->Disable();
                 }
-                glColor3f(0.5f, 0.0f, 0.5f);
-                DCoordinate3 selected_point = _composite_patch->getPoint(_selected_patch, _selected_patch_point_x, _selected_patch_point_y);
-                glBegin(GL_POINTS);
-                    glPointSize(100.0f);
-                        glVertex3f(selected_point.x(), selected_point.y(), selected_point.z());
-                    glPointSize(1.0f);
-                glEnd();
-
 
                 if(_enable_texture) {
                     _textures[_selected_texture]->release();
@@ -809,7 +811,6 @@ namespace cagd
         if(index >= 0 && index < 4){
             _selected_arc_point = index;
         }
-
         emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
         emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
         emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
@@ -819,21 +820,46 @@ namespace cagd
         if(index>= 0 && index<4) {
             _selected_patch_point_x = index;
         }
+
         //todo javitani
         emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[0]);
         emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[1]);
         emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
+
+        glDisable(GL_LIGHTING);
+
+        glBegin(GL_POINTS);
+          glPointSize(250.0);
+        glColor3f(0.0f,1.0f,0.0f);
+        glVertex3f((_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y))[0],(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y))[1],(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y))[2]);
+        glEnd();
+        glPointSize(1.0);
+        glEnable(GL_LIGHTING);
         update();
+
+
     }
     void GLWidget::set_selected_point_patch_y(int index) {
         if(index>=0 && index<4) {
             _selected_patch_point_y = index;
         }
         //todo javitani
+
         emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[0]);
         emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[1]);
         emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
+
+        glDisable(GL_LIGHTING);
+
+        glBegin(GL_POINTS);
+        glPointSize(250.0);
+        glColor3f(0.0f,1.0f,0.0f);
+        glVertex3f((_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y))[0],(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y))[1],(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y))[2]);
+        glEnd();
+        glPointSize(1.0);
+        glEnable(GL_LIGHTING);
         update();
+
 
     }
     void GLWidget::pushArc(){
