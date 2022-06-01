@@ -614,13 +614,39 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
     Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, S);
     Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, N);
 
-    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, direction_1);
-    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, direction_0);
+    //  TODO:  remove testing
+
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 4; j++)
+            std::cout << first_indexes(i,j).row_index << "," << first_indexes(i,j).column_index << "  ";
+
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 4; j++)
+            std::cout << second_indexes(i,j).row_index << "," << second_indexes(i,j).column_index << "  ";
+
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+    std::cout << "--------------------------" << std::endl;
+
+
+
+
+
+
+
     DCoordinate3 temp;
     for(GLuint i = 0; i < 4; ++i){
         temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_1->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2.0;
-        (*attribute_0->patch)(first_indexes(0, i).row_index, first_indexes(0, i).column_index) = temp;
-        (*attribute_1->patch)(second_indexes(0, i).row_index, second_indexes(0, i).column_index) = temp;
+//        (*attribute_0->patch)(first_indexes(0, i).row_index, first_indexes(0, i).column_index) = temp;
+//        (*attribute_1->patch)(second_indexes(0, i).row_index, second_indexes(0, i).column_index) = temp;
+        setPoint(index_0 ,first_indexes(0, i).row_index, first_indexes(0, i).column_index, temp);
+        setPoint(index_1 ,second_indexes(0, i).row_index, second_indexes(0, i).column_index, temp);
     }
 
     //Set neighbours!!!
