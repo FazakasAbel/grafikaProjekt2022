@@ -448,135 +448,146 @@ GLboolean FOAHCompositePatch3::ContinueExistingPatch(GLuint index, Direction dir
     return GL_TRUE;
 }
 
-Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(Direction direction, Direction other_direction){
+GLvoid FOAHCompositePatch3::rotateMatrixLeft(Matrix<Pair>* mat)
+{
+    int n = mat->GetColumnCount();
+    // Consider all squares one by one
+    for (int x = 0; x < n / 2; x++) {
+        // Consider elements in group
+        // of 4 in current square
+        for (int y = x; y < n - x - 1; y++) {
+        // Store current cell in
+        // temp variable
+        Pair temp = (*mat)(x,y);
+
+        // Move values from right to top
+        (*mat)(x,y) = (*mat)(y,n - 1 - x);
+
+        // Move values from bottom to right
+        (*mat)(y,n - 1 - x) = (*mat)(n - 1 - x,n - 1 - y);
+
+        // Move values from left to bottom
+        (*mat)(n - 1 - x,n - 1 - y) = (*mat)(n - 1 - y,x);
+
+        // Assign temp to left
+        (*mat)(n - 1 - y,x) = temp;
+        }
+    }
+}
+
+GLvoid FOAHCompositePatch3::rotateMatrixRight(Matrix<Pair>* mat)
+{
+    int n = mat->GetColumnCount();
+    // Consider all squares one by one
+    for (int i = 0; i < n / 2; i++) {
+            for (int j = i; j < n - i - 1; j++) {
+
+                // Swap elements of each cycle
+                // in clockwise direction
+                Pair temp = (*mat)(i,j);
+                (*mat)(i,j) = (*mat)(n - 1 - j,i);
+                (*mat)(n - 1 - j,i) = (*mat)(n - 1 - i,n - 1 - j);
+                (*mat)(n - 1 - i,n - 1 - j) = (*mat)(j,n - 1 - i);
+                (*mat)(j,n - 1 - i) = temp;
+            }
+        }
+}
+
+Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(Direction direction, Direction new_direction){
     Matrix<Pair> result(2, 4);
 
-    switch(direction){
-        case (N):
+    Matrix<Pair>* matrix = new Matrix<Pair>(4,4);
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
         {
-            result(0, 0).column_index = 0;
-            result(0, 1).column_index = 1;
-            result(0, 2).column_index = 2;
-            result(0, 3).column_index = 3;
-            result(0, 0).row_index = 0;
-            result(0, 1).row_index = 0;
-            result(0, 2).row_index = 0;
-            result(0, 3).row_index = 0;
-            result(1, 0).column_index = 0;
-            result(1, 1).column_index = 1;
-            result(1, 2).column_index = 2;
-            result(1, 3).column_index = 3;
-            result(1, 0).row_index = 1;
-            result(1, 1).row_index = 1;
-            result(1, 2).row_index = 1;
-            result(1, 3).row_index = 1;
-
-            if (other_direction == E){  //|| other_direction == S) {
-                result(0, 0).column_index = 3;
-                result(0, 1).column_index = 2;
-                result(0, 2).column_index = 1;
-                result(0, 3).column_index = 0;
-                result(1, 0).column_index = 3;
-                result(1, 1).column_index = 2;
-                result(1, 2).column_index = 1;
-                result(1, 3).column_index = 0;
-            }
+            (*matrix)(i,j).row_index = i;
+            (*matrix)(i,j).column_index = j;
         }
-        break;
-        case (W):
+
+    if (new_direction == N)
+    {
+        switch (direction)
         {
-            result(0, 0).column_index = 0;
-            result(0, 1).column_index = 0;
-            result(0, 2).column_index = 0;
-            result(0, 3).column_index = 0;
-            result(0, 0).row_index = 0;
-            result(0, 1).row_index = 1;
-            result(0, 2).row_index = 2;
-            result(0, 3).row_index = 3;
-            result(1, 0).column_index = 1;
-            result(1, 1).column_index = 1;
-            result(1, 2).column_index = 1;
-            result(1, 3).column_index = 1;
-            result(1, 0).row_index = 0;
-            result(1, 1).row_index = 1;
-            result(1, 2).row_index = 2;
-            result(1, 3).row_index = 3;
-
-            if (other_direction == N) {
-                result(0, 0).row_index = 3;
-                result(0, 1).row_index = 2;
-                result(0, 2).row_index = 1;
-                result(0, 3).row_index = 0;
-                result(1, 0).row_index = 3;
-                result(1, 1).row_index = 2;
-                result(1, 2).row_index = 1;
-                result(1, 3).row_index = 0;
-            }
+            case (E):
+                rotateMatrixRight(matrix);
+            case (S):
+                rotateMatrixRight(matrix);
+            case (W):
+                rotateMatrixRight(matrix);
         }
-        break;
-        case (S):
+
+        for (int i = 0; i < 4; i++)
         {
-            result(0, 0).column_index = 0;
-            result(0, 1).column_index = 1;
-            result(0, 2).column_index = 2;
-            result(0, 3).column_index = 3;
-            result(0, 0).row_index = 3;
-            result(0, 1).row_index = 3;
-            result(0, 2).row_index = 3;
-            result(0, 3).row_index = 3;
-            result(1, 0).column_index = 0;
-            result(1, 1).column_index = 1;
-            result(1, 2).column_index = 2;
-            result(1, 3).column_index = 3;
-            result(1, 0).row_index = 2;
-            result(1, 1).row_index = 2;
-            result(1, 2).row_index = 2;
-            result(1, 3).row_index = 2;
-
-            if (other_direction == W){// || other_direction == N) {
-                result(0, 0).column_index = 3;
-                result(0, 1).column_index = 2;
-                result(0, 2).column_index = 1;
-                result(0, 3).column_index = 0;
-                result(1, 0).column_index = 3;
-                result(1, 1).column_index = 2;
-                result(1, 2).column_index = 1;
-                result(1, 3).column_index = 0;
-            }
+            result(0,i) = (*matrix)(0,i);
+            result(1,i) = (*matrix)(1,i);
         }
-        break;
-        case (E):
-        {
-            result(0, 0).column_index = 3;
-            result(0, 1).column_index = 3;
-            result(0, 2).column_index = 3;
-            result(0, 3).column_index = 3;
-            result(0, 0).row_index = 0;
-            result(0, 1).row_index = 1;
-            result(0, 2).row_index = 2;
-            result(0, 3).row_index = 3;
-            result(1, 0).column_index = 2;
-            result(1, 1).column_index = 2;
-            result(1, 2).column_index = 2;
-            result(1, 3).column_index = 2;
-            result(1, 0).row_index = 0;
-            result(1, 1).row_index = 1;
-            result(1, 2).row_index = 2;
-            result(1, 3).row_index = 3;
-
-            if (other_direction == S || other_direction == E) {
-                result(0, 0).row_index = 3;
-                result(0, 1).row_index = 2;
-                result(0, 2).row_index = 1;
-                result(0, 3).row_index = 0;
-                result(1, 0).row_index = 3;
-                result(1, 1).row_index = 2;
-                result(1, 2).row_index = 1;
-                result(1, 3).row_index = 0;
-            }
-        }
-        break;
     }
+
+    if (new_direction == S)
+    {
+        switch (direction)
+        {
+            case (E):
+                rotateMatrixLeft(matrix);
+            case (N):
+                rotateMatrixLeft(matrix);
+            case (W):
+                rotateMatrixLeft(matrix);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            result(0,i) = (*matrix)(3,i);
+            result(1,i) = (*matrix)(2,i);
+        }
+
+    }
+
+    if (new_direction == E)
+    {
+        switch (direction)
+        {
+            case (S):
+                rotateMatrixLeft(matrix);
+            case (W):
+                rotateMatrixLeft(matrix);
+            case (N):
+                rotateMatrixLeft(matrix);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            result(0,i) = (*matrix)(i,0);
+            result(1,i) = (*matrix)(i,1);
+        }
+
+    }
+
+    if (new_direction == W)
+    {
+        switch (direction)
+        {
+            case (N):
+                rotateMatrixRight(matrix);
+            case (E):
+                rotateMatrixRight(matrix);
+            case (S):
+                rotateMatrixRight(matrix);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            result(0,i) = (*matrix)(i,3);
+            result(1,i) = (*matrix)(i,2);
+        }
+
+    }
+
+
+
+
+
+
     return result;
 }
 
@@ -599,6 +610,9 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
         std::cout << "Patch already has a neighbor in given direction!";
         return GL_FALSE;
     }
+
+    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, S);
+    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, N);
 
     Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, direction_1);
     Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, direction_0);

@@ -51,7 +51,6 @@ namespace cagd
 
         Matrix<DCoordinate3>         _big_control_net; // only in case of B-spline projects!
 
-
     public:
         struct Pair{
             GLuint row_index, column_index;
@@ -83,6 +82,10 @@ namespace cagd
         GLvoid setPoint(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition);
 
         Matrix<Pair> GetIndexesFromDirection(Direction direction, Direction other_direction);
+
+    private:
+        GLvoid rotateMatrixRight(Matrix<Pair>*);
+        GLvoid rotateMatrixLeft(Matrix<Pair>*);
 
 
     };
