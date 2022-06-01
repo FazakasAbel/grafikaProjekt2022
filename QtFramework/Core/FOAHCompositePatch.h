@@ -50,11 +50,12 @@ namespace cagd
         std::vector<PatchAttributes> _attributes;
 
         Matrix<DCoordinate3>         _big_control_net; // only in case of B-spline projects!
+
+
+    public:
         struct Pair{
             GLuint row_index, column_index;
         };
-
-    public:
         // special/default ctor
         FOAHCompositePatch3(GLdouble alpha, GLuint minimal_patch_count_to_be_reserved);
 
@@ -82,6 +83,7 @@ namespace cagd
         GLvoid setPoint(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition);
 
         Matrix<Pair> GetIndexesFromDirection(Direction direction, Direction other_direction);
+
 
     };
 }

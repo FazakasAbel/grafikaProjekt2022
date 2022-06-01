@@ -288,7 +288,7 @@ namespace cagd
             _composite_patch->pushPatch(0, 0);
             _composite_patch->pushPatch(0, 0);
             _composite_patch->InsertNewPatch();
-            _composite_patch->MergeExistingPatches(0, FOAHCompositePatch3::N, 1, FOAHCompositePatch3::W);
+            _composite_patch->MergeExistingPatches(0, FOAHCompositePatch3::N, 1, FOAHCompositePatch3::S);
 
             glEnable(GL_POLYGON_SMOOTH);
             glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
@@ -399,6 +399,15 @@ namespace cagd
                 if(_enable_shader) {
                     _shaders[_selected_shader]->Disable();
                 }
+                glColor3f(0.5f, 0.0f, 0.5f);
+                DCoordinate3 selected_point = _composite_patch->getPoint(_selected_patch, _selected_patch_point_x, _selected_patch_point_y);
+                glBegin(GL_POINTS);
+                    glPointSize(100.0f);
+                        glVertex3f(selected_point.x(), selected_point.y(), selected_point.z());
+                    glPointSize(1.0f);
+                glEnd();
+
+
                 if(_enable_texture) {
                     _textures[_selected_texture]->release();
                     glDisable(GL_TEXTURE_2D);
@@ -416,6 +425,7 @@ namespace cagd
                     break;
                 }
             }
+
         glPopMatrix();
     }
 

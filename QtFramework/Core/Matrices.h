@@ -358,6 +358,8 @@ namespace cagd
     // definitions of Matrix-related overloaded and templated input/output from/to stream operators
     //---------------------------------------------------------------------------------------------
 
+
+
     // output to stream
     template <typename T>
     std::ostream& operator <<(std::ostream& lhs, const Matrix<T>& rhs)
