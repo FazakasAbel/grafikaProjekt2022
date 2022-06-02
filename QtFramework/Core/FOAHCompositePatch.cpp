@@ -501,7 +501,7 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
         for (int j = 0; j < 4; j++)
         {
             (*matrix)(i,j).row_index = i;
-            (*matrix)(i,j).column_index = j;
+            (*matrix)(i,j).column_index = 3 - j;
         }
 
     if (new_direction == N)
@@ -611,8 +611,8 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
         return GL_FALSE;
     }
 
-    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, S);
-    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, N);
+    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, N);
+    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, S);
 
     //  TODO:  remove testing
 
@@ -799,7 +799,6 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     if (row == 0) {
         if (_attributes[patch_index].neighbours[N]) {
             Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, _attributes[patch_index].connection_type[N]);
-            cout << _attributes[patch_index].connection_type[N] << endl;
             Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], N);
 
             _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
