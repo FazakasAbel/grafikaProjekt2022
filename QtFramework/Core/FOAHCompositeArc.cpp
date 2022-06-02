@@ -259,8 +259,8 @@ GLvoid FOAHCompositeArc::setPoint(GLuint arcIndex, GLuint pointIndex, GLuint dir
         if(_attributes[arcIndex].next){
 
             if(pointIndex == 3){
-                temp_point_index = _attributes[arcIndex].next_connection_type == LEFT ? 3 : 0;
-                temp_point_index_2 = _attributes[arcIndex].next_connection_type == LEFT ? 2 : 1;
+                temp_point_index = _attributes[arcIndex].next_connection_type == LEFT ? 0 : 3;
+                temp_point_index_2 = _attributes[arcIndex].next_connection_type == LEFT ? 1 : 2;
 
                 (*_attributes[arcIndex].next->arc)[temp_point_index][direction] += delta;
                 (*_attributes[arcIndex].next->arc)[temp_point_index_2][direction] += delta;
@@ -268,7 +268,7 @@ GLvoid FOAHCompositeArc::setPoint(GLuint arcIndex, GLuint pointIndex, GLuint dir
             }
 
             if(pointIndex == 2){
-                temp_point_index = _attributes[arcIndex].next_connection_type == LEFT ? 2 : 1;
+                temp_point_index = _attributes[arcIndex].next_connection_type == LEFT ? 1 : 2;
 
                 (*_attributes[arcIndex].next->arc)[temp_point_index][direction] -= delta;
             }
@@ -323,7 +323,6 @@ FOAHCompositeArc::ArcAttributes& FOAHCompositeArc::getNext(GLuint index){
 
 GLboolean FOAHCompositeArc::JoinExistingArcs(GLuint index_0, Direction direction_0, GLuint index_1, Direction direction_1)
 {
-    // TODO: test
     if (index_0 >= _attributes.size() || index_1 >= _attributes.size())
     {
         cout << "Arc index is invalid!" << endl;
