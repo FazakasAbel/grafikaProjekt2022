@@ -864,22 +864,36 @@ namespace cagd
     }
     void GLWidget::pushArc(){
         _composite_arc->pushArc(_selected_arc, _direction);
-
+        emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
+        emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
+        emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
         update();
     }
 
     void GLWidget::pullArc(){
         _composite_arc->pullArc(_selected_arc, _direction);
-
+        emit set_x_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[0]);
+        emit set_y_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[1]);
+        emit set_z_signal(_composite_arc->getPoint(_selected_arc, _selected_arc_point)[2]);
         update();
     }
 
     void GLWidget::pushPatch() {
         _composite_patch->pushPatch(_selected_patch, _direction_patch);
+
+        emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[0]);
+        emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[1]);
+        emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
+
         update();
     }
     void GLWidget::pullPatch() {
         _composite_patch->pullPatch(_selected_patch, _direction_patch);
+
+        emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[0]);
+        emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[1]);
+        emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
+
         update();
     }
 
