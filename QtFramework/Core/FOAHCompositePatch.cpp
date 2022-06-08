@@ -614,39 +614,34 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
     Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, N);
     Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, S);
 
-    //  TODO:  remove testing
-
-    for (int i = 0; i < 2; i++)
-    {
-        for (int j = 0; j < 4; j++)
-            std::cout << first_indexes(i,j).row_index << "," << first_indexes(i,j).column_index << "  ";
-
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-    for (int i = 0; i < 2; i++)
-    {
-        for (int j = 0; j < 4; j++)
-            std::cout << second_indexes(i,j).row_index << "," << second_indexes(i,j).column_index << "  ";
-
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-    std::cout << "--------------------------" << std::endl;
 
 
-
-
-
-
+    RowMatrix<DCoordinate3>* correct_positions = new RowMatrix<DCoordinate3>(4);
 
     DCoordinate3 temp;
     for(GLuint i = 0; i < 4; ++i){
-        temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_1->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2.0;
-//        (*attribute_0->patch)(first_indexes(0, i).row_index, first_indexes(0, i).column_index) = temp;
-//        (*attribute_1->patch)(second_indexes(0, i).row_index, second_indexes(0, i).column_index) = temp;
-        setPoint(index_0 ,first_indexes(0, i).row_index, first_indexes(0, i).column_index, temp);
-        setPoint(index_1 ,second_indexes(0, i).row_index, second_indexes(0, i).column_index, temp);
+            temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_1->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2.0;
+            (*correct_positions)[i] = temp;
+            setPoint(index_0 ,first_indexes(0, i).row_index, first_indexes(0, i).column_index, temp);
+            setPoint(index_1 ,second_indexes(0, i).row_index, second_indexes(0, i).column_index, temp);
+    }
+
+    // new idea: to fix when corner is present in merge
+    for (GLuint i = 1; i < 3; ++i) {
+        DCoordinate3 curr_pos;
+        attribute_0->patch->GetData(first_indexes(0,i).row_index, first_indexes(0,i).column_index, curr_pos);
+        DCoordinate3 correct_pos = (*correct_positions)[i];
+        if (curr_pos.x() != correct_pos.x() || curr_pos.y() != correct_pos.y() || curr_pos.z() != correct_pos.z())
+        {
+            setPoint(index_0, first_indexes(0,i).row_index, first_indexes(0,i).column_index, correct_pos);
+        }
+
+        attribute_1->patch->GetData(second_indexes(0,i).row_index, second_indexes(0,i).column_index, curr_pos);
+        correct_pos = (*correct_positions)[i];
+        if (curr_pos.x() != correct_pos.x() || curr_pos.y() != correct_pos.y() || curr_pos.z() != correct_pos.z())
+        {
+            setPoint(index_1, second_indexes(0,i).row_index, second_indexes(0,i).column_index, correct_pos);
+        }
     }
 
     //Set neighbours!!!
