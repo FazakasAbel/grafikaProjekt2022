@@ -656,7 +656,7 @@ namespace cagd
                 break;
             }
             case 1: {
-                _composite_patch->ContinueExistingPatch(_selected_patch_1,FOAHCompositePatch3::W);
+                _composite_patch->ContinueExistingPatch(_selected_patch_1,FOAHCompositePatch3::E);
                 break;
             }
             case 2: {
@@ -664,7 +664,7 @@ namespace cagd
                 break;
             }
             case 3: {
-                _composite_patch->ContinueExistingPatch(_selected_patch_1,FOAHCompositePatch3::E);
+                _composite_patch->ContinueExistingPatch(_selected_patch_1,FOAHCompositePatch3::W);
                 break;
             }
             }
@@ -703,7 +703,7 @@ namespace cagd
                 break;
             }
             case 1: {
-                dir_patch_1 = FOAHCompositePatch3::W;
+                dir_patch_1 = FOAHCompositePatch3::E;
                 break;
             }
             case 2: {
@@ -711,7 +711,7 @@ namespace cagd
                 break;
             }
             case 3: {
-                dir_patch_1 = FOAHCompositePatch3::E;
+                dir_patch_1 = FOAHCompositePatch3::W;
                 break;
             }
             }
@@ -721,7 +721,7 @@ namespace cagd
                 break;
             }
             case 1: {
-                dir_patch_2 = FOAHCompositePatch3::W;
+                dir_patch_2 = FOAHCompositePatch3::E;
                 break;
             }
             case 2: {
@@ -729,7 +729,7 @@ namespace cagd
                 break;
             }
             case 3: {
-                dir_patch_2 = FOAHCompositePatch3::E;
+                dir_patch_2 = FOAHCompositePatch3::W;
                 break;
             }
             }
@@ -771,7 +771,7 @@ namespace cagd
                 break;
             }
             case 1: {
-                dir_patch_1 = FOAHCompositePatch3::W;
+                dir_patch_1 = FOAHCompositePatch3::E;
                 break;
             }
             case 2: {
@@ -779,7 +779,7 @@ namespace cagd
                 break;
             }
             case 3: {
-                dir_patch_1 = FOAHCompositePatch3::E;
+                dir_patch_1 = FOAHCompositePatch3::W;
                 break;
             }
             }
@@ -789,7 +789,7 @@ namespace cagd
                 break;
             }
             case 1: {
-                dir_patch_2 = FOAHCompositePatch3::W;
+                dir_patch_2 = FOAHCompositePatch3::E;
                 break;
             }
             case 2: {
@@ -797,7 +797,7 @@ namespace cagd
                 break;
             }
             case 3: {
-                dir_patch_2 = FOAHCompositePatch3::E;
+                dir_patch_2 = FOAHCompositePatch3::W;
                 break;
             }
             }
