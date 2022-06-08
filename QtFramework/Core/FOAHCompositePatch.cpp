@@ -501,7 +501,7 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
         for (int j = 0; j < 4; j++)
         {
             (*matrix)(i,j).row_index = i;
-            (*matrix)(i,j).column_index = 3 - j;
+            (*matrix)(i,j).column_index = j;
         }
 
     if (new_direction == N)
@@ -557,8 +557,8 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
 
         for (int i = 0; i < 4; i++)
         {
-            result(0,i) = (*matrix)(i,0);
-            result(1,i) = (*matrix)(i,1);
+            result(0,i) = (*matrix)(i,3);
+            result(1,i) = (*matrix)(i,2);
         }
 
     }
@@ -577,8 +577,8 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
 
         for (int i = 0; i < 4; i++)
         {
-            result(0,i) = (*matrix)(i,3);
-            result(1,i) = (*matrix)(i,2);
+            result(0,i) = (*matrix)(i,0);
+            result(1,i) = (*matrix)(i,1);
         }
 
     }
