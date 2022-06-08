@@ -509,6 +509,7 @@ public:
 
         patch_point_selector_x = new QSpinBox(formLayoutWidget_2);
         patch_point_selector_x->setObjectName(QString::fromUtf8("patch_point_selector_x"));
+        patch_point_selector_x->setMaximum(3);
 
         formLayout_4->setWidget(6, QFormLayout::FieldRole, patch_point_selector_x);
 
@@ -519,6 +520,7 @@ public:
 
         patch_point_selector_y = new QSpinBox(formLayoutWidget_2);
         patch_point_selector_y->setObjectName(QString::fromUtf8("patch_point_selector_y"));
+        patch_point_selector_y->setMaximum(3);
 
         formLayout_4->setWidget(7, QFormLayout::FieldRole, patch_point_selector_y);
 
@@ -529,6 +531,7 @@ public:
 
         x_selector_patch = new QDoubleSpinBox(formLayoutWidget_2);
         x_selector_patch->setObjectName(QString::fromUtf8("x_selector_patch"));
+        x_selector_patch->setMinimum(-99.989999999999995);
 
         formLayout_4->setWidget(8, QFormLayout::FieldRole, x_selector_patch);
 
@@ -539,6 +542,7 @@ public:
 
         y_selector_patch = new QDoubleSpinBox(formLayoutWidget_2);
         y_selector_patch->setObjectName(QString::fromUtf8("y_selector_patch"));
+        y_selector_patch->setMinimum(-99.989999999999995);
 
         formLayout_4->setWidget(9, QFormLayout::FieldRole, y_selector_patch);
 
@@ -549,6 +553,7 @@ public:
 
         z_selector_patch = new QDoubleSpinBox(formLayoutWidget_2);
         z_selector_patch->setObjectName(QString::fromUtf8("z_selector_patch"));
+        z_selector_patch->setMinimum(-99.989999999999995);
 
         formLayout_4->setWidget(10, QFormLayout::FieldRole, z_selector_patch);
 
