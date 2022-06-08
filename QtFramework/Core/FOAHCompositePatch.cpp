@@ -142,24 +142,24 @@ GLboolean FOAHCompositePatch3::InsertNewPatch()
 
         FirstOrderAlgebraicHyperbolicPatch &newPatch = *_attributes[patch_count].patch;
         newPatch(0,0) = DCoordinate3(0,0,0);
-        newPatch(0,1) = DCoordinate3(0,0,1);
-        newPatch(0,2) = DCoordinate3(0,0,2);
-        newPatch(0,3) = DCoordinate3(0,0,3);
+        newPatch(0,1) = DCoordinate3(0,0,-1);
+        newPatch(0,2) = DCoordinate3(0,0,-2);
+        newPatch(0,3) = DCoordinate3(0,0,-3);
 
         newPatch(1,0) = DCoordinate3(1,0,0);
-        newPatch(1,1) = DCoordinate3(1,2,1);
-        newPatch(1,2) = DCoordinate3(1,2,2);
-        newPatch(1,3) = DCoordinate3(1,0,3);
+        newPatch(1,1) = DCoordinate3(1,2,-1);
+        newPatch(1,2) = DCoordinate3(1,2,-2);
+        newPatch(1,3) = DCoordinate3(1,0,-3);
 
         newPatch(2,0) = DCoordinate3(2,0,0);
-        newPatch(2,1) = DCoordinate3(2,2,1);
-        newPatch(2,2) = DCoordinate3(2,2,2);
-        newPatch(2,3) = DCoordinate3(2,0,3);
+        newPatch(2,1) = DCoordinate3(2,2,-1);
+        newPatch(2,2) = DCoordinate3(2,2,-2);
+        newPatch(2,3) = DCoordinate3(2,0,-3);
 
         newPatch(3,0) = DCoordinate3(3,0,0);
-        newPatch(3,1) = DCoordinate3(3,0,1);
-        newPatch(3,2) = DCoordinate3(3,0,2);
-        newPatch(3,3) = DCoordinate3(3,0,3);
+        newPatch(3,1) = DCoordinate3(3,0,-1);
+        newPatch(3,2) = DCoordinate3(3,0,-2);
+        newPatch(3,3) = DCoordinate3(3,0,-3);
 
         return _attributes[patch_count].UpdateImageAndVBO();
     }
