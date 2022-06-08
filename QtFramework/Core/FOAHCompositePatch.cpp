@@ -793,8 +793,8 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     // TODO: szel
     if (row == 0) {
         if (_attributes[patch_index].neighbours[N]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, _attributes[patch_index].connection_type[N]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], N);
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, N);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
 
             _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
             _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
@@ -809,8 +809,8 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     }
     if (row == 3) {
         if (_attributes[patch_index].neighbours[S]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, _attributes[patch_index].connection_type[S]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], S);
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, S);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
             _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
             _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
 
@@ -822,32 +822,34 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
         }
     }
+    // when if (column...) -> inside, use firstIndexes(1,row)
+    // because: when if (row...) -> inside, firstIndexes(1,column)
     if(column == 0){
         if (_attributes[patch_index].neighbours[W]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, _attributes[patch_index].connection_type[W]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], W);
-            _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, W);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
+            _attributes[patch_index].patch->GetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos);
+            _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
 
-            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement);
-            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement);
+            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
+            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement);
+            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement);
 
             _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
         }
     }
     if(column == 3){
         if (_attributes[patch_index].neighbours[E]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, _attributes[patch_index].connection_type[E]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], E);
-            _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, E);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
+            _attributes[patch_index].patch->GetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos);
+            _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
 
-            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement);
-            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement);
+            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
+            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement);
+            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement);
 
             _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
         }
@@ -856,10 +858,10 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     if(column == 1){
         if (_attributes[patch_index].neighbours[W]) {
             Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, _attributes[patch_index].connection_type[W]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], W);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
 
-            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement);
+            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement);
 
             _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
         }
@@ -869,10 +871,10 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     if(column == 2){
         if (_attributes[patch_index].neighbours[E]) {
             Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, _attributes[patch_index].connection_type[E]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], E);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
 
-            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement);
+            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement);
 
             _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
         }
@@ -880,7 +882,7 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     if(row == 1){
         if (_attributes[patch_index].neighbours[N]) {
             Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, _attributes[patch_index].connection_type[N]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], N);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
 
             _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
             _attributes[patch_index].neighbours[N]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement);
@@ -893,7 +895,7 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     if(row == 2){
         if (_attributes[patch_index].neighbours[S]) {
             Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, _attributes[patch_index].connection_type[S]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], S);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
 
             _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
             _attributes[patch_index].neighbours[S]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement);
