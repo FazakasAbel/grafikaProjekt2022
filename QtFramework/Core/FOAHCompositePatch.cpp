@@ -547,11 +547,11 @@ Matrix<FOAHCompositePatch3::Pair> FOAHCompositePatch3::GetIndexesFromDirection(D
     {
         switch (direction)
         {
-            case (S):
+            case (N):
                 rotateMatrixLeft(matrix);
             case (W):
                 rotateMatrixLeft(matrix);
-            case (N):
+            case (S):
                 rotateMatrixLeft(matrix);
         }
 
@@ -709,8 +709,8 @@ GLboolean FOAHCompositePatch3::JoinExistingPatches(GLuint index_0, Direction dir
 
     FirstOrderAlgebraicHyperbolicPatch &patch = *_attributes[patch_count].patch;
 
-    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, W);
-    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, E);
+    Matrix<Pair> first_indexes = GetIndexesFromDirection(direction_0, E);
+    Matrix<Pair> second_indexes = GetIndexesFromDirection(direction_1, W);
 
     patch(0, 0) = (*attribute_0->patch)(first_indexes(0, 0).row_index, first_indexes(0, 0).column_index);
     patch(1, 0) = (*attribute_0->patch)(first_indexes(0, 1).row_index, first_indexes(0, 1).column_index);
@@ -790,7 +790,6 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
 
     _attributes[patch_index].patch->SetData(row, column, newPosition);
 
-    // TODO: szel
     if (row == 0) {
         if (_attributes[patch_index].neighbours[N]) {
             Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, N);
