@@ -297,6 +297,8 @@ namespace cagd
             _composite_patch->pushPatch(2, 2);
             _composite_patch->pushPatch(2, 1);
             _composite_patch->pushPatch(2, 1);
+            _composite_patch->MergeExistingPatches(2, FOAHCompositePatch3::E, 1, FOAHCompositePatch3::W);
+
             glEnable(GL_POLYGON_SMOOTH);
             glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 
