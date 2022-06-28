@@ -55,6 +55,10 @@ namespace cagd
         struct Pair{
             GLuint row_index, column_index;
         };
+        struct PatchPoint {
+            GLuint patch_index, row_index, column_index;
+        };
+
         // special/default ctor
         FOAHCompositePatch3(GLdouble alpha, GLuint minimal_patch_count_to_be_reserved);
 
@@ -86,7 +90,9 @@ namespace cagd
     private:
         GLvoid rotateMatrixRight(Matrix<Pair>*);
         GLvoid rotateMatrixLeft(Matrix<Pair>*);
-
+        GLvoid setPoint(PatchAttributes* patch, GLuint row, GLuint column, DCoordinate3 newPosition);
+        GLvoid setPointRecursively(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint>& stack);
+        GLvoid setPointRecursively(PatchAttributes* patch, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint>& stack);
 
     };
 }

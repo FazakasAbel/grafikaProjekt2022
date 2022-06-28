@@ -780,11 +780,39 @@ std::ostream& operator <<(std::ostream& lhs, FOAHCompositePatch3::Pair pair){
     return lhs;
 }
 
-GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition)
+GLvoid FOAHCompositePatch3::setPointRecursively(PatchAttributes *patch, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint> &stack)
 {
-    // TODO: 3 eset: szel, kozepso, sarok
-    DCoordinate3 point;
+    for (GLuint i = 0; i < getPatchCount(); ++i)
+    {
+        if (&(_attributes[i]) == patch)
+        {
+            setPointRecursively(i, row, column, newPosition, stack);
+            return;
+        }
+    }
+
+}
+
+GLvoid FOAHCompositePatch3::setPointRecursively(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint>& stack)
+{
+    PatchPoint patch_point = {patch_index, row, column};
+
+    // If the point was already adjusted, skip it
+    if (stack.size() > 0)
+        for (GLuint i = 0; i < stack.size(); ++i)
+            if (stack[i].patch_index == patch_point.patch_index &&
+                stack[i].row_index == patch_point.row_index &&
+                stack[i].column_index == patch_point.column_index) return;
+
+    stack.push_back(patch_point);
+
+     DCoordinate3 point;
     _attributes[patch_index].patch->GetData(row, column, point);
+
+    if (point.x() == newPosition.x() && point.y() == newPosition.y() && point.z() == newPosition.z()) {
+        return;
+    }
+
     DCoordinate3 movement = newPosition - point;
     DCoordinate3 prev_pos = point;
 
@@ -799,9 +827,9 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
 
             _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[N]->patch->SetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement);
+            setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement, stack);
             _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[N]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement);
+            setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement, stack);
 
             _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
         }
@@ -814,9 +842,9 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
 
             _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[S]->patch->SetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement);
+            setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement, stack);
             _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[S]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement);
+            setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement, stack);
 
             _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
         }
@@ -831,9 +859,9 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
 
             _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
-            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement);
+            setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement, stack);
             _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
-            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement);
+            setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement, stack);
 
             _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
         }
@@ -846,9 +874,9 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
 
             _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
-            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement);
+            setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement, stack);
             _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
-            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement);
+            setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement, stack);
 
             _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
         }
@@ -860,7 +888,7 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
 
             _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
-            _attributes[patch_index].neighbours[W]->patch->SetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement);
+            setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement, stack);
 
             _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
         }
@@ -873,7 +901,7 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
 
             _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
-            _attributes[patch_index].neighbours[E]->patch->SetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement);
+            setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement, stack);
 
             _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
         }
@@ -884,7 +912,7 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
 
             _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[N]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement);
+            setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement, stack);
 
             _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
         }
@@ -897,13 +925,31 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
             Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
 
             _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            _attributes[patch_index].neighbours[S]->patch->SetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement);
+            setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement, stack);
 
             _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
         }
     }
-    // TODO: sarok
 
-    // TODO:  kozep
     _attributes[patch_index].UpdateImageAndVBO();
+
 }
+
+GLvoid FOAHCompositePatch3::setPoint(PatchAttributes *patch, GLuint row, GLuint column, DCoordinate3 newPosition)
+{
+    for (GLuint i = 0; i < getPatchCount(); ++i)
+    {
+        if (&(_attributes[i]) == patch)
+        {
+            setPoint(i, row, column, newPosition);
+            return;
+        }
+    }
+}
+
+GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition)
+{
+    vector<PatchPoint> stack;
+    setPointRecursively(patch_index, row, column, newPosition, stack);
+}
+
