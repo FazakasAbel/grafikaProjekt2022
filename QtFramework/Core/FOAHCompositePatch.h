@@ -93,7 +93,10 @@ namespace cagd
         GLvoid setPoint(PatchAttributes* patch, GLuint row, GLuint column, DCoordinate3 newPosition);
         GLvoid setPointRecursively(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint>& stack);
         GLvoid setPointRecursively(PatchAttributes* patch, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint>& stack);
-
+        // used internally in Merge. otherwise the simple setPoint sets the corners too (but that version isn't correct if used in Merge and Join)
+        GLvoid setPointWithoutCorner(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition);
+        GLvoid setPointRecursivelyWithoutCorner(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint>& stack);
+        GLvoid setPointRecursivelyWithoutCorner(PatchAttributes* patch, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint>& stack);
     };
 }
 

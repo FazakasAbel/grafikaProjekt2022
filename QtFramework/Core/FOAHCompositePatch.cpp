@@ -622,8 +622,8 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
     for(GLuint i = 0; i < 4; ++i){
             temp = ((*attribute_0->patch)(first_indexes(1, i).row_index, first_indexes(1, i).column_index) + (*attribute_1->patch)(second_indexes(1, i).row_index, second_indexes(1, i).column_index)) / 2.0;
             (*correct_positions)[i] = temp;
-            setPoint(index_0 ,first_indexes(0, i).row_index, first_indexes(0, i).column_index, temp);
-            setPoint(index_1 ,second_indexes(0, i).row_index, second_indexes(0, i).column_index, temp);
+            setPointWithoutCorner(index_0 ,first_indexes(0, i).row_index, first_indexes(0, i).column_index, temp);
+            setPointWithoutCorner(index_1 ,second_indexes(0, i).row_index, second_indexes(0, i).column_index, temp);
     }
 
     // new idea: to fix when corner is present in merge
@@ -633,14 +633,14 @@ GLboolean FOAHCompositePatch3::MergeExistingPatches(GLuint index_0, Direction di
         DCoordinate3 correct_pos = (*correct_positions)[i];
         if (curr_pos.x() != correct_pos.x() || curr_pos.y() != correct_pos.y() || curr_pos.z() != correct_pos.z())
         {
-            setPoint(index_0, first_indexes(0,i).row_index, first_indexes(0,i).column_index, correct_pos);
+            setPointWithoutCorner(index_0, first_indexes(0,i).row_index, first_indexes(0,i).column_index, correct_pos);
         }
 
         attribute_1->patch->GetData(second_indexes(0,i).row_index, second_indexes(0,i).column_index, curr_pos);
         correct_pos = (*correct_positions)[i];
         if (curr_pos.x() != correct_pos.x() || curr_pos.y() != correct_pos.y() || curr_pos.z() != correct_pos.z())
         {
-            setPoint(index_1, second_indexes(0,i).row_index, second_indexes(0,i).column_index, correct_pos);
+            setPointWithoutCorner(index_1, second_indexes(0,i).row_index, second_indexes(0,i).column_index, correct_pos);
         }
     }
 
@@ -818,155 +818,234 @@ GLvoid FOAHCompositePatch3::setPointRecursively(GLuint patch_index, GLuint row, 
 
     _attributes[patch_index].patch->SetData(row, column, newPosition);
 
-    if (row == 0) {
-        if (_attributes[patch_index].neighbours[N]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, N);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
-            _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
 
-            if (stack.size() > 1)
-                setPointRecursively(patch_index, firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement, stack);
-            else
-            {
-                _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+    // corners
+    int isCorner = ((row == 0 || row == 3) && (column == 0 || column == 3));
+    if (isCorner)
+    {
+        if (column == 0) {
+            if (_attributes[patch_index].neighbours[W]) {
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
 
-                patch_point.row_index = firstIndexes(1, column).row_index;
-                patch_point.column_index = firstIndexes(1, column).column_index;
-                stack.push_back(patch_point);
+                _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(0,row).row_index, secondIndexes(0,row).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(0,row).row_index, secondIndexes(0,row).column_index, prev_pos + movement, stack);
+            }
+        }
+
+        if (column == 3) {
+            if (_attributes[patch_index].neighbours[E]) {
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
+
+                _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(0,row).row_index, secondIndexes(0,row).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(0,row).row_index, secondIndexes(0,row).column_index, prev_pos + movement, stack);
+            }
+        }
+
+        if (row == 0) {
+            if (_attributes[patch_index].neighbours[N]) {
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
+
+                _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(0,column).row_index, secondIndexes(0,column).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(0,column).row_index, secondIndexes(0,column).column_index, prev_pos + movement, stack);
+            }
+        }
+
+        if (row == 3) {
+            if (_attributes[patch_index].neighbours[S]) {
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
+
+                _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(0,column).row_index, secondIndexes(0,column).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(0,column).row_index, secondIndexes(0,column).column_index, prev_pos + movement, stack);
+            }
+        }
+
+        if (row == 0 && column == 0) {
+            _attributes[patch_index].patch->GetData(0,1,prev_pos);
+            _attributes[patch_index].patch->SetData(0,1,prev_pos + movement);
+            _attributes[patch_index].patch->GetData(1,0,prev_pos);
+            _attributes[patch_index].patch->SetData(1,0,prev_pos + movement);
+            _attributes[patch_index].patch->GetData(1,1,prev_pos);
+            _attributes[patch_index].patch->SetData(1,1,prev_pos + movement);
+        }
+
+        if (row == 3 && column == 0) {
+            _attributes[patch_index].patch->GetData(3,1,prev_pos);
+            _attributes[patch_index].patch->SetData(3,1,prev_pos + movement);
+            _attributes[patch_index].patch->GetData(2,0,prev_pos);
+            _attributes[patch_index].patch->SetData(2,0,prev_pos + movement);
+            _attributes[patch_index].patch->GetData(2,1,prev_pos);
+            _attributes[patch_index].patch->SetData(2,1,prev_pos + movement);
+        }
+
+        if (row == 0 && column == 3) {
+            _attributes[patch_index].patch->GetData(0,2,prev_pos);
+            _attributes[patch_index].patch->SetData(0,2,prev_pos + movement);
+            _attributes[patch_index].patch->GetData(1,3,prev_pos);
+            _attributes[patch_index].patch->SetData(1,3,prev_pos + movement);
+            _attributes[patch_index].patch->GetData(1,2,prev_pos);
+            _attributes[patch_index].patch->SetData(1,2,prev_pos + movement);
+        }
+
+        if (row == 3 && column == 3) {
+            _attributes[patch_index].patch->GetData(3,2,prev_pos);
+            _attributes[patch_index].patch->SetData(3,2,prev_pos + movement);
+            _attributes[patch_index].patch->GetData(2,3,prev_pos);
+            _attributes[patch_index].patch->SetData(2,3,prev_pos + movement);
+            _attributes[patch_index].patch->GetData(2,2,prev_pos);
+            _attributes[patch_index].patch->SetData(2,2,prev_pos + movement);
+        }
+
+    } else {
+        if (row == 0) {
+            if (_attributes[patch_index].neighbours[N]) {
+                Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, N);
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
+                _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
+
+                if (stack.size() > 1)
+                    setPointRecursively(patch_index, firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement, stack);
+                else
+                {
+                    _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+
+                    patch_point.row_index = firstIndexes(1, column).row_index;
+                    patch_point.column_index = firstIndexes(1, column).column_index;
+                    stack.push_back(patch_point);
+                }
+
+                _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement, stack);
+                _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement, stack);
+
+                _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
+            }
+        }
+        if (row == 3) {
+            if (_attributes[patch_index].neighbours[S]) {
+                Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, S);
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
+                _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
+
+                if (stack.size() > 1)
+                    setPointRecursively(patch_index, firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement, stack);
+                else
+                {
+                    _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+
+                    patch_point.row_index = firstIndexes(1, column).row_index;
+                    patch_point.column_index = firstIndexes(1, column).column_index;
+                    stack.push_back(patch_point);
+                }
+
+                _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement, stack);
+                _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement, stack);
+
+                _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
+            }
+        }
+        // when if (column...) -> inside, use firstIndexes(1,row)
+        // because: when if (row...) -> inside, firstIndexes(1,column)
+        if(column == 0){
+            if (_attributes[patch_index].neighbours[W]) {
+                Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, W);
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
+                _attributes[patch_index].patch->GetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos);
+
+                if (stack.size() > 1)
+                    setPointRecursively(patch_index, firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement, stack);
+                else
+                {
+                    _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
+
+                    patch_point.row_index = firstIndexes(1, row).row_index;
+                    patch_point.column_index = firstIndexes(1, row).column_index;
+                    stack.push_back(patch_point);
+                }
+
+                _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement, stack);
+                _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement, stack);
+
+                _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
+            }
+        }
+        if(column == 3){
+            if (_attributes[patch_index].neighbours[E]) {
+                Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, E);
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
+                _attributes[patch_index].patch->GetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos);
+
+                if (stack.size() > 1)
+                    setPointRecursively(patch_index, firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement, stack);
+                else
+                {
+                    _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
+
+                    patch_point.row_index = firstIndexes(1, row).row_index;
+                    patch_point.column_index = firstIndexes(1, row).column_index;
+                    stack.push_back(patch_point);
+                }
+
+                _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement, stack);
+                _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement, stack);
+
+                _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
+            }
+        }
+
+        if(column == 1){
+            if (_attributes[patch_index].neighbours[W]) {
+                Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, _attributes[patch_index].connection_type[W]);
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
+
+                _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement, stack);
+
+                _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
             }
 
-            _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement, stack);
-            _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement, stack);
-
-            _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
         }
-    }
-    if (row == 3) {
-        if (_attributes[patch_index].neighbours[S]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, S);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
-            _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
 
-            if (stack.size() > 1)
-                setPointRecursively(patch_index, firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement, stack);
-            else
-            {
-                _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+        if(column == 2){
+            if (_attributes[patch_index].neighbours[E]) {
+                Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, _attributes[patch_index].connection_type[E]);
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
 
-                patch_point.row_index = firstIndexes(1, column).row_index;
-                patch_point.column_index = firstIndexes(1, column).column_index;
-                stack.push_back(patch_point);
+                _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement, stack);
+
+                _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
+            }
+        }
+        if(row == 1){
+            if (_attributes[patch_index].neighbours[N]) {
+                Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, _attributes[patch_index].connection_type[N]);
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
+
+                _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement, stack);
+
+                _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
             }
 
-            _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement, stack);
-            _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement, stack);
-
-            _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
         }
-    }
-    // when if (column...) -> inside, use firstIndexes(1,row)
-    // because: when if (row...) -> inside, firstIndexes(1,column)
-    if(column == 0){
-        if (_attributes[patch_index].neighbours[W]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, W);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
-            _attributes[patch_index].patch->GetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos);
 
-            if (stack.size() > 1)
-                setPointRecursively(patch_index, firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement, stack);
-            else
-            {
-                _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
+        if(row == 2){
+            if (_attributes[patch_index].neighbours[S]) {
+                Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, _attributes[patch_index].connection_type[S]);
+                Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
 
-                patch_point.row_index = firstIndexes(1, row).row_index;
-                patch_point.column_index = firstIndexes(1, row).column_index;
-                stack.push_back(patch_point);
+                _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+                setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement, stack);
+
+                _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
             }
-
-            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement, stack);
-            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement, stack);
-
-            _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
-        }
-    }
-    if(column == 3){
-        if (_attributes[patch_index].neighbours[E]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, E);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
-            _attributes[patch_index].patch->GetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos);
-
-            if (stack.size() > 1)
-                setPointRecursively(patch_index, firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement, stack);
-            else
-            {
-                _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
-
-                patch_point.row_index = firstIndexes(1, row).row_index;
-                patch_point.column_index = firstIndexes(1, row).column_index;
-                stack.push_back(patch_point);
-            }
-
-            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement, stack);
-            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement, stack);
-
-            _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
-        }
-    }
-
-    if(column == 1){
-        if (_attributes[patch_index].neighbours[W]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, _attributes[patch_index].connection_type[W]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
-
-            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[W], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement, stack);
-
-            _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
-        }
-
-    }
-
-    if(column == 2){
-        if (_attributes[patch_index].neighbours[E]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, _attributes[patch_index].connection_type[E]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
-
-            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[E], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement, stack);
-
-            _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
-        }
-    }
-    if(row == 1){
-        if (_attributes[patch_index].neighbours[N]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, _attributes[patch_index].connection_type[N]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
-
-            _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[N], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement, stack);
-
-            _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
-        }
-
-    }
-
-    if(row == 2){
-        if (_attributes[patch_index].neighbours[S]) {
-            Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, _attributes[patch_index].connection_type[S]);
-            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
-
-            _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
-            setPointRecursively(_attributes[patch_index].neighbours[S], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement, stack);
-
-            _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
         }
     }
 
@@ -991,4 +1070,203 @@ GLvoid FOAHCompositePatch3::setPoint(GLuint patch_index, GLuint row, GLuint colu
     vector<PatchPoint> stack;
     setPointRecursively(patch_index, row, column, newPosition, stack);
 }
+
+GLvoid FOAHCompositePatch3::setPointRecursivelyWithoutCorner(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint> &stack)
+{
+    PatchPoint patch_point = {patch_index, row, column};
+
+    // If the point was already adjusted, skip it
+    if (stack.size() > 0)
+        for (GLuint i = 0; i < stack.size(); ++i)
+            if (stack[i].patch_index == patch_point.patch_index &&
+                    stack[i].row_index == patch_point.row_index &&
+                    stack[i].column_index == patch_point.column_index) return;
+
+    stack.push_back(patch_point);
+
+    DCoordinate3 point;
+    _attributes[patch_index].patch->GetData(row, column, point);
+
+    if (point.x() == newPosition.x() && point.y() == newPosition.y() && point.z() == newPosition.z()) {
+        return;
+    }
+
+    DCoordinate3 movement = newPosition - point;
+    DCoordinate3 prev_pos = point;
+
+    _attributes[patch_index].patch->SetData(row, column, newPosition);
+
+    if (row == 0) {
+        if (_attributes[patch_index].neighbours[N]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, N);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
+            _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
+
+            if (stack.size() > 1)
+                setPointRecursivelyWithoutCorner(patch_index, firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement, stack);
+            else
+            {
+                _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+
+                patch_point.row_index = firstIndexes(1, column).row_index;
+                patch_point.column_index = firstIndexes(1, column).column_index;
+                stack.push_back(patch_point);
+            }
+
+            _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[N], secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement, stack);
+            _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[N], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement, stack);
+
+            _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
+        }
+    }
+    if (row == 3) {
+        if (_attributes[patch_index].neighbours[S]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, S);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
+            _attributes[patch_index].patch->GetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos);
+
+            if (stack.size() > 1)
+                setPointRecursivelyWithoutCorner(patch_index, firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement, stack);
+            else
+            {
+                _attributes[patch_index].patch->SetData(firstIndexes(1, column).row_index, firstIndexes(1, column).column_index, prev_pos + movement);
+
+                patch_point.row_index = firstIndexes(1, column).row_index;
+                patch_point.column_index = firstIndexes(1, column).column_index;
+                stack.push_back(patch_point);
+            }
+
+            _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[S], secondIndexes(0, column).row_index, secondIndexes(0, column).column_index, prev_pos + movement, stack);
+            _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[S], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos + movement, stack);
+
+            _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
+        }
+    }
+    // when if (column...) -> inside, use firstIndexes(1,row)
+    // because: when if (row...) -> inside, firstIndexes(1,column)
+    if(column == 0){
+        if (_attributes[patch_index].neighbours[W]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, W);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
+            _attributes[patch_index].patch->GetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos);
+
+            if (stack.size() > 1)
+                setPointRecursivelyWithoutCorner(patch_index, firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement, stack);
+            else
+            {
+                _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
+
+                patch_point.row_index = firstIndexes(1, row).row_index;
+                patch_point.column_index = firstIndexes(1, row).column_index;
+                stack.push_back(patch_point);
+            }
+
+            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[W], secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement, stack);
+            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[W], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement, stack);
+
+            _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
+        }
+    }
+    if(column == 3){
+        if (_attributes[patch_index].neighbours[E]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, E);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
+            _attributes[patch_index].patch->GetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos);
+
+            if (stack.size() > 1)
+                setPointRecursivelyWithoutCorner(patch_index, firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement, stack);
+            else
+            {
+                _attributes[patch_index].patch->SetData(firstIndexes(1, row).row_index, firstIndexes(1, row).column_index, prev_pos + movement);
+
+                patch_point.row_index = firstIndexes(1, row).row_index;
+                patch_point.column_index = firstIndexes(1, row).column_index;
+                stack.push_back(patch_point);
+            }
+
+            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[E], secondIndexes(0, row).row_index, secondIndexes(0, row).column_index, prev_pos + movement, stack);
+            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[E], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos + movement, stack);
+
+            _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
+        }
+    }
+
+    if(column == 1){
+        if (_attributes[patch_index].neighbours[W]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(W, _attributes[patch_index].connection_type[W]);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[W], E);
+
+            _attributes[patch_index].neighbours[W]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[W], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement, stack);
+
+            _attributes[patch_index].neighbours[W]->UpdateImageAndVBO();
+        }
+
+    }
+
+    if(column == 2){
+        if (_attributes[patch_index].neighbours[E]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(E, _attributes[patch_index].connection_type[E]);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[E], W);
+
+            _attributes[patch_index].neighbours[E]->patch->GetData(secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[E], secondIndexes(1, row).row_index, secondIndexes(1, row).column_index, prev_pos - movement, stack);
+
+            _attributes[patch_index].neighbours[E]->UpdateImageAndVBO();
+        }
+    }
+    if(row == 1){
+        if (_attributes[patch_index].neighbours[N]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(N, _attributes[patch_index].connection_type[N]);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[N], S);
+
+            _attributes[patch_index].neighbours[N]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[N], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement, stack);
+
+            _attributes[patch_index].neighbours[N]->UpdateImageAndVBO();
+        }
+
+    }
+
+    if(row == 2){
+        if (_attributes[patch_index].neighbours[S]) {
+            Matrix<Pair> firstIndexes = GetIndexesFromDirection(S, _attributes[patch_index].connection_type[S]);
+            Matrix<Pair> secondIndexes = GetIndexesFromDirection(_attributes[patch_index].connection_type[S], N);
+
+            _attributes[patch_index].neighbours[S]->patch->GetData(secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos);
+            setPointRecursivelyWithoutCorner(_attributes[patch_index].neighbours[S], secondIndexes(1, column).row_index, secondIndexes(1, column).column_index, prev_pos - movement, stack);
+
+            _attributes[patch_index].neighbours[S]->UpdateImageAndVBO();
+        }
+    }
+
+    _attributes[patch_index].UpdateImageAndVBO();
+}
+
+GLvoid FOAHCompositePatch3::setPointRecursivelyWithoutCorner(PatchAttributes *patch, GLuint row, GLuint column, DCoordinate3 newPosition, std::vector<PatchPoint> &stack)
+{
+    for (GLuint i = 0; i < getPatchCount(); ++i)
+    {
+        if (&(_attributes[i]) == patch)
+        {
+            setPointRecursivelyWithoutCorner(i, row, column, newPosition, stack);
+            return;
+        }
+    }
+}
+
+GLvoid FOAHCompositePatch3::setPointWithoutCorner(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition)
+{
+    vector<PatchPoint> stack;
+    setPointRecursivelyWithoutCorner(patch_index, row, column, newPosition, stack);
+}
+
 

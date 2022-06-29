@@ -279,7 +279,6 @@ namespace cagd
             //_composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::RIGHT);
             //_composite_arc->ContinueExisitingArc(0, FOAHCompositeArc::LEFT);
 
-            // TODO: fuck this shit
             _composite_patch = new FOAHCompositePatch3(1, 100);
             _composite_patch->InsertNewPatch();
             _composite_patch->pushPatch(0, 1);
@@ -298,6 +297,9 @@ namespace cagd
             _composite_patch->pushPatch(2, 1);
             _composite_patch->pushPatch(2, 1);
             _composite_patch->MergeExistingPatches(2, FOAHCompositePatch3::E, 1, FOAHCompositePatch3::W);
+
+//            _composite_patch->JoinExistingPatches(0, FOAHCompositePatch3::N, 1, FOAHCompositePatch3::S);
+//            _composite_patch->JoinExistingPatches(2, FOAHCompositePatch3::E, 1, FOAHCompositePatch3::W);
 
             glEnable(GL_POLYGON_SMOOTH);
             glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
