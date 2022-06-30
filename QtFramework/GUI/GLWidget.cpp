@@ -83,64 +83,125 @@ namespace cagd
         _materials[6] = MatFBTurquoise;
 
 
-        _text = new QOpenGLTexture(QImage("Textures/texture_11.jpg").mirrored());
-        _text->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _text->setMagnificationFilter(QOpenGLTexture::Linear);
-        _textures[0] = new QOpenGLTexture(QImage("Textures/texture_01.jpg").mirrored());
-        _textures[0]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[0]->setMagnificationFilter(QOpenGLTexture::Linear);
+        if(APPL){
+            _text = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_14.jpg").mirrored());
+            _text->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _text->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[0] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_01.jpg").mirrored());
+            _textures[0]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[0]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[1] = new QOpenGLTexture(QImage("Textures/texture_02.jpg"));
-        _textures[1]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[1]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[1] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_02.jpg"));
+            _textures[1]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[1]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[2] = new QOpenGLTexture(QImage("Textures/texture_03.jpg"));
-        _textures[2]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[2]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[2] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_02.jpg"));
+            _textures[2]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[2]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[3] = new QOpenGLTexture(QImage("Textures/texture_04.jpg"));
-        _textures[3]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[3]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[3] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_05.jpg"));
+            _textures[3]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[3]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[4] = new QOpenGLTexture(QImage("Textures/texture_05.jpg"));
-        _textures[4]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[4]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[4] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_05.jpg"));
+            _textures[4]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[4]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[5] = new QOpenGLTexture(QImage("Textures/texture_06.jpg"));
-        _textures[5]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[5]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[5] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_06.jpg"));
+            _textures[5]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[5]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[6] = new QOpenGLTexture(QImage("Textures/texture_07.jpg"));
-        _textures[6]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[6]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[6] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_07.jpg"));
+            _textures[6]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[6]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[7] = new QOpenGLTexture(QImage("Textures/texture_08.jpg"));
-        _textures[7]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[7]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[7] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_08.jpg"));
+            _textures[7]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[7]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[8] = new QOpenGLTexture(QImage("Textures/texture_09.jpg"));
-        _textures[8]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[8]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[8] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_09.jpg"));
+            _textures[8]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[8]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[9] = new QOpenGLTexture(QImage("Textures/texture_10.jpg"));
-        _textures[9]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[9]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[9] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_10.jpg"));
+            _textures[9]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[9]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[10] = new QOpenGLTexture(QImage("Textures/texture_11.jpg"));
-        _textures[10]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[10]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[10] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_11.jpg"));
+            _textures[10]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[10]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[11] = new QOpenGLTexture(QImage("Textures/texture_12.jpg"));
-        _textures[11]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[11]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[11] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_12.jpg"));
+            _textures[11]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[11]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[12] = new QOpenGLTexture(QImage("Textures/texture_13.jpg"));
-        _textures[12]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[12]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[12] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_13.jpg"));
+            _textures[12]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[12]->setMagnificationFilter(QOpenGLTexture::Linear);
 
-        _textures[13] = new QOpenGLTexture(QImage("Textures/texture_14.jpg"));
-        _textures[13]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
-        _textures[13]->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[13] = new QOpenGLTexture(QImage("/Users/andorgere/Documents/Egyetem/Grafika/build-QtFramework-Qt_6_2_3_for_macOS-Debug/Textures/texture_14.jpg"));
+            _textures[13]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[13]->setMagnificationFilter(QOpenGLTexture::Linear);
+        } else {
+            _text = new QOpenGLTexture(QImage("Textures/texture_11.jpg").mirrored());
+            _text->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _text->setMagnificationFilter(QOpenGLTexture::Linear);
+            _textures[0] = new QOpenGLTexture(QImage("Textures/texture_01.jpg").mirrored());
+            _textures[0]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[0]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[1] = new QOpenGLTexture(QImage("Textures/texture_02.jpg"));
+            _textures[1]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[1]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[2] = new QOpenGLTexture(QImage("Textures/texture_03.jpg"));
+            _textures[2]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[2]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[3] = new QOpenGLTexture(QImage("Textures/texture_04.jpg"));
+            _textures[3]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[3]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[4] = new QOpenGLTexture(QImage("Textures/texture_05.jpg"));
+            _textures[4]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[4]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[5] = new QOpenGLTexture(QImage("Textures/texture_06.jpg"));
+            _textures[5]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[5]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[6] = new QOpenGLTexture(QImage("Textures/texture_07.jpg"));
+            _textures[6]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[6]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[7] = new QOpenGLTexture(QImage("Textures/texture_08.jpg"));
+            _textures[7]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[7]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[8] = new QOpenGLTexture(QImage("Textures/texture_09.jpg"));
+            _textures[8]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[8]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[9] = new QOpenGLTexture(QImage("Textures/texture_10.jpg"));
+            _textures[9]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[9]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[10] = new QOpenGLTexture(QImage("Textures/texture_11.jpg"));
+            _textures[10]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[10]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[11] = new QOpenGLTexture(QImage("Textures/texture_12.jpg"));
+            _textures[11]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[11]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[12] = new QOpenGLTexture(QImage("Textures/texture_13.jpg"));
+            _textures[12]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[12]->setMagnificationFilter(QOpenGLTexture::Linear);
+
+            _textures[13] = new QOpenGLTexture(QImage("Textures/texture_14.jpg"));
+            _textures[13]->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+            _textures[13]->setMagnificationFilter(QOpenGLTexture::Linear);
+        }
 
         //_potykany.LoadFromOFF("/Users/andorgere/Documents/Egyetem/Grafika/Models/Flying objects/Airplanes/airplane_01.off",GL_TRUE);
         //_potykany.UpdateVertexBufferObjects(GL_DYNAMIC_DRAW);
@@ -298,6 +359,15 @@ namespace cagd
             _composite_patch->pushPatch(2, 1);
             _composite_patch->MergeExistingPatches(2, FOAHCompositePatch3::E, 1, FOAHCompositePatch3::W);
 
+            _composite_patch->setMaterial(0,0);
+            _composite_patch->setMaterial(1,1);
+            _composite_patch->setMaterial(2,3);
+            _composite_patch->setTexture(0,0);
+            _composite_patch->setTexture(1,1);
+            _composite_patch->setTexture(2,3);
+            _composite_patch->setShader(0,0);
+            _composite_patch->setShader(1,1);
+            _composite_patch->setShader(2,3);
 //            _composite_patch->JoinExistingPatches(0, FOAHCompositePatch3::N, 1, FOAHCompositePatch3::S);
 //            _composite_patch->JoinExistingPatches(2, FOAHCompositePatch3::E, 1, FOAHCompositePatch3::W);
 
@@ -321,6 +391,7 @@ namespace cagd
         emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y)[0]);
         emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y)[1]);
         emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch,_selected_patch_point_x,_selected_patch_point_y)[2]);
+
     }
 
     //-----------------------
@@ -374,6 +445,7 @@ namespace cagd
                         _sl->Enable();
                     break;
                 }
+                /*
                 if(_enable_shader) {
                     _shaders[_selected_shader]->Enable();
                 }
@@ -391,9 +463,53 @@ namespace cagd
                     _textures[_selected_texture]->bind();
 
                 }
-
+*/
                 //content
-                _composite_patch->RenderAllPatches(0, GL_TRIANGLES);
+                // _composite_patch->RenderAllPatches(0, GL_TRIANGLES);
+            if(!_enable_material) {
+                glColor3f(patch_r, patch_g, patch_b);
+            }
+             for(GLuint i=0; i< _composite_patch->getPatchCount(); i++) {
+                 if(_enable_shader) {
+                     _shaders[_composite_patch->getShader(i)]->Enable();
+                 }
+                 if(_enable_texture) {
+                        glEnable(GL_TEXTURE_2D);
+                       // glEnable(GL_LIGHT0);
+                        //glEnable(GL_NORMALIZE);
+                        _textures[_composite_patch->getTexture(i)]->bind();
+                    }
+                 if(_enable_material){
+                 glEnable(GL_LIGHTING);
+                 switch(_composite_patch->getMaterial(i)){
+                         case 0:
+                             MatFBBrass.Apply();
+                             break;
+                         case 1:
+                             MatFBEmerald.Apply();
+                             break;
+                         case 2:
+                             MatFBGold.Apply();
+                             break;
+                         case 3:
+                             MatFBPearl.Apply();
+                             break;
+                         case 4:
+                             MatFBRuby.Apply();
+                             break;
+                         case 5:
+                             MatFBSilver.Apply();
+                             break;
+                         case 6:
+                             MatFBTurquoise.Apply();
+                             break;
+                     }
+                 }
+                 _composite_patch->RenderSelectedPatchWithoutData(i, 0, GL_TRIANGLES);
+                 if(_enable_shader) {
+                     _shaders[_composite_patch->getShader(i)]->Disable();
+                 }
+             }
                 _composite_patch->RenderAllPatchData(GL_LINE_STRIP);
                 glColor3f(0.0f, 1.0f, 0.0f);
                 DCoordinate3 selected_point = _composite_patch->getPoint(_selected_patch, _selected_patch_point_x, _selected_patch_point_y);
@@ -416,15 +532,11 @@ namespace cagd
                     _composite_patch->RenderIsoparametricCurves(2, GL_LINES);
                 }
 
-
-                if(_enable_shader) {
-                    _shaders[_selected_shader]->Disable();
-                }
-
                 if(_enable_texture) {
                     _textures[_selected_texture]->release();
                     glDisable(GL_TEXTURE_2D);
-                    glDisable(GL_NORMALIZE);
+                   // glDisable(GL_NORMALIZE);
+                     //glDisable(GL_LIGHT0);
                 }
                 switch(_selected_light){
                     case 0:
@@ -586,6 +698,9 @@ namespace cagd
             emit set_x_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[0]);
             emit set_y_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[1]);
             emit set_z_signal_patch(_composite_patch->getPoint(_selected_patch, _selected_patch_point_x,_selected_patch_point_y)[2]);
+            emit set_texture_signal_patch(_composite_patch->getTexture(_selected_patch));
+            emit set_material_signal_patch(_composite_patch->getMaterial(_selected_patch));
+            emit set_shader_signal_patch(_composite_patch->getShader(_selected_patch));
             update();
         }
     }
@@ -939,6 +1054,7 @@ namespace cagd
         }
 
         _selected_shader = index;
+        _composite_patch->setShader(_selected_patch, _selected_shader);
         update();
     }
 
@@ -1002,17 +1118,20 @@ namespace cagd
 
     void GLWidget::set_material_index(int value) {
         _selected_material = value;
+         _composite_patch->setMaterial(_selected_patch, _selected_material);
         update();
     }
     void GLWidget::set_material_enable(bool value) {
         if(_enable_material!=value) {
             _enable_material=value;
+            _composite_patch->setEnableMaterial(_enable_material);
             update();
         }
     }
 
     void GLWidget::set_texture_index(int value) {
         _selected_texture = value;
+         _composite_patch->setTexture(_selected_patch, _selected_texture);
         update();
     }
 

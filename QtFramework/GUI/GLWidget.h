@@ -199,6 +199,8 @@ namespace cagd
         void set_x_signal_patch(double);
         void set_y_signal_patch(double);
         void set_z_signal_patch(double);
-
+        void set_texture_signal_patch(int);
+        void set_material_signal_patch(int);
+        void set_shader_signal_patch(int);
     };
 }

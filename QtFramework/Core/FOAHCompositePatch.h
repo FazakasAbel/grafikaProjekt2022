@@ -24,7 +24,9 @@ namespace cagd
             ShaderProgram       *shader;   // use pointers to pre-defined shader programs
 
             // other attributes
-            // ...
+            int texture_index;
+            int material_index;
+            int shadow_index;
 
             std::vector<PatchAttributes*>   neighbours;
             std::vector<Direction>         	connection_type;
@@ -50,7 +52,7 @@ namespace cagd
         std::vector<PatchAttributes> _attributes;
 
         Matrix<DCoordinate3>         _big_control_net; // only in case of B-spline projects!
-
+        bool enable_material = false;
     public:
         struct Pair{
             GLuint row_index, column_index;
@@ -71,6 +73,7 @@ namespace cagd
 
         GLboolean RenderAllPatches(GLuint order, GLenum render_mode) const;
         GLboolean RenderSelectedPatch(GLuint index, GLuint order, GLenum render_mode) const;
+        GLboolean RenderSelectedPatchWithoutData(GLuint index, GLuint order, GLenum render_mode) const;
         GLboolean RenderAllPatchData(GLenum render_mode) const;
         GLboolean RenderIsoparametricCurves(GLuint order, GLenum render_mode) const;
 
@@ -86,6 +89,15 @@ namespace cagd
         GLvoid setPoint(GLuint patch_index, GLuint row, GLuint column, DCoordinate3 newPosition);
 
         Matrix<Pair> GetIndexesFromDirection(Direction direction, Direction other_direction);
+
+        GLvoid setTexture(GLuint, int);
+        GLvoid setMaterial(GLuint, int);
+        GLvoid setShader(GLuint, int);
+        GLvoid setEnableMaterial(bool);
+        int getTexture(GLuint);
+        int getMaterial(GLuint);
+        int getShader(GLuint);
+        // GLvoid setTextureArray(QOpenGLTexture**);
 
     private:
         GLvoid rotateMatrixRight(Matrix<Pair>*);

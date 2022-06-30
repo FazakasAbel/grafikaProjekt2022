@@ -112,9 +112,14 @@ namespace cagd
         connect(_side_widget->x_selector_patch, SIGNAL(valueChanged(double)),_gl_widget, SLOT(update_selected_point_patch_x(double)));
         connect(_side_widget->y_selector_patch, SIGNAL(valueChanged(double)),_gl_widget, SLOT(update_selected_point_patch_y(double)));
         connect(_side_widget->z_selector_patch, SIGNAL(valueChanged(double)),_gl_widget, SLOT(update_selected_point_patch_z(double)));
+
         connect(_gl_widget, SIGNAL(set_x_signal_patch(double)), _side_widget->x_selector_patch, SLOT(setValue(double)));
         connect(_gl_widget, SIGNAL(set_y_signal_patch(double)), _side_widget->y_selector_patch, SLOT(setValue(double)));
         connect(_gl_widget, SIGNAL(set_z_signal_patch(double)), _side_widget->z_selector_patch, SLOT(setValue(double)));
+        connect(_gl_widget, SIGNAL(set_texture_signal_patch(int)), _side_widget->comboBox_texture, SLOT(setCurrentIndex(int)));
+        connect(_gl_widget, SIGNAL(set_material_signal_patch(int)), _side_widget->comboBox_material, SLOT(setCurrentIndex(int)));
+        connect(_gl_widget, SIGNAL(set_shader_signal_patch(int)), _side_widget->comboBox_shader, SLOT(setCurrentIndex(int)));
+
         connect(_side_widget->spinBox_patch1, SIGNAL(valueChanged(int)),_gl_widget, SLOT(set_selected_patch_1(int)));
         connect(_side_widget->spinBox_patch2, SIGNAL(valueChanged(int)),_gl_widget, SLOT(set_selected_patch_2(int)));
         connect(_side_widget->comboBox_patch1_direction, SIGNAL(currentIndexChanged(int)),_gl_widget, SLOT(set_direction_patch_1(int)));

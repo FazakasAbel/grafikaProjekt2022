@@ -109,6 +109,29 @@ GLboolean FOAHCompositePatch3::PatchAttributes::UpdateImageAndVBO()
     return GL_TRUE;
 }
 
+GLvoid FOAHCompositePatch3::setTexture(GLuint index, int texture_i){
+    this->_attributes[index].texture_index = texture_i;
+}
+GLvoid FOAHCompositePatch3::setMaterial(GLuint index, int mat_i){
+    this->_attributes[index].material_index = mat_i;
+}
+GLvoid FOAHCompositePatch3::setShader(GLuint index, int sh_i){
+    this->_attributes[index].shadow_index = sh_i;
+}
+
+int FOAHCompositePatch3::getTexture(GLuint index){
+    return this->_attributes[index].texture_index;
+}
+int FOAHCompositePatch3::getMaterial(GLuint index){
+    return this->_attributes[index].material_index;
+}
+int FOAHCompositePatch3::getShader(GLuint index){
+    return this->_attributes[index].shadow_index;
+}
+GLvoid FOAHCompositePatch3::setEnableMaterial(bool en) {
+    this->enable_material = en;
+}
+
 GLvoid FOAHCompositePatch3::PatchAttributes::push(GLuint axis, PatchAttributes* prev)
 {
     for (GLuint i = 0; i < 4; i++)
@@ -189,6 +212,18 @@ GLboolean FOAHCompositePatch3::RenderSelectedPatch(GLuint index, GLuint order, G
     {
         _attributes[index].image->Render(render_mode);
         _attributes[index].patch->RenderData(render_mode);
+    }
+    else
+        return GL_FALSE;
+
+    return GL_FALSE;
+}
+
+GLboolean FOAHCompositePatch3::RenderSelectedPatchWithoutData(GLuint index, GLuint order, GLenum render_mode) const
+{
+    if (_attributes[index].image)
+    {
+        _attributes[index].image->Render(render_mode);
     }
     else
         return GL_FALSE;
